@@ -5,14 +5,12 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-app.use(express.static(path.join(__dirname, '../frontend/public')));
+const authRoutes = require('./routes/auth');
+app.use(express.json());
 
-//Api endpoints:
-app.post('/auth/signin', (req, res) => {
-    res.json({
-        email: "example@gmail.com"
-    })
-});
+app.use(express.static(path.join(__dirname, '../../frontend/public')));
+
+app.use('/auth', authRoutes);
 
 app.get('/api', (req, res) => {
     res.json({message: 'Hello from the backend!'});
@@ -20,7 +18,7 @@ app.get('/api', (req, res) => {
 
 //Wildcard api endpoint
 app.get('/{*any}', (req, res) =>{
-    res.sendFile(path.resolve(__dirname, '../frontend/public', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '../../frontend/public', 'index.html'));
 });
 
 app.listen(port, () => {

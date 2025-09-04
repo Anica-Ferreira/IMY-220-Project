@@ -1,12 +1,21 @@
 /* Anica Ferreira u24581802 */
 import React from "react";
-import { Navbar } from "../components/Header";
+import { Header } from "../components/Header";
+import { Search } from "../components/Search";
+import { Feed }  from "../components/Feed";
+import { Sort } from "../components/Sort";
 
 export const Home = () =>{
     return(
         <div>
-            <Navbar />
-            <h1>Home</h1>
+            <Header isAuthenticated={true}/>
+            <main>
+                <h1>Home</h1>
+                <Search />
+                <h2>Activity Feed</h2>
+                <Sort />
+                <Feed />
+            </main>
         </div>
     )
 };

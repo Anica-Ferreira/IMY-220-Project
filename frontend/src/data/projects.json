@@ -1,0 +1,57 @@
+[
+  {
+    "id": "p1",
+    "name": "Cabinet App",
+    "description": "A simple not so simple version control App",
+    "image": "/assets/images/project.png",
+    "type": "Web Application",
+    "hashtags": ["#javascript", "#react", "#api"],
+    "version": "1.1.0",
+    "createdAt": "2025-08-25",
+    "ownerId": "u1",
+    "members": ["u1", "u2"],
+    "status": "Checked in",
+    "files": [
+      { "id": "f1", "name": "App.js", "language": "javascript", "size": "4KB", "lastModified": "2025-08-27" },
+      { "id": "f2", "name": "index.html", "language": "html", "size": "2KB", "lastModified": "2025-08-28" },
+      { "id": "f3", "name": "styles.css", "language": "css", "size": "3KB", "lastModified": "2025-09-02" }
+    ],
+    "activity": [
+      { "id": "a1", "userId": "u1", "username": "anica", "action": "created project", "message": "Project created", "date": "2025-08-27", "version": "1.0.0" },
+      { "id": "a2", "userId": "u2", "username": "alex", "action": "checked out", "message": "Started working on adding search functionality", "date": "2025-08-27", "version": "1.0.0" },
+      { "id": "a3", "userId": "u2", "username": "alex", "action": "checked in", "message": "Added search by city name", "date": "2025-08-28", "version": "1.1.0" },
+      { "id": "a4", "userId": "u1", "username": "anica", "action": "checked in", "message": "Improved UI with TailwindCSS", "date": "2025-09-02", "version": "1.2.0" }
+    ],
+    "discussion": [
+      { "id": "d1", "userId": "u2", "message": "Should we refactor the App.js file?", "date": "2025-08-28" },
+      { "id": "d2", "userId": "u1", "message": "Yes, let's improve readability and modularize components.", "date": "2025-08-29" }
+    ]
+  },
+  {
+    "id": "p2",
+    "name": "Fitness Tracker",
+    "description": "A mobile app to track workouts and calories.",
+    "image": "/assets/images/project.png",
+    "type": "mobile-application",
+    "hashtags": ["#kotlin", "#android", "#health"],
+    "version": "1.0.0",
+    "createdAt": "2025-07-15",
+    "ownerId": "u3",
+    "members": ["u3", "u4"],
+    "status": "Checked out",
+    "files": [
+      { "id": "f1", "name": "MainActivity.kt", "language": "kotlin", "size": "6KB", "lastModified": "2025-07-20" },
+      { "id": "f2", "name": "TrackerUtils.kt", "language": "kotlin", "size": "5KB", "lastModified": "2025-08-05" },
+      { "id": "f3", "name": "res/layout/activity_main.xml", "language": "xml", "size": "3KB", "lastModified": "2025-07-20" }
+    ],
+    "activity": [
+      { "id": "a1", "userId": "u3", "username": "sarah", "action": "created project", "message": "Initial project setup", "date": "2025-07-15", "version": "0.1.0" },
+      { "id": "a2", "userId": "u4", "username": "mike", "action": "checked in", "message": "Added calorie tracking feature", "date": "2025-07-20", "version": "0.5.0" },
+      { "id": "a3", "userId": "u3", "username": "sarah", "action": "checked out", "message": "Working on workout logging", "date": "2025-08-05", "version": "0.9.0" }
+    ],
+    "discussion": [
+      { "id": "d1", "userId": "u4", "username": "mike", "message": "Can we add a weekly summary feature?", "date": "2025-07-21" },
+      { "id": "d2", "userId": "u3", "username": "sarah", "message": "Sure, I can implement it in the next update.", "date": "2025-07-22" }
+    ]
+  }
+]

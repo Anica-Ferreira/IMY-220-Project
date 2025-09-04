@@ -1,0 +1,50 @@
+[
+  {
+    "id": "u1",
+    "username": "Jeremy",
+    "name": "Jeremy Smith",
+    "image": "/assets/images/profile.png",
+    "email": "jerm@smith@gmail.com",
+    "role": "Backend Developer",
+    "about": "Just Jeremy here, let's make some stuff together.",
+    "accountholder": true,
+    "company": "Nerdy Company",
+    "friends": ["u2", "u3", "u4"]
+  },
+  {
+    "id": "u2",
+    "username": "Jimmy",
+    "name": "Jimmy Smith",
+    "image": "/assets/images/profile.png",
+    "email": "jerm@smith@gmail.com",
+    "role": "Backend Developer",
+    "about": "Just Jimmy here, let's make some stuff together.",
+    "accountholder": false,
+    "company": "Nerdy Company",
+    "friends": ["u1", "u3"]
+  },
+  {
+    "id": "u3",
+    "username": "Serious",
+    "name": "Sam Serious",
+    "image": "/assets/images/profile.png",
+    "email": "sam.sir@example.com",
+    "role": "Mobile Developer",
+    "about": "Kotlin enthusiast and fitness fanatic.",
+    "accountholder": false,
+    "company": "HealthTech Inc.",
+    "friends": ["u1", "u2", "u4"]
+  },
+  {
+    "id": "u4",
+    "username": "Tom",
+    "name": "Thomas Meiring",
+    "image": "/assets/images/profile.png",
+    "email": "tomt@example.com",
+    "role": "Backend Developer",
+    "about": "API wizard and database optimizer.",
+    "accountholder": false,
+    "company": "Nerdy Company",
+    "friends": ["u1", "u2", "u3", "u4"]
+  }
+]

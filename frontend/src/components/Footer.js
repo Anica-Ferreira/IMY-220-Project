@@ -3,8 +3,9 @@ import React from "react";
 
 export const Footer = () =>{
     return(
-        <div>
-            <h1>Footer</h1>
-        </div>
-    )
+        <footer>
+            <p>&copy; 2025 Cabinet | 2025 | All rights reserved.</p>
+            <p>LightMode/DarkMode</p>
+        </footer>
+    );
 };

@@ -2,9 +2,12 @@
 	"name": "imy220-2025",
 	"version": "1.0.0",
 	"scripts": {
-		"build": "webpack && babel backend/src/server.js -d dist",
-		"start": "npm run build && node dist/server.js",
-		"watch": "webpack -w"
+		"build": "webpack && babel backend/src -d backend/dist",
+		"start": "npm run build && node backend/dist/server.js",
+		"watch": "webpack -w",
+        "docker:build": "docker build -t cabinet-app .",
+        "docker:run": "docker run --rm -p 3000:3000 cabinet-app",
+        "docker": "npm run docker:build && npm run docker:run"
 	},
 	"dependencies": {
 		"express": "^5.1.0",
