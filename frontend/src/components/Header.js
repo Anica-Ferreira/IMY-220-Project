@@ -7,19 +7,27 @@ export const Header = ({ isAuthenticated }) =>{
         <header>
             {/* Render a different navbar based on whether the user is logged in */}
             {isAuthenticated ? (
-                <nav>
-                    <Link to="/home"><h2>CabiNet</h2></Link>
-                    <Link to="/home">Home</Link>
-                    <Link to="/projects">Projects</Link>
-                    {/* hardcoded for now, needs to go to logged in users profile */}
-                    <Link to="/profile/u1">Profile</Link> 
-                    <Link to="/">Log out</Link>
+                <nav className="navbar">
+                    <div className="logo">
+                        <Link to="/home"><h4 id="logo">CabiNet</h4></Link>
+                    </div>
+                    <div className="nav-links">
+                        <Link to="/home">Home</Link>
+                        <Link to="/projects">Projects</Link>
+                        {/* hardcoded for now, needs to go to logged in users profile */}
+                        <Link to="/profile/u1">Profile</Link>
+                        <Link to="/">Log out</Link>
+                    </div>
                 </nav>
             ) : (
-                <nav>
-                    <Link to="/"><h2>CabiNet</h2></Link>
-                    <Link to="/signup"><button>Sign Up</button></Link>
-                    <Link to="/login"><button>Log In</button></Link>
+                <nav className="navbar">
+                    <div className="logo">
+                        <Link to="/"><h4 id="logo">CabiNet</h4></Link>
+                    </div>
+                    <div className="nav-links">
+                        <Link to="/signup"><button>Sign Up</button></Link>
+                        <Link to="/login"><button>Log In</button></Link>
+                    </div>
                 </nav>
             )}
             

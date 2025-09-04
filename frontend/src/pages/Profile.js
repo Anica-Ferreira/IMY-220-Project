@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { ProfileTabs } from "../components/ProfileTabs";
 import { ProfileInfo } from "../components/ProfileInfo";
-import { TagCloud } from "../components/tagcloud";
+import {TagCloud } from "../components/TagCloud";
 
 //dummy data
 import  userData  from "../data/users.json";
@@ -31,16 +31,14 @@ export const Profile = () =>{
     return(
         <div>
             <Header isAuthenticated={true}/>
-            <main>
-                <h1>Profile</h1>
-                <div>
-                    <ProfileInfo user={currentProfile} onSave={handleSave} />
-                    <TagCloud />
-                </div>
-                <div>
-                    <ProfileTabs user={currentProfile}/>
-                </div>
-            </main>
+            <h1>Profile</h1>
+            <div>
+                <ProfileInfo user={currentProfile} onSave={handleSave} />
+                <TagCloud />
+            </div>
+            <div>
+                <ProfileTabs user={currentProfile}/>
+            </div>
         </div>
     );
 };

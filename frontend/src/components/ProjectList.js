@@ -4,10 +4,10 @@ import { ProjectPreview } from "./ProjectPreview";
 
 export const ProjectList = ({ projects }) =>{
     return(
-        <section>
+        <div>
             {projects.map((project) =>(
                 <ProjectPreview key={project.id} project={project} />
             ))}
-        </section>
+        </div>
     );
 };

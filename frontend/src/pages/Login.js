@@ -7,10 +7,8 @@ export const Login = () =>{
     return(
         <div>
             <Header isAuthenticated={false}/>
-            <main>
-                <h1>Log In</h1>
-                <LoginForm />
-            </main>  
+            <h1>Log In</h1>
+            <LoginForm />
         </div>
     )
 };

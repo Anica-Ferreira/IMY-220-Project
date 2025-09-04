@@ -6,16 +6,16 @@ export const CreateProject = () =>{
     return(
         <form>
             <label htmlFor="image">Project Image (max 5MB)</label><br/>
-            <input id="image" name="image" type="file" accept="image/*" /><br/>
+            <input id="image" name="image" type="file" className="form-control" /><br/>
 
             <label htmlFor="name">Project Name</label><br/>
-            <input id="name" name="name" type="text"/><br/>
+            <input id="name" name="name" type="text" className="form-control" /><br/>
 
             <label htmlFor="description">Description</label><br/>
-            <textarea id="description" name="description"/><br/>
+            <textarea id="description" name="description" className="form-control"/><br/>
 
             <label htmlFor="type">Project Type</label><br/>
-            <select id="type" name="type">
+            <select id="type" name="type" className="form-select">
                 <option value="desktop">Desktop Application</option>
                 <option value="web">Web Application</option>
                 <option value="mobile">Mobile Application</option>
@@ -24,13 +24,13 @@ export const CreateProject = () =>{
             </select><br/>
 
             <label htmlFor="hashtags">Programming Languages (hashtags)</label><br/>
-            <input id="hashtags" name="hashtags" type="text" placeholder="#JavaScript #Python" /><br/>
+            <input id="hashtags" name="hashtags" type="text" placeholder="#JavaScript #Python" className="form-control" /><br/>
 
             <label htmlFor="version">Version</label><br/>
-            <input id="version" name="version" type="text" readOnly  defaultValue="1.0.0" /><br/>
+            <input id="version" name="version" type="text" readOnly  defaultValue="1.0.0" className="form-control" /><br/>
 
             <label htmlFor="files">Project Files (first check-in)</label><br/>
-            <input id="files" name="files" type="file" multiple/><br/>
+            <input id="files" name="files" type="file" multiple className="form-control" /><br/>
 
             <button type="submit">Create Project</button>
         </form>

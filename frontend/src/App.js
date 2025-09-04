@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     {path: "/", element: <Splash />},
     {path: "/signup", element: <Signup />},
     {path: "/login", element: <Login />},
-    {path: "/home",element: <Home />},
+    {path: "/home", element: <Home />},
     {path: "/projects", element: <Projects />},
     {path: "/projects/:projectId", element: <Project /> },
     {path: "/profile/:profileId", element: <Profile />}
@@ -23,7 +23,9 @@ const router = createBrowserRouter([
 export const App = () => {
     return(
         <div>
-            <RouterProvider router={router} />
+            <main>
+                <RouterProvider router={router} />
+            </main>
             <Footer/>
         </div>
     );

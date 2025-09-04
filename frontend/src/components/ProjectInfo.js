@@ -21,9 +21,9 @@ export const ProjectInfo = ({project, onSave}) =>{
 
                     <p>{project.description}</p>
 
-                    <h4>Version {project.version}</h4>
-                    <h4>Created on {project.createdAt}</h4>
-                    <h4>Status {project.status} <button>{project.status === "Checked in" ? "Check out" : "Check in"}</button></h4>
+                    <strong>Version {project.version}</strong><br/>
+                    <strong>Created on {project.createdAt}</strong><br/>
+                    <strong>Status {project.status} <button>{project.status === "Checked in" ? "Check out" : "Check in"}</button></strong><br/><br/>
 
                     {/*Add edit and delete button if the user is owner*/}
                     {/*Hardcoded for now so that it checks for u1 to be the ownder*/}
@@ -43,7 +43,7 @@ export const ProjectInfo = ({project, onSave}) =>{
                         {project.hashtags?.map((tag, index) => (
                             <span key={index}>{tag} </span>
                         ))}
-            </div>
+                    </div>
         </article>
     )
 };

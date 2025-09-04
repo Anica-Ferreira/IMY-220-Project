@@ -9,13 +9,11 @@ export const Home = () =>{
     return(
         <div>
             <Header isAuthenticated={true}/>
-            <main>
-                <h1>Home</h1>
-                <Search />
-                <h2>Activity Feed</h2>
-                <Sort />
-                <Feed />
-            </main>
+            <h1>Home</h1>
+            <Search />
+            <h2>Activity Feed</h2>
+            <Sort />
+            <Feed />
         </div>
     )
 };

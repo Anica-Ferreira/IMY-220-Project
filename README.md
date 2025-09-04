@@ -4,10 +4,10 @@ This is a repository for my IMY 220 version control website.
 ## Docker commands
 
 ### Build:
-docker build -t cabinet-app .
+docker build -t app-image .
 
 ### Run:
-docker run --name container -p 3000:8080 cabinet-app
+docker run --name app-container -p 3000:3000 app-image
 
 ## Wireframes
 

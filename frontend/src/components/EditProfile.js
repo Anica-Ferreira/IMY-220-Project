@@ -1,6 +1,5 @@
 /* Anica Ferreira u24581802 */
 import React from "react";
-import { UserProfile } from "./ProfileInfo";
 import { useState } from "react";
 
 export const EditProfile = ({ user, onSave, onCancel }) => {

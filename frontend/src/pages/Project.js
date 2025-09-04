@@ -6,7 +6,6 @@ import { Header } from "../components/Header";
 import { ProjectInfo } from "../components/ProjectInfo";
 import { ProjectTabs } from "../components/ProjectTabs";
 
-
 import projectData from "../data/projects.json";
 import userData from "../data/users.json";
 
@@ -27,10 +26,8 @@ export const Project = () =>{
     return (
         <div>
             <Header isAuthenticated={true}/>
-            <main>         
-                <ProjectInfo project={currentProject} user={userData} onSave={handleSave} />
-                <ProjectTabs project={currentProject}/>
-            </main>
+            <ProjectInfo project={currentProject} user={userData} onSave={handleSave} />
+            <ProjectTabs project={currentProject}/>
         </div>
     );
 };

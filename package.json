@@ -4,10 +4,7 @@
 	"scripts": {
 		"build": "webpack && babel backend/src -d backend/dist",
 		"start": "npm run build && node backend/dist/server.js",
-		"watch": "webpack -w",
-        "docker:build": "docker build -t cabinet-app .",
-        "docker:run": "docker run --rm -p 3000:3000 cabinet-app",
-        "docker": "npm run docker:build && npm run docker:run"
+		"watch": "webpack -w"
 	},
 	"dependencies": {
 		"express": "^5.1.0",

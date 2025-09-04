@@ -12,7 +12,7 @@ export const ProfileInfo = ({user, onSave}) =>{
     }
 
     return(
-        <article>
+        <article >
             {!isEditing ? (
                 <>
                     <img src={user.image} alt={`${user.username}'s profile picture.`} width={120}/>
@@ -20,9 +20,9 @@ export const ProfileInfo = ({user, onSave}) =>{
                     <h3>@{user.username}</h3>
 
                     <p>{user.about}</p>
-                    <h3>{user.role}</h3>
-                    <h3>{user.email}</h3>
-                    <h3>{user.company}</h3>
+                    <strong>{user.role}</strong><br/>
+                    <strong>{user.email}</strong><br/>
+                    <strong>{user.company}</strong><br/><br/>
 
                     {/* Harcoded for now since u1 us the logged in user */}
                     {user.id == "u1" ? (

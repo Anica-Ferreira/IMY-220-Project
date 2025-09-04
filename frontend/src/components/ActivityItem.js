@@ -6,11 +6,10 @@ import userData from "../data/users.json"
 
 export const ActivityItem = ({ activity, showAll = true }) =>{
 
-    const user = userData.find((u) => u.id === activity.userId);
-    console.log(user);
+    const user = userData.find((u) => u.id === activity.userId); 
 
     return(  
-        <div className="activity-item">
+        <div className="card mb-3">
             {showAll ? (
                 <div>
                     <span><strong>{activity.username}</strong> {activity.action} a project: {activity.date}</span>
