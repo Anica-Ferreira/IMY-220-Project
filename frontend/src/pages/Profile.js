@@ -1,9 +1,7 @@
-/* Anica Ferreira u24581802 */
+/* Anica Ferreira 40_u24581802 */
 import React from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Header } from "../components/Header";
 import { ProfileTabs } from "../components/ProfileTabs";
 import { ProfileInfo } from "../components/ProfileInfo";
 import {TagCloud } from "../components/TagCloud";
@@ -30,7 +28,6 @@ export const Profile = () =>{
 
     return(
         <div>
-            <Header isAuthenticated={true}/>
             <h1>Profile</h1>
             <div>
                 <ProfileInfo user={currentProfile} onSave={handleSave} />

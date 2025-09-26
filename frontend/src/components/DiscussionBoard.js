@@ -1,4 +1,4 @@
-/* Anica Ferreira u24581802 */
+/* Anica Ferreira 40_u24581802 */
 import React, { useState } from "react";
 
 //dummy data, find user based on id in discussion

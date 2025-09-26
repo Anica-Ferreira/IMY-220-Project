@@ -1,8 +1,7 @@
-/* Anica Ferreira u24581802 */
+/* Anica Ferreira 40_u24581802 */
 import React from "react";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { Header } from "../components/Header";
 import { ProjectInfo } from "../components/ProjectInfo";
 import { ProjectTabs } from "../components/ProjectTabs";
 
@@ -25,7 +24,6 @@ export const Project = () =>{
 
     return (
         <div>
-            <Header isAuthenticated={true}/>
             <ProjectInfo project={currentProject} user={userData} onSave={handleSave} />
             <ProjectTabs project={currentProject}/>
         </div>

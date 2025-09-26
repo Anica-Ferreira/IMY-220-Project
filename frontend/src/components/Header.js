@@ -1,36 +1,59 @@
-/* Anica Ferreira u24581802 */
+/* Anica Ferreira 40_u24581802 */
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-export const Header = ({ isAuthenticated }) =>{
+export const Header = ({ isAuthenticated, setIsAuthenticated }) =>{
+    const navigate = useNavigate();
+
+    const logout = () =>{
+        sessionStorage.removeItem("userId");
+        setIsAuthenticated(false);
+        navigate("/");
+    }
+
     return(
-        <header>
+        <header className="p-2 w-100vw bg-dark">
             {/* Render a different navbar based on whether the user is logged in */}
             {isAuthenticated ? (
                 <nav className="navbar">
-                    <div className="logo">
-                        <Link to="/home"><h4 id="logo">CabiNet</h4></Link>
-                    </div>
-                    <div className="nav-links">
-                        <Link to="/home">Home</Link>
-                        <Link to="/projects">Projects</Link>
-                        {/* hardcoded for now, needs to go to logged in users profile */}
-                        <Link to="/profile/u1">Profile</Link>
-                        <Link to="/">Log out</Link>
-                    </div>
+                    <NavLink to="/home" className="navbar-brand mx-2"><img src="/assets/images/logo.png" className="logo" alt="CabiNet logo"/></NavLink>
+                    <ul className="nav-links d-flex align-items-center list-unstyled mb-0">
+                        <li className="btn-white mx-2 mt-2 btn-md">
+                            <NavLink to="/home" className={({ isActive }) => isActive ? "active-link" : "" }>
+                                Home
+                            </NavLink></li>
+                        <li className="btn-white mx-2 mt-2 btn-md">
+                            <NavLink to="/projects" className={({ isActive }) => isActive ? "active-link" : "" }>
+                                Projects
+                            </NavLink></li>
+                        <li className="btn-white mx-2 mt-2 btn-md">
+                            <NavLink to="/profile/u1" className={({ isActive }) => isActive ? "active-link" : "" }>
+                                Profile
+                            </NavLink></li>
+                        <li>
+                            <button className="btn-red mx-3 mt-2 btn-md" onClick={logout}>
+                                Log out
+                            </button>
+                        </li>
+                    </ul>
                 </nav>
             ) : (
                 <nav className="navbar">
-                    <div className="logo">
-                        <Link to="/"><h4 id="logo">CabiNet</h4></Link>
-                    </div>
-                    <div className="nav-links">
-                        <Link to="/signup"><button>Sign Up</button></Link>
-                        <Link to="/login"><button>Log In</button></Link>
-                    </div>
+                    <NavLink to="/" className="navbar-brand mx-2"><img src="/assets/images/logo.png" className="logo" alt="CabiNet logo"/></NavLink>
+                    <div className="ms-auto">
+                        <NavLink to="/signup">
+                            <button className="btn-white mx-3 mt-2 btn-md">
+                                Sign Up
+                            </button>
+                        </NavLink>
+                        <NavLink to="/login">
+                            <button className="btn-red mx-3 mt-2 btn-md">
+                                Log In
+                            </button>
+                        </NavLink>
+                    </div>             
                 </nav>
             )}
-            
         </header>
     );
 };

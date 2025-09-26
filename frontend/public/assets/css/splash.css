@@ -1,0 +1,32 @@
+/* Anica Ferreira 40_u24581802 */
+
+/* SPLASH SCREEN */
+.splash {
+    background-image: url("/assets/images/background.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.splashImg{
+    max-width: 20em;
+}
+
+.splash h2{
+    letter-spacing: 0.3em;
+}
+
+.splash-content{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    gap: 3em;
+    height: 60vh;
+}
+
+.logo{
+    width: 6em;
+}

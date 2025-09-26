@@ -1,12 +1,12 @@
-/* Anica Ferreira u24581802 */
+/* Anica Ferreira 40_u24581802 */
 import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export const LoginForm = () =>{
+export const LoginForm = ({ setIsAuthenticated }) =>{
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("test@test.com");
+    const [password, setPassword] = useState("test1234");
     const [errors, setErrors] = useState({});
     
     const validateEmail = (email) =>{
@@ -22,61 +22,67 @@ export const LoginForm = () =>{
     const submit = async (event) =>{
         event.preventDefault();
         
-        //get input errors
+        //validate input
         const emailError = validateEmail(email);
         const passwordError = validatePassword(password);
-        let loginErorr = "";
-        if(email != "test@test.com" || password != "test1234"){
-            loginErorr = "Invalid email or password. Please try again.";
-        }
-        
-        //object to store all input errors
-        const newErrors = {
-            "email" : emailError,
-            "password" : passwordError,
-            "login" : loginErorr
-        };
-        setErrors(newErrors);
 
-        //successful login - redirect to home
-        if(loginErorr == "" && emailError == "" && passwordError == ""){
-            try{
-                const res = await fetch('/auth/login', {
-                    method: "POST",
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({email, password})
-                });
-                const data = await res.json();
-                console.log(data);
+        if (emailError || passwordError) {
+            setErrors({ email: emailError, password: passwordError, login: "" });
+            return;
+        }
+
+        try{
+            const res = await fetch('/auth/login', {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({email, password})
+            });
+
+            const data = await res.json();
+            
+            //If password is incorrect, or user does not exist
+            if(!res.ok){
+                setErrors({ email: "", password: "", login: data.error_message});
+            }else{
+                //store ID
+                sessionStorage.setItem("userId", data._id);
+                sessionStorage.setItem("isAuthenticated", "true");
+                setIsAuthenticated(true);
                 //successful login - redirect to home
                 navigate("/home");
-            }catch (err){
-                console.log("Error logging in: ", err);
             }
+
+        }catch (err){
+            console.log("Error logging in: ", err);
         }
     }
 
     return(
-        <form onSubmit={submit} noValidate>
-            <div>
-                <label htmlFor="emailInput">Email</label><br/>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="emailInput"/>
-                {errors.email && <small style={{ color: "red" }}>{errors.email}</small>}
-            </div>
+        <div className="form-box shadow-sm rounded bg-dark">
+            <form onSubmit={submit} noValidate autoComplete="off">
+                <h2>Log In</h2>
+                <div className="form-input">
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="emailInput" placeholder=""/>
+                    <label htmlFor="emailInput">Email</label>
+                </div>
+                {errors.email && <small className="text-danger">{errors.email}</small>}
 
-            <div>
-                <label htmlFor="passwordInput">Password</label><br/>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="passwordInput"/>
-                {errors.password && <small style={{ color: "red" }}>{errors.password}</small>}
-            </div>
+                <div className="form-input">
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="passwordInput" placeholder=""/>
+                    <label htmlFor="passwordInput">Password</label>
+                </div>
+                {errors.password && <small className="text-danger">{errors.password}</small>}
 
-            {errors.login && <small style={{ color: "red" }}>{errors.login}</small>}<br/>
+                {errors.login && <small className="text-danger">{errors.login}</small>}
 
-            <small>Not registered? <Link to="/signup">Sign up</Link></small>
-
-            <div>
-                <input type="submit" name="submit" value="Log In"/>
-            </div>
-        </form>
+                <div className="mt-1 form-info">
+                    <small>Not registered? <Link to="/signup" className="red-link">Sign up</Link></small>
+                </div>
+              
+                <div>
+                    <input type="submit" name="submit" value="Log In" className="mt-4"/>
+                </div>
+            </form>
+        </div>
     )
 }

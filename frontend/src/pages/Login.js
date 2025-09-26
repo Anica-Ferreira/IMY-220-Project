@@ -1,14 +1,9 @@
-/* Anica Ferreira u24581802 */
+/* Anica Ferreira 40_u24581802 */
 import React from "react"; 
-import { Header } from "../components/Header";
 import { LoginForm } from "../components/LoginForm";
 
-export const Login = () =>{
+export const Login = ({ setIsAuthenticated }) =>{
     return(
-        <div>
-            <Header isAuthenticated={false}/>
-            <h1>Log In</h1>
-            <LoginForm />
-        </div>
+        <LoginForm setIsAuthenticated={setIsAuthenticated}/>
     )
 };

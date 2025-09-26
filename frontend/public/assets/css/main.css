@@ -1,0 +1,86 @@
+/* Anica Ferreira 40_u24581802 */
+
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
+
+@import url(splash.css);
+@import url(buttons.css);
+@import url(forms.css);
+
+/* VARIABLES */
+:root {
+    --blue : #232539;
+    --darkBlue : #151624;
+    --lightBlue : #2c2e48;
+    --white : #EAEAEA;
+    --red : #ff3c49;
+    --main-font : 'Montserrat';
+}
+
+/* LIGHT THEME */
+
+/* DARK THEME */
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--main-font);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    line-height: 1.5;
+}
+
+html{
+    overflow-x: hidden;
+}
+
+main{
+    min-height: 100vh;
+    background-color: var(--blue);
+}
+
+/* BACKGROUND COLOURS */
+
+/*BG-DARK*/
+*[class*="bg-dark"] {
+    background-color: var(--darkBlue) !important;
+    color: var(--white);
+}
+
+*[class*="bg-dark"] p,
+*[class*="bg-dark"] a {
+    color: var(--white) !important;
+    color: var(--white);
+}
+
+/*BG-Light*/
+*[class*="bg-light"] {
+    background-color: var(--lightBlue) !important;
+    color: var(--white);
+}
+
+/* FOOTER LOGOS */
+*[class*="fa-brands"]{
+    transition: all 0.1s ease-in-out;
+}
+
+*[class*="fa-brands"]:hover{
+    color: var(--red); 
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--darkBlue);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff4b576d;
+    border-radius: 5px;
+}

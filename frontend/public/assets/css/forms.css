@@ -1,0 +1,92 @@
+/* Anica Ferreira 40_u24581802 */
+
+/* LOGIN & SIGNUP FORM */
+
+.form-box{
+    position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	width: 450px;
+    padding: 40px;
+	box-sizing: border-box;
+}
+
+.form-box h2{
+    text-transform: uppercase;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.form-input{
+    position: relative;
+    margin-top: 2em;
+}
+
+.form-input input{
+    width: 100%;
+    padding: 0.6em 0;
+    color: var(--white);
+    border: none;
+    border-bottom: 1px solid #eaeaeaa9;;
+    outline: none;
+    background: transparent;
+}
+
+.form-input label{
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0.6em 0;
+    color: var(--white);
+    transition: 0.2s ease all;
+    pointer-events: none;
+}
+
+.form-input:focus-within label,
+.form-input input:not(:placeholder-shown) + label {
+    top: -1.5em;
+    font-size: 0.85em;
+    color: var(--red);
+    font-weight: 500;
+}
+
+.form-input::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    height: 1.5px;
+    width: 100%;
+    background-color: var(--white);
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease-out, background-color 0.3s ease-out;
+}
+
+.form-input:focus-within::after,
+.form-input input:not(:placeholder-shown) ~ label ~ ::after {
+    transform: translateX(-50%) scaleX(1);
+    background-color: var(--white);
+}
+
+.red-link{
+    text-decoration: none;
+    transition: all 0.2s ease-out;
+    font-weight: 600;
+}
+
+.red-link:hover{
+    color: #ff7d84;
+}
+
+*[class*="text-danger"] {
+    color: #ff3a44 !important;
+}
+
+.form-info {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 0.5em;
+}

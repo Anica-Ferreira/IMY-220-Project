@@ -1,9 +1,9 @@
-/* Anica Ferreira u24581802 */
+/* Anica Ferreira 40_u24581802 */
 import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export const SignupForm = () =>{
+export const SignupForm = ({ setIsAuthenticated }) =>{
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -44,22 +44,33 @@ export const SignupForm = () =>{
         const newErrors = {
             "username" : usernameError,
             "email" : emailError,
-            "password" : passwordError
+            "password" : passwordError,
+            "signup" : ""
         };
-
         setErrors(newErrors);
 
-        if(usernameError == "" && emailError == "" && passwordError == ""){
+        if(!usernameError && !emailError && !passwordError){
             try{
                 const res = await fetch('/auth/signup', {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, email, password })
                 });
+
                 const data = await res.json();
-                console.log(data);
-                //successful sign up - redirect to home
-                navigate("/home");
+                
+                //If user already exists
+                if(!res.ok){
+                    setErrors({ username: "", email: "", password: "", signup: data.error_message});
+                }else{
+                    console.log(data);
+                    //store ID
+                    sessionStorage.setItem("userId", data._id);
+                    sessionStorage.setItem("isAuthenticated", "true");
+                    setIsAuthenticated(true);
+                    //successful sign up - redirect to home
+                    navigate("/home");
+                }
             }catch (err){
                 console.log("Error signing up:", err);
             }   
@@ -67,30 +78,37 @@ export const SignupForm = () =>{
     };
 
     return(
-        <form onSubmit={submit} noValidate>
-            <div>
-                <label htmlFor="usernameInput">Username</label><br/>
-                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} id="usernameInput"/>
-                {errors.username && <small style={{ color: "red" }}>{errors.username}</small>}
-            </div>
+        <div className="form-box shadow-sm rounded bg-dark">
+            <form onSubmit={submit} noValidate autoComplete="off">
+                <h2>Sign Up</h2>
+                <div className="form-input">
+                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} id="usernameInput" placeholder=""/>
+                    <label htmlFor="usernameInput">Username</label>
+                </div>
+                {errors.username && <small className="text-danger">{errors.username}</small>}
 
-            <div>
-                <label htmlFor="emailInput">Email</label><br/>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="emailInput"/>
-                {errors.email && <small style={{ color: "red" }}>{errors.email}</small>}
-            </div>
-            
-            <div>
-                <label htmlFor="passwordInput">Password</label><br/>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="passwordInput"/>
-                {errors.password && <small style={{ color: "red" }}>{errors.password}</small>}
-            </div>
+                <div className="form-input">
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="emailInput"  placeholder=""/>
+                    <label htmlFor="emailInput">Email</label>
+                </div>
+                {errors.email && <small className="text-danger">{errors.email}</small>}
+                
+                <div className="form-input">
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="passwordInput"  placeholder="" />
+                    <label htmlFor="passwordInput">Password</label>
+                </div>
+                {errors.password && <small className="text-danger">{errors.password}</small>}
 
-            <small>Already a member? <Link to="/login">Login</Link></small>
+                {errors.signup && <small className="text-danger">{errors.signup}</small>}
 
-            <div>
-                <input type="submit" name="submit" value="Sign Up"/>
-            </div>
-        </form>
+                <div className="mt-1 form-info">
+                    <small>Already a member? <Link to="/login" className="red-link">Login</Link></small>
+                </div>
+                
+                <div>
+                    <input type="submit" name="submit" value="Sign Up" className="mt-4"/>
+                </div>
+            </form>
+        </div>
     )
 }
