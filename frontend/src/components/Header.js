@@ -7,6 +7,7 @@ export const Header = ({ isAuthenticated, setIsAuthenticated }) =>{
 
     const logout = () =>{
         sessionStorage.removeItem("userId");
+        sessionStorage.setItem("isAuthenticated", false);
         setIsAuthenticated(false);
         navigate("/");
     }
@@ -27,7 +28,7 @@ export const Header = ({ isAuthenticated, setIsAuthenticated }) =>{
                                 Projects
                             </NavLink></li>
                         <li className="btn-white mx-2 mt-2 btn-md">
-                            <NavLink to="/profile/u1" className={({ isActive }) => isActive ? "active-link" : "" }>
+                            <NavLink to={`/profile/${sessionStorage.getItem("userId")}`} className={({ isActive }) => isActive ? "active-link" : "" }>
                                 Profile
                             </NavLink></li>
                         <li>

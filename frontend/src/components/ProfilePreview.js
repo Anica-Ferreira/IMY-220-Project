@@ -3,10 +3,16 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export const ProfilePreview = ({ profile }) =>{
+    const currentUserId = sessionStorage.getItem("userId");
+
     return(
         <>
-            <img src={profile.image} alt={`${profile.name} thumbnail image.`} width={40}/>
-            <strong> <Link to={`/profile/${profile.id}`}>{profile.name} </Link></strong>
+            <img src={profile.image} alt={`${profile.username} thumbnail image.`} width={40}/>
+            <strong>
+                <Link to={`/profile/${profile._id}`}>
+                    {profile.username} {currentUserId === profile._id && "(you)"}
+                </Link>
+            </strong>
         </>
     );
 };

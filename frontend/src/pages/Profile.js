@@ -6,35 +6,67 @@ import { ProfileTabs } from "../components/ProfileTabs";
 import { ProfileInfo } from "../components/ProfileInfo";
 import {TagCloud } from "../components/TagCloud";
 
-//dummy data
-import  userData  from "../data/users.json";
-
 export const Profile = () =>{
-    //get profiletId
     const { profileId } = useParams();
-    const profile = userData.find(p => p.id === profileId);
-    
-    const [currentProfile, setCurrentProfile] = useState(profile);
+    const [currentProfile, setCurrentProfile] = useState(null);
+    const [currentUser, setCurrentUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
+    const sessionUserId = sessionStorage.getItem("userId");
+    
     //update profile when url changes
     useEffect(() => {
-        const profile = userData.find(p => p.id === profileId);
-        setCurrentProfile(profile);
+        const fetchUser = async () =>{
+            setLoading(true);
+            setError("");
+            try{
+                //fetch user by id
+                const res = await fetch(`/users/${profileId}`);
+                const data = await res.json();
+                if (!res.ok) {
+                    setError(data.error_message);
+                }
+                setCurrentProfile(data);
+
+                //fetch current logged-in user
+                if (sessionUserId) {
+                    const userRes = await fetch(`/users/${sessionUserId}`);
+                    const userData = await userRes.json();
+                    if (!userRes.ok) throw new Error(userData.error_message);
+                    setCurrentUser(userData);
+                }
+            }catch (err){
+                console.error(err);
+            }finally{
+                setLoading(false);
+            }
+        };
+        //on page reload fetch new user
+        fetchUser();
     }, [profileId]);
 
     const handleSave = (updatedUser) => {
         setCurrentProfile(updatedUser);
     };
 
+    //If user not found yet, display loading
+    if (loading) return <p>Loading profile...</p>;
+    if (error) return <p className="text-danger">{error}</p>;
+
+    //check if you are viewing your own or another profile
+    const isOwnProfile = sessionUserId === profileId;
+    const headerText = isOwnProfile ? "Your Profile" : "View Profile";
+
     return(
         <div>
-            <h1>Profile</h1>
+            <h1>{headerText}</h1>
             <div>
-                <ProfileInfo user={currentProfile} onSave={handleSave} />
+                <ProfileInfo user={currentProfile} onSave={handleSave} viewOnly={isOwnProfile} currentUser={currentUser}/>
                 <TagCloud />
             </div>
             <div>
-                <ProfileTabs user={currentProfile}/>
+                <ProfileTabs user={currentProfile} viewOnly={isOwnProfile}/>
             </div>
         </div>
     );

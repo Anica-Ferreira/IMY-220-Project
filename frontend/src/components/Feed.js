@@ -1,16 +1,11 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
+
 import { useState } from "react";
 import { ActivityList } from "./ActivityList";
 
-//dummy data
-import projects from "../data/projects.json"
-
-export const Feed = () => {
+export const Feed = ({ localActivity, globalActivity  }) => {
     const [activeTab, setActiveTab] = useState('local');
-    
-    //hardcoded for now
-    const currentUser = "u1";
 
     const switchTab = (tab) => setActiveTab(tab);
 
@@ -38,9 +33,9 @@ export const Feed = () => {
             <section className="tab-content">
                 <div className="tab-pane active">
                     {activeTab === "local" ? (
-                        <ActivityList projects={projects} userId={currentUser} />
+                        <ActivityList activities={localActivity}/>
                     ) : (
-                        <ActivityList projects={projects} />
+                        <ActivityList activities={globalActivity} />
                     )}
                 </div>
             </section>

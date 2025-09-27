@@ -1,15 +1,82 @@
 /* Anica Ferreira 40_u24581802 */
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { EditProfile } from "./EditProfile";
 
-export const ProfileInfo = ({user, onSave}) =>{
+export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
     const [isEditing, setIsEditing] = useState(false);
+    const [isFriend, setIsFriend] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [saving, setSaving] = useState(false);
 
-    const handleSave = (updatedUser) => {
-        onSave(updatedUser);
-        setIsEditing(false);
-    }
+    //check if profile user is in current users friends list
+    useEffect(() =>{
+        if (!currentUser || !currentUser.friends || !user) return;
+
+        if(currentUser.friends.some(friendId => friendId === user._id)) {
+            setIsFriend(true);
+        }else {
+            setIsFriend(false);
+        }
+    }, [currentUser, user]);
+
+    //Save new user profile
+    const handleSave = async (updatedUser) => {
+        setSaving(true);
+
+        try{
+            const res = await fetch(`/users/update/${user._id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: updatedUser.name,
+                    image: updatedUser.image,
+                    role: updatedUser.role,
+                    about: updatedUser.about,
+                    company: updatedUser.company,
+                }),
+            });
+
+            if(res.ok){
+                const updatedUser = await res.json();
+                onSave(updatedUser.user);
+                setIsEditing(false);
+            }
+        }catch(err){
+            console.error(err);
+        }finally{
+            setSaving(false);
+        }
+    };
+
+    const handleToggleFollow = async () =>{
+        if(!currentUser) return;
+        setLoading(true);
+
+        try {
+            const endpoint = isFriend ? "/users/removeFriend" : "/users/addFriend";
+            const res = await fetch(endpoint, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id: currentUser._id,
+                    friendId: user._id,
+                }),
+            });
+
+            if (res.ok) {
+                setIsFriend(!isFriend);
+            }else {
+                console.error("Failed to update friends");
+            }
+        }catch (err){
+            console.error(err);
+        }finally {
+            setLoading(false);
+        }
+    };
 
     return(
         <article >
@@ -24,11 +91,12 @@ export const ProfileInfo = ({user, onSave}) =>{
                     <strong>{user.email}</strong><br/>
                     <strong>{user.company}</strong><br/><br/>
 
-                    {/* Harcoded for now since u1 us the logged in user */}
-                    {user.id == "u1" ? (
+                    {viewOnly ? (
                         <button onClick={() => setIsEditing(true)}>Edit Profile</button>
                     ) : (
-                        <button>Follow</button>
+                        <button onClick={handleToggleFollow} disabled={loading}>
+                            {loading ? "..." : isFriend ? "Unfollow" : "Follow"}
+                        </button>
                     )}
                 </>
             ) : (

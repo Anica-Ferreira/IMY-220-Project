@@ -8,7 +8,7 @@
     "hashtags": ["#javascript", "#react", "#api", "#mongodb"],
     "version": "1.2.0",
     "createdAt": "2025-08-25",
-    "ownerId": "u1",
+    "owner": "u1",
     "members": ["u1", "u4", "u7", "u3"],
     "status": "Checked out",
     "files": [
@@ -23,7 +23,7 @@
       { "id": "a3-p1", "userId": "u4", "username": "Tom", "action": "checked in", "message": "Added the home page", "date": "2025-08-28", "version": "1.1.0" },
       { "id": "a4-p1", "userId": "u3", "username": "Serious", "action": "checked out", "message": "Checking home page code", "date": "2025-09-02", "version": "1.2.0" },
       { "id": "a5-p1", "userId": "u3", "username": "Serious", "action": "checked in", "message": "Fixed messy home page code.", "date": "2025-09-02", "version": "1.2.0" },
-      { "id": "a6-p1", "userId": "u7", "username": "Bob", "action": "checked in", "message": "Implementing databse.", "date": "2025-09-03", "version": "1.2.0" }
+      { "id": "a6-p1", "userId": "u7", "username": "Bob", "action": "checked out", "message": "Implementing databse.", "date": "2025-09-03", "version": "1.2.0" }
     ],
     "discussion": [
       { "id": "d1-p1", "userId": "u4", "message": "Hey Team! I just finished the home page", "date": "2025-08-28" },

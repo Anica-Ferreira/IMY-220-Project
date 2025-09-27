@@ -19,7 +19,7 @@ export const App = () => {
 
     //check session storage on first load
     useEffect(() => {
-        const storedUser = sessionStorage.getItem("user");
+        const storedUser = sessionStorage.getItem("userId");
         if (storedUser) {
             setIsAuthenticated(true);
         }

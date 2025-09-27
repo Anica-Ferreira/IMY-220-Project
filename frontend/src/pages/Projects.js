@@ -1,17 +1,45 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
+import { useState, useEffect } from "react";
 import { ProjectList } from "../components/ProjectList";
 import { Search } from "../components/Search";
 
-//dummy data
-import projectData from "../data/projects.json";
-
 export const Projects = () =>{
-    return(
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+    
+    useEffect(() =>{
+         const fetchProjects = async () => {
+            setLoading(true);
+            setError("");
+            try{
+                const res = await fetch("/projects");
+                if(res.ok) {
+                    const data = await res.json();
+                    setProjects(data);
+                }
+
+            }catch (err) {
+                console.error(err);
+                setError(err.message);
+            }finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProjects();
+    }, [])
+
+    return( 
         <div>
             <h1>Projects</h1>
             <Search />
-            <ProjectList projects={projectData} />
+
+            {loading && <p>Loading projects...</p>}
+            {error && <p className="text-danger">{error}</p>}
+
+            {!loading && !error && <ProjectList projects={projects} />}
         </div>
     )
 };

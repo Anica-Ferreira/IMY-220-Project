@@ -1,24 +1,54 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
+import { useState, useEffect } from "react";
 import { ProfilePreview } from "./ProfilePreview";
 
-//dummy data
-import users from "../data/users.json";
+export const Friends = ({ friends: initialFriends, currentUser, viewOnly }) =>{
+    const [friends, setFriends] = useState(initialFriends);
+    const [loading, setLoading] = useState(false)
 
-export const Friends = ({ user, onRemoveFriend }) =>{
-    //find friends from user id
-    const friendsList = user.friends
-        .map(friendId => users.find(u => u.id === friendId))
+    useEffect(() => {
+        setFriends(initialFriends);
+    }, [initialFriends]);
+
+    const handleRemove = async (friendId) =>{
+        if(!currentUser) return;
+        setLoading(true);
+
+        try {
+            const res = await fetch("/users/removeFriend", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    id: currentUser._id,
+                    friendId: friendId,
+                }),
+            });
+
+            if(res.ok) {
+                setFriends((prevFriends) => prevFriends.filter(f => f._id !== friendId));
+            }
+
+        }catch (err){
+            console.error(err);
+        }finally {
+            setLoading(false);
+        }
+    };
 
     return(
         <div>
-            {friendsList.length === 0 && <p>No friends yet.</p>}
-            {friendsList.map((friend) => (
-                <div key={friend.id}>
-                    <ProfilePreview profile={friend} />
-                    <button onClick={() => onRemoveFriend(friend.id)}>
-                        Remove Friend
-                    </button>
+            {friends.length === 0 && <p>No friends yet.</p>}
+            {friends.map((friend) => (
+                <div key={friend._id}>
+                    <ProfilePreview profile={friend}/>
+                    {viewOnly && (
+                        <button onClick={() => handleRemove(friend._id)} disabled={loading}>
+                            {loading ? "..." : "Remove"}
+                        </button>
+                    )}
                 </div>
             ))}
         </div>

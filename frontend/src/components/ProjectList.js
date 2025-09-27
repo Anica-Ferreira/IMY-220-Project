@@ -5,8 +5,8 @@ import { ProjectPreview } from "./ProjectPreview";
 export const ProjectList = ({ projects }) =>{
     return(
         <div>
-            {projects.map((project) =>(
-                <ProjectPreview key={project.id} project={project} />
+            {projects.map((project, index) =>(
+                <ProjectPreview key={index} project={project} />
             ))}
         </div>
     );

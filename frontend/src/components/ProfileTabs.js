@@ -1,5 +1,5 @@
 /* Anica Ferreira 40_u24581802 */
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 
 import { CreateProject } from "./CreateProject";
@@ -7,15 +7,54 @@ import { Friends } from "./Friends";
 import { ProjectList } from "./ProjectList";
 import { ActivityList } from "./ActivityList";
 
-//dummy data
-import userData  from "../data/users.json";
-import projectData from "../data/projects.json";
-
-export const ProfileTabs = ({user}) =>{
+export const ProfileTabs = ({user, viewOnly}) =>{
     const [activeTab, setActiveTab] = useState('activity');
+    const [activity, setActivity] = useState([]);
+    const [projects, setProjects] = useState([]);
+    const [friends, setFriends] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
     const switchTab = (tab) => setActiveTab(tab);
 
-    const handleRemoveFriend = () =>{}
+    //fetch activity for current user
+    useEffect(() =>{
+        const fetchAllData = async () => {
+            if (!user._id) return;
+            setLoading("true");
+            setError("");
+
+            try{
+                //fetch in parallel
+                const [activityRes, projectsRes, friendsRes] = await Promise.all([
+                    fetch(`/activities/user/${user._id}`),
+                    fetch(`/projects/user/${user._id}`),
+                    fetch(`/users/friends/${user._id}`)
+                ]);
+
+                const activityData = await activityRes.json();
+                const projectsData = await projectsRes.json();
+                const friendsData = await friendsRes.json();
+
+                //check for errors
+                if (!activityRes.ok) throw new Error(activityData.error_message);
+                if (!projectsRes.ok) throw new Error(projectsData.error_message);
+                if (!friendsRes.ok) throw new Error(friendsData.error_message );
+
+                setActivity(activityData);
+                setProjects(projectsData);
+                setFriends(friendsData);
+            }catch(err){
+                console.error(err);
+            }finally{
+                setLoading(false);
+            }
+        }
+        fetchAllData();
+    }, [user])
+
+    if (loading) return <p>Loading profile data...</p>;
+    if (error) return <p className="text-danger">{error}</p>;
 
     return(
         <div>
@@ -53,16 +92,16 @@ export const ProfileTabs = ({user}) =>{
             {/* Tab Content */}
             <section className="tab-content">
                 {activeTab === "activity" && (
-                    <ActivityList projects={projectData} userId={user.id} onlyUserActivity={true} />
+                    <ActivityList activities={activity}/>
                 )}
 
                 {activeTab === "friends" && (
-                    <Friends user={user} onRemoveFriend={handleRemoveFriend}/>
+                    <Friends friends={friends} currentUser={user} viewOnly={viewOnly}/>
                 )}
 
                 {activeTab === "projects" && (
                     <div> 
-                        <ProjectList projects={projectData} />
+                        <ProjectList projects={projects} />
                     </div>
                 )}
 

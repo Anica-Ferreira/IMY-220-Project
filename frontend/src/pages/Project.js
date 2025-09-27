@@ -1,30 +1,45 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ProjectInfo } from "../components/ProjectInfo";
 import { ProjectTabs } from "../components/ProjectTabs";
 
-import projectData from "../data/projects.json";
-import userData from "../data/users.json";
-
 export const Project = () =>{
-    //get projectId
     const { projectId } = useParams();
-    const project = projectData.find(p => p.id === projectId);
+    const [currentProject, setCurrentProject] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-    const [currentProject, setCurrentProject] = useState(project);
+    useEffect(() =>{
+        const fetchProject = async () => {
+            setLoading(true);
+            try{
+                const res = await fetch(`/projects/${projectId}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    setCurrentProject(data);;
+                }
+            }catch(err) {
+                console.error(err);
+                setError(err.message);
+            }finally{
+                setLoading(false);
+            }
+        };
+        fetchProject();
+    }, [projectId]);
 
     const handleSave = (updatedProject) => {
         setCurrentProject(updatedProject);
     };
 
-    //harcoded as u1 viewing the projects page for now
-    const user = userData.find(u => u.id === "u1");
+    if (loading) return <p>Loading project...</p>;
+    if (error) return <p className="text-danger">{error}</p>;
 
     return (
         <div>
-            <ProjectInfo project={currentProject} user={userData} onSave={handleSave} />
+            <ProjectInfo project={currentProject} onSave={handleSave} />
             <ProjectTabs project={currentProject}/>
         </div>
     );

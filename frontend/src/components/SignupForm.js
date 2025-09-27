@@ -65,14 +65,14 @@ export const SignupForm = ({ setIsAuthenticated }) =>{
                 }else{
                     console.log(data);
                     //store ID
-                    sessionStorage.setItem("userId", data._id);
-                    sessionStorage.setItem("isAuthenticated", "true");
+                    sessionStorage.setItem("userId", data.userId);
+                    sessionStorage.setItem("isAuthenticated", true);
                     setIsAuthenticated(true);
                     //successful sign up - redirect to home
                     navigate("/home");
                 }
             }catch (err){
-                console.log("Error signing up:", err);
+                console.error(err);
             }   
         }
     };
@@ -101,12 +101,12 @@ export const SignupForm = ({ setIsAuthenticated }) =>{
 
                 {errors.signup && <small className="text-danger">{errors.signup}</small>}
 
-                <div className="mt-1 form-info">
-                    <small>Already a member? <Link to="/login" className="red-link">Login</Link></small>
-                </div>
-                
                 <div>
-                    <input type="submit" name="submit" value="Sign Up" className="mt-4"/>
+                    <input type="submit" name="submit" value="Sign Up" className="mt-5"/>
+                </div>
+
+                <div className="mt-4 form-info">
+                    <small>Already a member? <Link to="/login" className="red-link">Login</Link></small>
                 </div>
             </form>
         </div>

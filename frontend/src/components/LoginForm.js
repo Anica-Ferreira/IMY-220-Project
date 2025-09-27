@@ -5,8 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const LoginForm = ({ setIsAuthenticated }) =>{
     const navigate = useNavigate();
-    const [email, setEmail] = useState("test@test.com");
-    const [password, setPassword] = useState("test1234");
+    const [email, setEmail] = useState("thomas10meiring@gmail.com");
+    const [password, setPassword] = useState("Overwatch0");
     const [errors, setErrors] = useState({});
     
     const validateEmail = (email) =>{
@@ -45,15 +45,15 @@ export const LoginForm = ({ setIsAuthenticated }) =>{
                 setErrors({ email: "", password: "", login: data.error_message});
             }else{
                 //store ID
-                sessionStorage.setItem("userId", data._id);
-                sessionStorage.setItem("isAuthenticated", "true");
+                sessionStorage.setItem("userId", data.userId);
+                sessionStorage.setItem("isAuthenticated", true);
                 setIsAuthenticated(true);
                 //successful login - redirect to home
                 navigate("/home");
             }
 
-        }catch (err){
-            console.log("Error logging in: ", err);
+        }catch(err){
+            console.error(err);
         }
     }
 
@@ -75,12 +75,12 @@ export const LoginForm = ({ setIsAuthenticated }) =>{
 
                 {errors.login && <small className="text-danger">{errors.login}</small>}
 
-                <div className="mt-1 form-info">
-                    <small>Not registered? <Link to="/signup" className="red-link">Sign up</Link></small>
-                </div>
-              
                 <div>
-                    <input type="submit" name="submit" value="Log In" className="mt-4"/>
+                    <input type="submit" name="submit" value="Log In" className="mt-5"/>
+                </div>
+
+                <div className="mt-4 form-info">
+                    <small>Not registered? <Link to="/signup" className="red-link">Sign up</Link></small>
                 </div>
             </form>
         </div>
