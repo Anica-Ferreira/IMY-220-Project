@@ -2,7 +2,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { ProjectList } from "../components/ProjectList";
-import { Search } from "../components/Search";
 
 export const Projects = () =>{
     const [projects, setProjects] = useState([]);
@@ -34,7 +33,6 @@ export const Projects = () =>{
     return( 
         <div>
             <h1>Projects</h1>
-            <Search />
 
             {loading && <p>Loading projects...</p>}
             {error && <p className="text-danger">{error}</p>}

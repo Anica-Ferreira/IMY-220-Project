@@ -92,7 +92,7 @@ export const ProfileTabs = ({user, viewOnly}) =>{
             {/* Tab Content */}
             <section className="tab-content">
                 {activeTab === "activity" && (
-                    <ActivityList activities={activity}/>
+                    <ActivityList activities={activity} showAll={false}/>
                 )}
 
                 {activeTab === "friends" && (

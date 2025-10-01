@@ -10,6 +10,7 @@ import { Home } from "./pages/Home";
 import { Projects } from "./pages/Projects";
 import { Project } from "./pages/Project";
 import { Profile } from "./pages/Profile";
+import { Results } from "./pages/Results";
 
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
@@ -37,6 +38,7 @@ export const App = () => {
                     <Route path="/projects" element={<Projects />} />
                     <Route path="/projects/:projectId" element={<Project />} />
                     <Route path="/profile/:profileId" element={<Profile />} />
+                    <Route path="/results" element={<Results />} />
                 </Routes>
             </main>
             <Footer />

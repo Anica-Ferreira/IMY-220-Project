@@ -2,7 +2,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-import { Search } from "../components/Search";
 import { Feed }  from "../components/Feed";
 import { Sort } from "../components/Sort";
 
@@ -12,6 +11,7 @@ export const Home = () =>{
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [sortOption, setSortOption] = useState("date");
 
     const currentUserID = sessionStorage.getItem("userId");
 
@@ -47,6 +47,32 @@ export const Home = () =>{
         fetchActivity();
     }, [currentUserID]);
 
+    //sort if sortOption changess
+    useEffect(() => {
+        if (!activity) return;
+
+        const sorted = [...activity]; //deep copy
+
+        switch (sortOption) {
+            case "popularity":
+                sorted.sort((a, b) => b.downloads - a.downloads);
+                break;
+            case "name":
+                sorted.sort((a, b) =>
+                    a.projectName.toLowerCase().localeCompare(b.projectName.toLowerCase())
+                );
+                break;
+            case "date":
+            default:
+                sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
+                break;
+        }
+
+        setFilteredActivity(sorted);
+
+    }, [sortOption, activity]);
+
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p className="text-danger">{error}</p>;
     if (!user) return null;
@@ -57,15 +83,15 @@ export const Home = () =>{
     const local = filteredActivity.filter(act =>
         Array.isArray(user.friends) && act.userId &&  
         (act.userId.toString() === user._id.toString() || user.friends.map(f => f.toString()).includes(act.userId.toString()))
-    ); 
+    );
+
     const global = filteredActivity;
 
     return(
         <div>
             <h1>Home</h1>
-            <Search/>
             <h2>Activity Feed</h2>
-            <Sort/>
+            <Sort sortOption={sortOption} setSortOption={setSortOption}/>
             <Feed localActivity={local} globalActivity={global}/>
         </div>
     )

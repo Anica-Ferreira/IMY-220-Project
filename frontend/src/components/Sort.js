@@ -2,13 +2,7 @@
 import React from "react";
 import { useState } from "react";
 
-export const Sort = () =>{
-    const [sortOption, setSortOption] = useState("date");
-    
-    const sort = (value) =>{
-        //handle sort
-    }
-
+export const Sort = ({ sortOption, setSortOption }) =>{
     return (
         <div>
             <label htmlFor="sort">Sort by:</label>

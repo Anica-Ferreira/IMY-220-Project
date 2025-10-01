@@ -12,14 +12,18 @@ export const ProjectPreview = ({ project }) =>{
                 {/* Link to dynamic project route */}
                 <Link to={`/projects/${project._id}`}><strong>{project.name}</strong></Link>
                 <div>{project.description}</div>
+                
             </div>
             
             {/* Programming languages */}
             <p>
                 {project.languages && project.languages.map((lang, index) => (
-                    <span key={index}>#{lang.toLowerCase()} </span>
+                    <Link key={index} to={`/results?hashtag=${encodeURIComponent(lang)}`} style={{ marginRight: "5px" }}>
+                        #{lang.toLowerCase()}
+                    </Link>
                 ))}
             </p>
+            <i className="fa-solid fa-download" ></i><span>{project.downloads}</span>
             
         </article>
     );
