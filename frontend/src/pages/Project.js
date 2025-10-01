@@ -15,7 +15,7 @@ export const Project = () =>{
         const fetchProject = async () => {
             setLoading(true);
             try{
-                const res = await fetch(`/projects/${projectId}`);
+                const res = await fetch(`/api/projects/${projectId}`);
                 if (res.ok) {
                     const data = await res.json();
                     setCurrentProject(data);;

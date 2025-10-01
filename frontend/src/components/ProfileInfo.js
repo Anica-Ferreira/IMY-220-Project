@@ -2,12 +2,15 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { EditProfile } from "./EditProfile";
+import { useNavigate } from "react-router-dom";
 
 export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
+    const navigate = useNavigate();
     const [isEditing, setIsEditing] = useState(false);
     const [isFriend, setIsFriend] = useState(false);
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
+    const [deleting, setDeleting] = useState(false);
 
     //check if profile user is in current users friends list
     useEffect(() =>{
@@ -20,12 +23,12 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
         }
     }, [currentUser, user]);
 
-    //Save new user profile
+    //UPDATE PROFILE
     const handleSave = async (updatedUser) => {
         setSaving(true);
 
         try{
-            const res = await fetch(`/users/update/${user._id}`, {
+            const res = await fetch(`/api/users/update/${user._id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -49,12 +52,13 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
         }
     };
 
+    //FRIEND AND UNFRIEND
     const handleToggleFollow = async () =>{
         if(!currentUser) return;
         setLoading(true);
 
         try {
-            const endpoint = isFriend ? "/users/removeFriend" : "/users/addFriend";
+            const endpoint = isFriend ? "/api/users/removeFriend" : "/api/users/addFriend";
             const res = await fetch(endpoint, {
                 method: "POST",
                 headers: {
@@ -78,11 +82,36 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
         }
     };
 
+    //DELETE PROFILE
+    const handleDeleteAccount = async () => {
+        if(!user) return;
+        setDeleting(true);
+
+        try{
+            const res = await fetch(`/api/users/delete/${user._id}`, {
+                method: "DELETE",
+            });
+        
+            if(res.ok){
+                sessionStorage.removeItem("userId");
+                sessionStorage.setItem("isAuthenticated", false);
+                window.dispatchEvent(new Event("authChange")); //set header
+                navigate("/");
+            }
+
+        }catch(err){
+            console.error(err);
+        }finally {
+            setDeleting(false);
+        }
+    };
+
     return(
         <article >
             {!isEditing ? (
                 <>
-                    <img src={user.image} alt={`${user.username}'s profile picture.`} width={120}/>
+                    <img src={user.image} alt={`${user.username}'s profile picture`} width={120}/>
+
                     <h2>{user.name}</h2>
                     <h3>@{user.username}</h3>
 
@@ -92,7 +121,11 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
                     <strong>{user.company}</strong><br/><br/>
 
                     {viewOnly ? (
-                        <button onClick={() => setIsEditing(true)}>Edit Profile</button>
+                        <>
+                            <button onClick={() => setIsEditing(true)}>Edit Profile</button>
+                            <button  onClick={handleDeleteAccount} disabled={deleting}>{deleting ? "Deleting..." : "Delete Account"}</button>
+                        </>
+                        
                     ) : (
                         <button onClick={handleToggleFollow} disabled={loading}>
                             {loading ? "..." : isFriend ? "Unfollow" : "Follow"}

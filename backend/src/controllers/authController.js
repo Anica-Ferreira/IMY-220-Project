@@ -66,9 +66,9 @@ const signup = async (req, res) => {
 
     //Signup succesful
     return res.status(200).json({
-        error : false,
+        error: false,
         message: "Signed in successfully", 
-        userId: result._id 
+        userId: result.insertedId 
     });
 }
 

@@ -22,7 +22,7 @@ export const Profile = () =>{
             setError("");
             try{
                 //fetch user by id
-                const res = await fetch(`/users/${profileId}`);
+                const res = await fetch(`/api/users/${profileId}`);
                 const data = await res.json();
                 if (!res.ok) {
                     setError(data.error_message);
@@ -31,7 +31,7 @@ export const Profile = () =>{
 
                 //fetch current logged-in user
                 if (sessionUserId) {
-                    const userRes = await fetch(`/users/${sessionUserId}`);
+                    const userRes = await fetch(`/api/users/${sessionUserId}`);
                     const userData = await userRes.json();
                     if (!userRes.ok) throw new Error(userData.error_message);
                     setCurrentUser(userData);
@@ -65,9 +65,11 @@ export const Profile = () =>{
                 <ProfileInfo user={currentProfile} onSave={handleSave} viewOnly={isOwnProfile} currentUser={currentUser}/>
                 <TagCloud />
             </div>
-            <div>
-                <ProfileTabs user={currentProfile} viewOnly={isOwnProfile}/>
-            </div>
+            {isOwnProfile && (
+                <div>
+                    <ProfileTabs user={currentProfile} viewOnly={isOwnProfile} />
+                </div>
+            )}
         </div>
     );
 };

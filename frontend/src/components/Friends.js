@@ -16,7 +16,7 @@ export const Friends = ({ friends: initialFriends, currentUser, viewOnly }) =>{
         setLoading(true);
 
         try {
-            const res = await fetch("/users/removeFriend", {
+            const res = await fetch("/api/users/removeFriend", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

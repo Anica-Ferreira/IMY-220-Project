@@ -22,7 +22,7 @@ export const Home = () =>{
             setError("");
             try{
                 //fetch user
-                const userRes = await fetch(`/users/${currentUserID}`);
+                const userRes = await fetch(`/api/users/${currentUserID}`);
                 const userData = await userRes.json();
                 if (!userRes.ok) {
                     setError(userData.error_message);
@@ -30,7 +30,7 @@ export const Home = () =>{
                 setUser(userData);
 
                 //fetch activity
-                const activityRes = await fetch("/activities/formatted");
+                const activityRes = await fetch("/api/activities/formatted");
                 const activityData = await activityRes.json();
                 if (!activityRes.ok) {
                     setError(activityData.error_message);

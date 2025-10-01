@@ -1,14 +1,28 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
+import { useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 export const Header = ({ isAuthenticated, setIsAuthenticated }) =>{
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const handleAuthChange = () => {
+            const storedAuth = sessionStorage.getItem("isAuthenticated") === "true";
+            setIsAuthenticated(storedAuth);
+        };
+
+        window.addEventListener("authChange", handleAuthChange);
+        handleAuthChange();
+
+        return () => window.removeEventListener("authChange", handleAuthChange);
+    }, [setIsAuthenticated]);
+
     const logout = () =>{
         sessionStorage.removeItem("userId");
-        sessionStorage.setItem("isAuthenticated", false);
+        sessionStorage.setItem("isAuthenticated", "false");
         setIsAuthenticated(false);
+        window.dispatchEvent(new Event("authChange"));
         navigate("/");
     }
 

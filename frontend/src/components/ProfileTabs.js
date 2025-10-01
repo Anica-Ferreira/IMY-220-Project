@@ -27,9 +27,9 @@ export const ProfileTabs = ({user, viewOnly}) =>{
             try{
                 //fetch in parallel
                 const [activityRes, projectsRes, friendsRes] = await Promise.all([
-                    fetch(`/activities/user/${user._id}`),
-                    fetch(`/projects/user/${user._id}`),
-                    fetch(`/users/friends/${user._id}`)
+                    fetch(`/api/activities/user/${user._id}`),
+                    fetch(`/api/projects/user/${user._id}`),
+                    fetch(`/api/users/friends/${user._id}`)
                 ]);
 
                 const activityData = await activityRes.json();
