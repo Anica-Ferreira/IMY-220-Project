@@ -1,6 +1,6 @@
 /* Anica Ferreira 40_u24581802 */
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React from "react";
+import { useState, useEffect } from "react";
 import { EditProfile } from "./EditProfile";
 import { useNavigate } from "react-router-dom";
 

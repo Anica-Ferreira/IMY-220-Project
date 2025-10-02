@@ -7,7 +7,7 @@ import { MemberList } from "./MemberList";
 import { ProjectMessages } from "./ProjectMessages";
 import { DiscussionBoard } from "../components/DiscussionBoard";
 
-export const ProjectTabs = ({ project }) =>{
+export const ProjectTabs = ({ project, isOwner, isMember }) =>{
     const [activeTab, setActiveTab] = useState('members');
     const switchTab = (tab) => setActiveTab(tab);
 
@@ -36,12 +36,14 @@ export const ProjectTabs = ({ project }) =>{
                     </button>
                 </li>
                 {/* Discussion board */}
-                <li className="nav-item">
-                    <button 
-                        className={`nav-link ${activeTab === "board" ? "active" : ""}`} 
-                        onClick={() => switchTab("board")}>Discussion board
-                    </button>
-                </li>
+                {isMember && (
+                    <li className="nav-item">
+                        <button 
+                            className={`nav-link ${activeTab === "board" ? "active" : ""}`} 
+                            onClick={() => switchTab("board")}>Discussion board
+                        </button>
+                    </li>
+                )}
                 {/* New Project */}
                 <li className="nav-item">
                     <button 
@@ -55,7 +57,7 @@ export const ProjectTabs = ({ project }) =>{
             <section className="tab-content">
                 {activeTab === "members" && (
                     <div> 
-                        <MemberList project={project}/>
+                        <MemberList project={project} isOwner={isOwner} isMember={isMember}/>
                     </div>
                 )}
 
@@ -67,13 +69,13 @@ export const ProjectTabs = ({ project }) =>{
 
                 {activeTab === "activity" && (
                     <div> 
-                        <ProjectMessages activities={project.activity.map(act => ({ ...act, project }))} />
+                        <ProjectMessages projectId={project._id} />
                     </div>
                 )}
 
-                {activeTab === "board" && (
+                {activeTab === "board" && isMember && (
                     <div> 
-                        <DiscussionBoard discussion={project.discussion}/>
+                        <DiscussionBoard project={project} initialDiscussion={project.discussion}/>
                     </div>
                 )}
 

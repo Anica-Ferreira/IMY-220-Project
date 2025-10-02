@@ -15,6 +15,8 @@ export const ProfileTabs = ({user, viewOnly}) =>{
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
+    const sessionUserId = sessionStorage.getItem("userId");
+
     const switchTab = (tab) => setActiveTab(tab);
 
     //fetch activity for current user

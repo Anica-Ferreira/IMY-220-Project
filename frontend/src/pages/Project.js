@@ -34,13 +34,18 @@ export const Project = () =>{
         setCurrentProject(updatedProject);
     };
 
-    if (loading) return <p>Loading project...</p>;
+    if (loading || !currentProject) return <p>Loading project...</p>;
     if (error) return <p className="text-danger">{error}</p>;
+
+    //determine view type
+    const sessionUserId = sessionStorage.getItem("userId");
+    const isOwner = currentProject?.owner?.toString() === sessionUserId;
+    const isMember = Array.isArray(currentProject?.members) && currentProject.members.some(memberId => memberId.toString() === sessionUserId);
 
     return (
         <div>
-            <ProjectInfo project={currentProject} onSave={handleSave} />
-            <ProjectTabs project={currentProject}/>
+            <ProjectInfo project={currentProject} onSave={handleSave} isMember={isMember} isOwner={isOwner} />
+            <ProjectTabs project={currentProject} isMember={isMember} isOwner={isOwner}/>
         </div>
     );
 };

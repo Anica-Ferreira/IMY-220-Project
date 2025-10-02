@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ProfileTabs } from "../components/ProfileTabs";
 import { ProfileInfo } from "../components/ProfileInfo";
-import {TagCloud } from "../components/TagCloud";
+import { TagCloud } from "../components/TagCloud";
 
 export const Profile = () =>{
     const { profileId } = useParams();

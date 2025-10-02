@@ -21,8 +21,8 @@ export const EditProfile = ({ user, onSave, onCancel }) => {
             setFormData({
                 ...formData,
                 image: URL.createObjectURL(file),
-        });
-    }
+            });
+        }
     }
 
     const handleChange = (e) => {
