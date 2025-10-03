@@ -17,8 +17,12 @@ export const Search = () =>{
 
     return (
         <form onSubmit={search}>
-        <input type="text" id="search" name="search" placeholder="" ref={searchInputRef}/>
-        <input className="button" type="submit" value="search"/>
+            <div className="search-wrapper">
+                <input type="text" id="search" name="search" placeholder="Search CabiNet..." ref={searchInputRef} autoComplete="off"/>
+                <button type="submit" className="search-button">
+                    <i className="fas fa-search"></i>
+                </button>
+            </div>
         </form>
     );
 };

@@ -2,7 +2,8 @@
 import React from "react";
 import { useState } from "react"; 
 import { EditProject } from "./EditProject";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 
 export const ProjectInfo = ({project, onSave, isOwner, isMember}) =>{
     const navigate = useNavigate();
@@ -62,10 +63,10 @@ export const ProjectInfo = ({project, onSave, isOwner, isMember}) =>{
     };
 
     return(
-        <article>
+        <article className="project-info shadow-sm">
             {!isEditing ? (
                 <>
-                    <img src={project.image} alt={`${project.name}'s profile picture.`} width={120} />
+                    <img src={project.image} alt={`${project.name}'s profile picture.`}/>
 
                     <h2>{project.name}</h2>
                     <h3>{project.type}</h3>
@@ -74,10 +75,9 @@ export const ProjectInfo = ({project, onSave, isOwner, isMember}) =>{
 
                     <strong>Version {project.version}</strong><br/>
                     <strong>Created on {new Date(project.createdAt).toLocaleDateString()}</strong><br/>
-                    <strong>Status {project.status} <button>{project.status === "Checked in" ? "Check out" : "Check in"}</button></strong><br/><br/>
+                    <strong>Status {project.status} {/*<button>{project.status === "Checked in" ? "Check out" : "Check in"}</button>*/}</strong><br/><br/>
 
                     {/*Add edit and delete button if the user is owner*/}
-                    {/*Hardcoded for now so that it checks for u1 to be the ownder*/}
                     {isOwner && (
                         <>
                             <button onClick={() => setIsEditing(true)}>Edit Project</button>
@@ -90,9 +90,11 @@ export const ProjectInfo = ({project, onSave, isOwner, isMember}) =>{
             )}
             <hr></hr>
                     <h3>Tags</h3>
-                    <div>
-                        {project.languages.map((tag, index) => (
-                            <span key={index}>#{tag} </span>
+                    <div className="tags">
+                        {(project.languages || []).map((tag, index) => (
+                            <Link key={index} to={`/results?hashtag=${encodeURIComponent(tag)}`} className="mx-1">
+                                #{tag.toLowerCase()}
+                            </Link>
                         ))}
                     </div>
         </article>

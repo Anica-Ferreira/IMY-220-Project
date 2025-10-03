@@ -10,9 +10,9 @@ export const EditProject = ({ project, onSave, onCancel }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
+    
     const fileInputRef = useRef(null);
-
-    const sessionUserId = sessionStorage.getItem("userId");
+    const dropdownRef = useRef(null);
     
     useEffect(() => {
         const fetchUsers = async () => {
@@ -30,6 +30,19 @@ export const EditProject = ({ project, onSave, onCancel }) => {
         };
         fetchUsers();
     }, [project]);
+
+    //event listener to hide dropdown on outside click
+    useEffect(() => {
+        const handleClickOutside = (event) =>{
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownVisible(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () =>{
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
     
     if((project.members || []).length > 0 && members.length === 0){
         return;
@@ -121,7 +134,7 @@ export const EditProject = ({ project, onSave, onCancel }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="edit-project-form" onSubmit={handleSubmit}>
             <img src={formData.image} alt={`${formData.name}'s profile`} width={120} onClick={handleFileClick}/>
 
             <input type="file" ref={fileInputRef} style={{ display: "none" }} accept="image/*" onChange={handleFileChange}/>
@@ -130,12 +143,12 @@ export const EditProject = ({ project, onSave, onCancel }) => {
             <div>
                 <label htmlFor="name">Project Name</label>
                 <input id="name" value={formData.name} onChange={handleChange} />
-            </div>
+            </div><br/>
 
             <div>
                 <label htmlFor="description">Description</label>
                 <textarea id="description" value={formData.description} onChange={handleChange}></textarea>
-            </div>
+            </div><br/>
 
             <label htmlFor="type">Project Type</label>
             <select id="type" name="type" value={formData.type} onChange={handleChange}>
@@ -144,14 +157,15 @@ export const EditProject = ({ project, onSave, onCancel }) => {
                 <option value="Mobile Application">Mobile Application</option>
                 <option value="Framework">Framework</option>
                 <option value="Library">Library</option>
-            </select>
+            </select><br/>
 
             {/* Change Ownership */}
-            <div className="dropdown">
+            <label>Change Ownership</label>
+            <div className="dropdown" ref={dropdownRef}>
                 <input
                     type="text"
                     className="dropdown-toggle"
-                    placeholder="Change OwnerShip"
+                    placeholder="Change Ownership"
                     onClick={() => setDropdownVisible(true)}
                     value={selectedUser ? selectedUser.username : searchTerm}
                     onChange={(e) => {
@@ -169,7 +183,7 @@ export const EditProject = ({ project, onSave, onCancel }) => {
                         </div>
                     ))}
                 </div>
-            </div>
+            </div><br/>
                                         
             <button type="submit" onClick={handleChangeOwner}>Save</button>
             <button type="button" onClick={onCancel}>Cancel</button>

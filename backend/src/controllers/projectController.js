@@ -48,7 +48,7 @@ const getProjectsByUserId = async (req, res) => {
 //UPDATE PROJECT
 const updatedProject = async (req, res) => {
     const { id } = req.params;
-    const { name, image, type, description, owner } = req.body;
+    const { name, image, type, description, owner, files } = req.body;
     const db = await connectDB();
 
     //find project
@@ -69,6 +69,7 @@ const updatedProject = async (req, res) => {
     if(type !== undefined) updateData.type = type;
     if(description !== undefined) updateData.description = description;
     if (owner !== undefined) updateData.owner = new ObjectId(owner);
+    if(files !== undefined) updateData.files = files;
 
     await db.collection("projects").updateOne(
         { _id: new ObjectId(id) },
@@ -233,6 +234,38 @@ const removeProjectMember = async (req, res) => {
     res.status(200).json({ message: "Member removed successfully." });
 }
 
+//CREATE NEW PROJECT
+const createProject = async (req, res) => {
+    const db = await connectDB();
+    const { name, description, type, version, hashtags, files, image, owner } = req.body;
+
+    //peoject object
+    const newProject = {
+        name,
+        description,
+        image: image || "/assets/images/project.png",
+        type,
+        downloads: 0,
+        version: version || "1.0.0",
+        owner: new ObjectId(owner),
+        members: [new ObjectId(owner)],
+        createdAt: new Date(),
+        status: "Checked in",
+        checkedOutBy: null,
+        files: files || [],
+        activity: [],
+        discussion: [],
+        languages: hashtags || []
+    };
+
+    const result = await db.collection("projects").insertOne(newProject);
+
+    res.status(200).json({
+        message: "Project created successfully.",
+        project: { ...newProject, _id: result.insertedId }
+    });
+}
+
 module.exports = {
     getAllProjects,
     getProjectsByID,
@@ -241,5 +274,6 @@ module.exports = {
     deleteProject,
     addDiscussionMessage,
     addProjectMember,
-    removeProjectMember
+    removeProjectMember,
+    createProject
 }

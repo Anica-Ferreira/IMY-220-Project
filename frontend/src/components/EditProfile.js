@@ -62,7 +62,7 @@ export const EditProfile = ({ user, onSave, onCancel }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="edit-project-form" onSubmit={handleSubmit}>
             <img src={formData.image} alt={`${formData.username}'s profile`}  width={120} onClick={handleFileClick}/>
 
             <input type="file" ref={fileInputRef} style={{ display: "none" }} accept="image/*" onChange={handleFileChange}/>
@@ -88,7 +88,7 @@ export const EditProfile = ({ user, onSave, onCancel }) => {
                 <input id="company" value={formData.company} onChange={handleChange} />
             </div>
 
-            <button type="submit">Save</button>
+            <button type="submit" className="mt-3">Save</button>
             <button type="button" onClick={onCancel}>Cancel</button>
         </form>
     );

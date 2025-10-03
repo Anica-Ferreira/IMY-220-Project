@@ -60,7 +60,9 @@ export const Results = () =>{
                 <section>
                 <h2>Users</h2>
                 {users.map((user) => (
-                    <ProfilePreview key={user._id} profile={user} />
+                
+                    <ProfilePreview key={user._id} profile={user}/>
+                      
                 ))}
                 </section>
             )}

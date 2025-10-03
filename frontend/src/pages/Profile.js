@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ProfileTabs } from "../components/ProfileTabs";
 import { ProfileInfo } from "../components/ProfileInfo";
-import { TagCloud } from "../components/TagCloud";
 
 export const Profile = () =>{
     const { profileId } = useParams();
@@ -60,16 +59,18 @@ export const Profile = () =>{
 
     return(
         <div>
-            <h1>{headerText}</h1>
-            <div>
-                <ProfileInfo user={currentProfile} onSave={handleSave} viewOnly={isOwnProfile} currentUser={currentUser}/>
-                <TagCloud />
-            </div>
-            {isOwnProfile && (
-                <div>
-                    <ProfileTabs user={currentProfile} viewOnly={isOwnProfile} />
+            <h1 className="text-center">{headerText}</h1>
+            <div className="profile-container">
+                <div className="profile-info flex-1">
+                    <ProfileInfo user={currentProfile} onSave={handleSave} viewOnly={isOwnProfile} currentUser={currentUser}/>
                 </div>
-            )}
+                
+                {isOwnProfile && (
+                    <div className="profile-tabs">
+                        <ProfileTabs user={currentProfile} viewOnly={isOwnProfile} />
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

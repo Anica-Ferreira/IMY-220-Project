@@ -10,21 +10,25 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '../../frontend/public'))); 
 
 app.use('/uploadedImages', express.static(path.join(__dirname, '../uploadedImages')));
+app.use('/uploadedFiles', express.static(path.join(__dirname, '../uploadedFiles')));
 
 /* ROUTES */
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
 const projectRoutes = require('./routes/projects');
 const activityRoutes = require('./routes/activities');
+const searchRoutes = require('./routes/search');
 const imageRoutes = require('./routes/images');
-const searchRoutes = require('./routes/search')
+const fileRoutes = require('./routes/files');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/activities', activityRoutes);
-app.use('/api/images', imageRoutes);
 app.use('/api/search', searchRoutes);
+app.use('/api/images', imageRoutes);
+app.use('/api/files', fileRoutes);
+
 
 app.get(/.*/, (req, res) =>{
     res.sendFile(path.resolve(__dirname, '../../frontend/public', 'index.html'));

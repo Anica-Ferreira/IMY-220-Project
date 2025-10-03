@@ -6,15 +6,22 @@
 @import url(splash.css);
 @import url(buttons.css);
 @import url(forms.css);
+@import url(activities.css);
+@import url(projects.css);
+@import url(links.css);
+@import url(profile.css);
 
 /* VARIABLES */
 :root {
     --blue : #232539;
     --darkBlue : #151624;
-    --lightBlue : #2c2e48;
+    --lightBlue : #212336;
+    --lightGrey : #ffffff1c;
     --white : #EAEAEA;
     --red : #ff3c49;
     --main-font : 'Montserrat';
+    --sub-font: "Poppins";
+    --grey: #696969;
 }
 
 /* LIGHT THEME */
@@ -38,7 +45,33 @@ html{
 
 main{
     min-height: 100vh;
-    /*background-color: var(--blue);*/
+    background-color: var(--blue);
+    padding: 2.5em;
+}
+
+main.no-padding {
+  padding: 0;
+}
+
+h1{
+    color: var(--white);
+    font-family: "Poppins";
+    font-size: 2.3em;
+    font-weight: 400;
+    text-decoration: underline;
+    text-decoration-color: var(--red);
+    text-underline-offset: 0.5em;
+    text-decoration-thickness: 0.05em;
+    margin-bottom: 1em;
+}
+
+h2{
+    color: var(--white);
+    font-family: var(--main-font);
+    font-weight: 300;
+    font-size: 1.9em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
 }
 
 /* BACKGROUND COLOURS */

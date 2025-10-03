@@ -6,20 +6,20 @@ export const ProfilePreview = ({ profile, isLink = true }) =>{
     const currentUserId = sessionStorage.getItem("userId");
 
     return(
-        <>
-            <img src={profile.image} alt={`${profile.username} thumbnail image.`} width={40}/>
+        <span className="profile-preview">
+            <img src={profile.image} alt={`${profile.username} thumbnail image.`}/>
             {isLink ? (
                 <strong>
                     <Link to={`/profile/${profile._id}`}>
-                        {profile.username} {currentUserId === profile._id && "(you)"}
+                        {" "}{profile.username} {currentUserId === profile._id && "(you)"}
                     </Link>
                 </strong>
             ) : (
                 <strong>
-                    {profile.username} {currentUserId === profile._id && "(you)"}
+                    {" "}{profile.username} {currentUserId === profile._id && "(you)"}
                 </strong>
             )}
 
-        </>
+        </span>
     );
 };

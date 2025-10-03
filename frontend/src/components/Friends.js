@@ -39,11 +39,11 @@ export const Friends = ({ friends: initialFriends, currentUser, viewOnly }) =>{
     };
 
     return(
-        <div>
+        <div className="card">
             {friends.length === 0 && <p>No friends yet.</p>}
             {friends.map((friend) => (
-                <div key={friend._id}>
-                    <ProfilePreview profile={friend}/>
+                <div key={friend._id} className="friend-item">
+                    <ProfilePreview profile={friend} />
                     {viewOnly && (
                         <button onClick={() => handleRemove(friend._id)} disabled={loading}>
                             {loading ? "..." : "Remove"}

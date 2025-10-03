@@ -107,7 +107,7 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
     };
 
     return(
-        <article >
+        <article className="profile-info shadow-sm">
             {!isEditing ? (
                 <>
                     <img src={user.image} alt={`${user.username}'s profile picture`} width={120}/>

@@ -1,0 +1,254 @@
+/* Anica Ferreira 40_u24581802 */
+
+/*---------------------------- Project Preview ----------------------------*/
+
+.project-preview {
+    padding: 0.6em;
+    background-color: var(--darkBlue);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.project-preview-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.project-preview-header img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid var(--red);
+}
+
+.project-preview-header .project-preview-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.project-preview-header strong {
+    font-size: 1em;
+}
+
+.project-preview-header .project-preview-description {
+    font-size: 0.9em;
+    color: #a5a5a5;
+    margin: 0;
+}
+
+.project-preview-languages,
+.project-info .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.3em;
+}
+
+.project-preview-languages a,
+.project-info .tags a {
+    font-size: 0.85em;
+    text-decoration: none;
+    color: var(--red);
+    background: var(--lightGrey);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.project-preview-languages a:hover,
+.project-info .tags a:hover {
+    background-color: var(--red);
+    color: var(--white);
+    font-weight: 600;
+}
+
+.project-preview-download {
+    font-size: 0.8rem;
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+/*---------------------------- Project Info ----------------------------*/
+.project-info, .profile-info  {
+    background-color: var(--darkBlue);
+    color: var(--white);
+    padding: 1.5em;
+    border-radius: 1em;
+    max-width: 800px;
+    margin: 1rem auto;
+    margin-bottom: 2em;
+}
+
+.project-info img, .profile-info img, .image-upload img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 1px solid var(--red);
+    margin-bottom: 1rem;
+}
+
+.project-info h2, .profile-info h2 {
+    font-size: 2rem;
+    margin-bottom: 0.3rem;
+    color: var(--white);
+}
+
+.project-info h3, .profile-info h3 {
+    font-size: 1.5em;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    color: var(--grey);
+}
+
+.project-info p, .project-info strong, 
+.profile-info p, .profile-info strong {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    color: var(--white);
+}
+
+.project-info button, .profile-info button {
+    background-color: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.project-info hr, .profile-info hr {
+    margin: 1.5rem 0;
+    border-color: var(--grey);
+}
+
+/* ----------------------------------------- Files ------------------------------------------- */
+
+.download-btn {
+    width: 20%;
+    margin-bottom: 1em;
+    padding: 0.4em 0.8em;
+    background-color: var(--red);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 1em;
+}
+
+.file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.file-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    padding: 0.3em 0;
+}
+
+/*------------------------------------ Discussion Board -------------------------------------------- */
+
+.discussion-message img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Each message */
+.discussion-message {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #444;
+}
+
+.discussion-message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.discussion-message-header span {
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+.discussion-message p {
+    margin: 0;
+    padding-left: 45px;
+}
+
+.discussion-input {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.discussion-input input {
+    flex: 1;
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.discussion-input button {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: none;
+    background-color: var(--red);
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 6px;
+    background: var(--red);
+    color: var(--darkBlue);
+    cursor: pointer;
+}
+
+.create input[type="text"],
+.create input[type="file"],
+.create select,
+.create textarea, #hashtags {
+    width: 50%;
+    min-width: 250px;
+}
+
+.inline-input input[type="text"],
+.inline-input input[type="file"] {
+    width: 50%;
+    flex: unset;
+}
+
+.inline-input button {
+    flex: 0;
+}
+
+.remove-btn{
+    background-color: var(--red) !important;
+    color: var(--white) !important;
+    width: 100px !important;
+}

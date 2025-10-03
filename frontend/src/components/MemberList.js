@@ -1,6 +1,6 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ProfilePreview } from "./ProfilePreview";
 
 export const MemberList = ({ project, isOwner, isMember }) =>{
@@ -10,6 +10,7 @@ export const MemberList = ({ project, isOwner, isMember }) =>{
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
 
+    const dropdownRef = useRef(null);
     const sessionUserId = sessionStorage.getItem("userId");
 
     useEffect(() => {
@@ -29,6 +30,19 @@ export const MemberList = ({ project, isOwner, isMember }) =>{
         };
         fetchUsers();
     }, [project]);
+
+    //event listener to hide dropdown on outside click
+    useEffect(() => {
+        const handleClickOutside = (event) =>{
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownVisible(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () =>{
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     if((project.members || []).length > 0 && members.length === 0){
         return <p>Loading members...</p>;
@@ -90,16 +104,15 @@ export const MemberList = ({ project, isOwner, isMember }) =>{
     };
 
     return(
-        <div>
-            <h3>Project Members</h3>
-            <ul style={{ listStyle: "none", padding: 0 }}>
+        <div className="members-card card">
+            <ul>
                 {members.map((user) => (
-                    <li key={user._id}>
+                    <li key={user._id} className="member-item">
                         <ProfilePreview profile={user} />
 
                         {/* Owner badge */}
                         {project.owner === user._id && (
-                            <span className="badge bg-primary ms-2">
+                            <span className="badge">
                                 Owner
                             </span>
                         )}
@@ -116,7 +129,7 @@ export const MemberList = ({ project, isOwner, isMember }) =>{
                 {/* Only members can can add new members */}
                     {isMember && (
                         <li className="mt-2">
-                            <div className="dropdown">
+                            <div className="add-member dropdown" ref={dropdownRef}>
                                 <input
                                     type="text"
                                     className="dropdown-toggle"
@@ -132,11 +145,21 @@ export const MemberList = ({ project, isOwner, isMember }) =>{
 
                                 {/*Dispay current user's friends who are not members*/}
                                 <div className={`dropdown-menu ${dropdownVisible ? "show" : ""} overflow-auto`}>
-                                    {filteredFriends.map((friend) => (
-                                        <div key={friend._id} className="dropdown-item" onClick={() => handleSelect(friend)}>
-                                            <ProfilePreview profile={friend} isLink={false} />
+                                   {filteredFriends.length > 0 ? (
+                                        filteredFriends.map((friend) => (
+                                            <div
+                                                key={friend._id}
+                                                className="dropdown-item"
+                                                onClick={() => handleSelect(friend)}
+                                            >
+                                                <ProfilePreview profile={friend} isLink={false} />
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="dropdown-item text-muted">
+                                            No friends available to add
                                         </div>
-                                    ))}
+                                    )}
                                 </div>
                                 <button onClick={handleAddMember}>+</button>
                             </div>

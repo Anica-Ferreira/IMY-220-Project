@@ -1,7 +1,7 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 
 import { Splash } from "./pages/Splash";
 import { Signup } from "./pages/Signup";
@@ -16,6 +16,7 @@ import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 
 export const App = () => {
+    const mainClass = location.pathname === "/" ? "no-padding" : "";
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     //check session storage on first load
@@ -29,7 +30,7 @@ export const App = () => {
     return(
         <BrowserRouter>
             <Header isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
-            <main>
+            <main className={mainClass}>
                 <Routes>
                     <Route path="/" element={<Splash />} />
                     <Route path="/signup" element={<Signup setIsAuthenticated={setIsAuthenticated} />} />

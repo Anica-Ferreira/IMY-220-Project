@@ -69,13 +69,4 @@
     font-weight: 600;
 }
 
-/*  --------------------------------- NAVIGATION LINKS --------------------------------- */
 
-.nav-links li a {
-    color: var(--white);
-    text-decoration: none;
-}
-
-.nav-links li .active-link::after {
-    transform: translateX(-50%) scaleX(1);
-}

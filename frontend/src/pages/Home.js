@@ -88,11 +88,15 @@ export const Home = () =>{
     const global = filteredActivity;
 
     return(
-        <div>
+        <div id="home">
             <h1>Home</h1>
             <h2>Activity Feed</h2>
-            <Sort sortOption={sortOption} setSortOption={setSortOption}/>
-            <Feed localActivity={local} globalActivity={global}/>
+            <Feed 
+                localActivity={local} 
+                globalActivity={global} 
+                sortOption={sortOption} 
+                setSortOption={setSortOption} 
+            />
         </div>
     )
 };

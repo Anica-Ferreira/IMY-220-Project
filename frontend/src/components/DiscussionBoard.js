@@ -53,8 +53,7 @@ export const DiscussionBoard = ({ project, initialDiscussion}) =>{
     }
 
     return (
-        <div>
-            <h2>Discussion Board</h2>
+        <div className="card discussion-card">
 
             {/* Check if messages exist */}
             {discussion.length === 0 && <p>No messages yet.</p>}
@@ -65,20 +64,32 @@ export const DiscussionBoard = ({ project, initialDiscussion}) =>{
                     const user = users[message.userId];
 
                     return(
-                        <div key={index}>
-                            <img src={user.image} alt={user.username} width={40}></img>
-                            <strong>
-                                <Link to={`/profile/${user._id}`}>{user.username}</Link>
-                            </strong>
-                            <span>{new Date(message.timestamp).toLocaleString()}</span>
+                        <div className="discussion-message" key={index}>
+                            <div className="discussion-message-header">
+                                <div className="user-info">
+                                    <img src={user.image} alt={user.username} />
+                                    <strong>
+                                        <Link to={`/profile/${user._id}`}>{user.username}</Link>
+                                    </strong>
+                                </div>
+                                <span>
+                                    {new Date(message.timestamp).toLocaleDateString(undefined, {
+                                        year: 'numeric',
+                                        month: 'short',
+                                        day: 'numeric',
+                                    })}
+                                </span>
+                            </div>
                             <p>{message.message}</p>
                         </div>
                     );
                 })}
             </div>
 
-            <input type="text" placeholder="Write a message" value={newMessage} onChange={(e) => setNewMessage(e.target.value)}/>
-            <button onClick={handleSendMessage}>Send</button>
+            <div className="discussion-input">
+                <input type="text" placeholder="Write a message" value={newMessage} onChange={(e) => setNewMessage(e.target.value)}/>
+                <button onClick={handleSendMessage}>Send</button>
+            </div>
         </div>
     );
 };
