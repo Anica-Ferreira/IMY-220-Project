@@ -10,7 +10,8 @@ const {
     addDiscussionMessage,
     addProjectMember,
     removeProjectMember,
-    createProject
+    createProject,
+    downloadProjects
 } = require('../controllers/projectController');
 
 router.get('/', getAllProjects);
@@ -25,5 +26,6 @@ router.delete('/delete/:id', deleteProject);
 
 router.post('/discussion/:id', addDiscussionMessage);
 router.post('/create', createProject);
+router.post('/download/:id', downloadProjects);
 
 module.exports = router;

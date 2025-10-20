@@ -63,7 +63,7 @@ export const ProjectTabs = ({ project, isOwner, isMember }) =>{
 
                 {activeTab === "files" && (
                     <div> 
-                        <Files files={project.files} />
+                        <Files project={project} />
                     </div>
                 )}
 

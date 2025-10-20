@@ -45,6 +45,33 @@ const getProjectsByUserId = async (req, res) => {
     res.status(200).json(projects);
 };
 
+//DOWNLOAD PROJECT
+const downloadProjects = async (req, res) => {
+    const { id } = req.params;
+    const db = await connectDB();
+
+    //find project
+    const project = await db.collection("projects").findOne({ _id: new ObjectId(id) });
+    
+    //Check if project was found
+    if (!project) {
+        return res.status(404).json({
+            error: true,
+            error_message: "Project not found."
+        });
+    }
+
+    //increment download field
+    await db.collection("projects").updateOne(
+        { _id: new ObjectId(id) },
+        { $inc: { downloads: 1 } }
+    );
+
+    res.status(200).json({
+        message: "Project downloads updated.",
+    });
+}
+
 //UPDATE PROJECT
 const updatedProject = async (req, res) => {
     const { id } = req.params;
@@ -270,6 +297,7 @@ module.exports = {
     getAllProjects,
     getProjectsByID,
     getProjectsByUserId,
+    downloadProjects,
     updatedProject,
     deleteProject,
     addDiscussionMessage,
