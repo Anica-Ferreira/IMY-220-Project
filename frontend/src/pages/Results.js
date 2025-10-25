@@ -79,7 +79,7 @@ export const Results = () =>{
             {activities && activities.length > 0 && (
                 <section>
                 <h2>Activities</h2>
-                <ActivityList activities={activities} />
+                <ActivityList activities={activities} showMessage={true} showAll={false} />
                 </section>
             )}
 

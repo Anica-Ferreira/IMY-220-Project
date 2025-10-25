@@ -57,7 +57,7 @@ export const ProjectMessages = ({ projectId }) =>{
                 <div key={monthYear}>
                     <h3>{monthYear}</h3>
                     {monthActivities.map((act, index) => (
-                        <ActivityItem key={index} activity={act} showAll={false}/>
+                        <ActivityItem key={index} activity={act} showAll={false} showMessage={true}/>
                     ))}
                 </div>
             ))}

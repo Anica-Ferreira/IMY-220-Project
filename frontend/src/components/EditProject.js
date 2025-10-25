@@ -2,6 +2,7 @@
 import React from "react";
 import { ProfilePreview } from "./ProfilePreview";
 import { useState, useRef, useEffect } from "react";
+import { useDropzone } from "react-dropzone";
 
 export const EditProject = ({ project, onSave, onCancel }) => {
     const [members, setMembers] = useState([]);
@@ -43,7 +44,26 @@ export const EditProject = ({ project, onSave, onCancel }) => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
+    //file drag and drop
+    const onDrop = (acceptedFiles) => {
+        const file = acceptedFiles[0];
+        setSelectedFile(file);
+
+        if (file) {
+            setFormData({
+                ...formData,
+                image: URL.createObjectURL(file),
+            });
+        }
+    };
     
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
+        accept: { "image/*": [] },
+        multiple: false
+    });
+
     if((project.members || []).length > 0 && members.length === 0){
         return;
     }
@@ -52,30 +72,12 @@ export const EditProject = ({ project, onSave, onCancel }) => {
     const filteredMembers = members.filter(u => u._id !== project.owner)
         .filter(u => u.username.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    //trigger hidden file input when pencil icon is clicked
-    const handleFileClick = () =>{
-        fileInputRef.current.click();
-    };
-
     //when member was selected in dropdown
     const handleSelect = (user) => {
         setSelectedUser(user);
         setSearchTerm(user.username);
         setDropdownVisible(false);
     };
-
-    const handleFileChange = (e) =>{
-        setSelectedFile(e.target.files[0]);
-        const file = e.target.files[0];
-        
-        //preview image
-        if (file) {
-            setFormData({
-                ...formData,
-                image: URL.createObjectURL(file),
-            });
-        }
-    }
 
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -135,10 +137,11 @@ export const EditProject = ({ project, onSave, onCancel }) => {
 
     return (
         <form className="edit-project-form" onSubmit={handleSubmit}>
-            <img src={formData.image} alt={`${formData.name}'s profile`} width={120} onClick={handleFileClick}/>
-
-            <input type="file" ref={fileInputRef} style={{ display: "none" }} accept="image/*" onChange={handleFileChange}/>
-            <i className="fas far fa-edit" onClick={handleFileClick}></i>
+            <div {...getRootProps()}>
+                <input {...getInputProps()} />
+                <img src={formData.image} alt={`${formData.name}'s image`} />
+                <p>{isDragActive ? "Drop image here..." : "Drag & drop or click to select an image"}</p>
+            </div>
 
             <div>
                 <label htmlFor="name">Project Name</label>

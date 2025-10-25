@@ -2,12 +2,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { ProfileImage } from "./ProfileImage";
+
 export const ProfilePreview = ({ profile, isLink = true }) =>{
     const currentUserId = sessionStorage.getItem("userId");
 
     return(
         <span className="profile-preview">
-            <img src={profile.image} alt={`${profile.username} thumbnail image.`}/>
+
+            <ProfileImage profile={profile} />
+            
             {isLink ? (
                 <strong>
                     <Link to={`/profile/${profile._id}`}>

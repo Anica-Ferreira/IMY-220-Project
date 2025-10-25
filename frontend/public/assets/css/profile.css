@@ -10,12 +10,36 @@
 }
 
 .profile-preview img {
-    width: 40px;
-    height: 40px;
     object-fit: cover;
     border-radius: 50%;
-    border: 1px solid var(--red);
-} 
+}
+
+.placeholder-stack {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.placeholder-stack img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.small-img{
+    width: 40px;
+    height: 40px;
+}
+
+.large-img{
+    width: 150px;
+    height: 150px;
+}
+
+
 
 /* ------------------------------------ Friends List ----------------------------------------- */
 

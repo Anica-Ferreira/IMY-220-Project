@@ -2,6 +2,7 @@
 
 const connectDB = require("../db/connection");
 const { ObjectId } = require('mongodb');
+const { updatedProject } = require("./projectController");
 
 /* CRUD OPERATIONS FOR ACTIVITY */
 
@@ -113,10 +114,83 @@ const getFormattedActivities = async (req, res) => {
             }
         },
         //sort in reverse chronological order
-        { $sort: { date: -1 } }
+        { $sort: { timestamp: -1 } }
     ]).toArray();
 
     res.status(200).json(activities);
+};
+
+//CHECK OUT
+const checkOut = async (req, res) => {
+    const { projectId, userId, version } = req.body;
+    const db = await connectDB();
+
+    //create new activity
+    const newActivity = {
+        projectId: new ObjectId(projectId),
+        userId: new ObjectId(userId),
+        action: "checked out",
+        message: "",
+        timestamp: new Date(),
+        version: version
+    };
+
+    const activityResult = await db.collection("activity").insertOne(newActivity);
+
+    //add activity id to project
+    const updatedProject = await db.collection("projects").updateOne(
+        { _id: new ObjectId(projectId) },
+        { 
+            $push: { activity: activityResult.insertedId },
+            $set: { 
+                checkedOutBy: new ObjectId(userId),
+                status: "Checked out" 
+            }
+        }
+    );
+
+    res.status(200).json({
+        success: true,
+        message: "Project checked out successfully.",
+        activityId: activityResult.insertedId
+    });
+
+};
+
+//CHECK IN
+const checkIn = async (req, res) => {
+    const { projectId, userId, version, message } = req.body;
+    const db = await connectDB();
+
+    //create new activity
+    const newActivity = {
+        projectId: new ObjectId(projectId),
+        userId: new ObjectId(userId),
+        action: "checked in",
+        message: message,
+        timestamp: new Date(),
+        version: version
+    };
+
+    const activityResult = await db.collection("activity").insertOne(newActivity);
+
+    //add activity id to project
+    const updatedProject = await db.collection("projects").updateOne(
+        { _id: new ObjectId(projectId) },
+        { 
+            $push: { activity: activityResult.insertedId },
+            $set: { 
+                checkedOutBy: null,
+                status: "Checked in", 
+            }
+        }
+    );
+
+    res.status(200).json({
+        success: true,
+        message: "Project checked in successfully.",
+        activityId: activityResult.insertedId
+    });
 };
 
 module.exports = {
@@ -124,5 +198,7 @@ module.exports = {
     getActivityByID,
     getActivityByProjectId,
     getActivityByUserId,
-    getFormattedActivities
+    getFormattedActivities,
+    checkOut,
+    checkIn
 }

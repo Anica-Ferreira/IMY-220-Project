@@ -3,7 +3,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import { Feed }  from "../components/Feed";
-import { Sort } from "../components/Sort";
 
 export const Home = () =>{
     const [activity, setActivity] = useState([]);

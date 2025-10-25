@@ -1,12 +1,14 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ActivityList } from "./ActivityList";
 import { Sort } from "./Sort";
 
 export const Feed = ({ localActivity, globalActivity, sortOption, setSortOption }) => {
-    const [activeTab, setActiveTab] = useState('local');
+    //defualt is local, but switch to global if it is empty
+    const initialTab = localActivity.length === 0 ? "global" : "local";
+    const [activeTab, setActiveTab] = useState(initialTab);
 
     const switchTab = (tab) => setActiveTab(tab);
 
@@ -37,10 +39,12 @@ export const Feed = ({ localActivity, globalActivity, sortOption, setSortOption 
             <section className="tab-content">
                 <div className="tab-pane active">
                     {activeTab === "local" ? (
-                        <ActivityList activities={localActivity}/>
+                        <ActivityList activities={localActivity} showMessage={false} type="feed"/>
                     ) : (
-                        <ActivityList activities={globalActivity} />
+                        <ActivityList activities={globalActivity} showMessage={false} type="feed"/>
                     )}
+
+
                 </div>
             </section>
         </div>

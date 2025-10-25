@@ -1,7 +1,7 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Splash } from "./pages/Splash";
 import { Signup } from "./pages/Signup";
@@ -14,6 +14,7 @@ import { Results } from "./pages/Results";
 
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
+import { ScrollToTop } from "./components/ScrollToTop";
 
 export const App = () => {
     const mainClass = location.pathname === "/" ? "no-padding" : "";
@@ -29,6 +30,7 @@ export const App = () => {
 
     return(
         <BrowserRouter>
+            <ScrollToTop />
             <Header isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
             <main className={mainClass}>
                 <Routes>

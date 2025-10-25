@@ -32,6 +32,31 @@ export const SignupForm = ({ setIsAuthenticated }) =>{
         return "";
     }
 
+    //Generate random number between 1 - 5
+    const generateRandom = () =>{
+        return Math.floor(Math.random() * (5 - 1 + 1)) + 1;
+    }
+
+    //Generate random profile image combination
+    const randomiseProfile = () =>{
+        
+        const background = generateRandom();
+        const body = generateRandom();
+        const face = generateRandom();
+        const head = generateRandom();
+        const accessory = generateRandom(); 
+
+        const placeholderImages = {
+            background : `/assets/images/placeholder/background/${background}.png`,
+            body : `/assets/images/placeholder/body/${body}.png`,
+            face : `/assets/images/placeholder/face/${face}.png`,
+            head : `/assets/images/placeholder/head/${head}.png`,
+            accessory : `/assets/images/placeholder/accessory/${accessory}.png`,
+        }
+
+        return placeholderImages;
+    }
+
     const submit = async (event) =>{
         event.preventDefault();
         
@@ -51,10 +76,11 @@ export const SignupForm = ({ setIsAuthenticated }) =>{
 
         if(!usernameError && !emailError && !passwordError){
             try{
+                const placeholderImages = randomiseProfile();
                 const res = await fetch('/api/auth/signup', {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, email, password })
+                    body: JSON.stringify({ username, email, password, placeholderImages })
                 });
 
                 const data = await res.json();

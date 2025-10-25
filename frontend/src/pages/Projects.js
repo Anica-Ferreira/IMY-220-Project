@@ -2,11 +2,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { ProjectList } from "../components/ProjectList";
+import { CreateProject } from "../components/CreateProject";
 
 export const Projects = () =>{
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [showCreate, setShowCreate] = useState(false);
     
     useEffect(() =>{
          const fetchProjects = async () => {
@@ -34,10 +36,21 @@ export const Projects = () =>{
         <div>
             <h1>Projects</h1>
 
+            <button onClick={() => setShowCreate(true)} >New Project</button>
+
             {loading && <p>Loading projects...</p>}
             {error && <p className="text-danger">{error}</p>}
 
             {!loading && !error && <ProjectList projects={projects} />}
+
+            {/* Modal overlay */}
+            {showCreate && (
+                <div className="modal-overlay">
+                    <div className="modal-content">
+                        <CreateProject onClose={() => setShowCreate(false)}/>
+                    </div>
+                </div>
+            )}
         </div>
     )
 };

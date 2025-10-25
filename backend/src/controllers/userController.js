@@ -33,7 +33,7 @@ const getUserByID = async (req, res) => {
 //UPDATE USER
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, image, role, about, company } = req.body;
+    const { name, image, role, about, company, placeholder } = req.body;
     const db = await connectDB();
 
     //find user
@@ -46,7 +46,7 @@ const updateUser = async (req, res) => {
         });
     }
 
-    const updateData = { name, image, role, about, company };
+    const updateData = { name, image, role, about, company, placeholder };
 
     await db.collection("users").updateOne(
         { _id: new ObjectId(id) },

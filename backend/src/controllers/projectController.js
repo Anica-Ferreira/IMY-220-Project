@@ -1,7 +1,9 @@
 /* Anica Ferreira 40_u24581802 */
-
 const connectDB = require("../db/connection");
 const { ObjectId } = require('mongodb');
+
+const path = require('path');
+const fs = require('fs');
 
 /* CRUD OPERATIONS FOR PROJECTS */
 
@@ -96,12 +98,18 @@ const updatedProject = async (req, res) => {
     if(type !== undefined) updateData.type = type;
     if(description !== undefined) updateData.description = description;
     if (owner !== undefined) updateData.owner = new ObjectId(owner);
-    if(files !== undefined) updateData.files = files;
 
     await db.collection("projects").updateOne(
         { _id: new ObjectId(id) },
         { $set: updateData }
     );
+
+    if (files !== undefined && files.length > 0) {
+        await db.collection("projects").updateOne(
+            { _id: new ObjectId(id) },
+            { $addToSet: { files: { $each: files } } }
+        );
+    }
 
     const updatedProject = await db.collection("projects").findOne({ _id: new ObjectId(id) });
 
@@ -286,6 +294,18 @@ const createProject = async (req, res) => {
     };
 
     const result = await db.collection("projects").insertOne(newProject);
+
+    //create first check in
+    const activity = {
+        projectId : result.insertedId,
+        userId : new ObjectId(owner),
+        action : "created project",
+        message : "",
+        timestamp : new Date(),
+        version : version
+    };
+
+    await db.collection("activity").insertOne(activity);
 
     res.status(200).json({
         message: "Project created successfully.",

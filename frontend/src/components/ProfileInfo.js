@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { EditProfile } from "./EditProfile";
 import { useNavigate } from "react-router-dom";
+import { ProfileImage } from "./ProfileImage";
 
 export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
     const navigate = useNavigate();
@@ -110,7 +111,7 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
         <article className="profile-info shadow-sm">
             {!isEditing ? (
                 <>
-                    <img src={user.image} alt={`${user.username}'s profile picture`} width={120}/>
+                    <ProfileImage profile={user} size="large"/>
 
                     <h2>{user.name}</h2>
                     <h3>@{user.username}</h3>

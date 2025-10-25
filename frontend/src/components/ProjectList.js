@@ -5,6 +5,11 @@ import { ProjectPreview } from "./ProjectPreview";
 export const ProjectList = ({ projects }) =>{
     return(
         <div>
+            {projects.length === 0 && 
+                <div className="card">
+                    {projects.length === 0 && <p>You have no projects yet.</p>}
+                </div>}
+            
             {projects.map((project, index) => (
                 <div key={index} className="card mb-3">
                     <ProjectPreview project={project} />

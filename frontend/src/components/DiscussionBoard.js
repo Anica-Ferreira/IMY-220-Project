@@ -2,6 +2,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { formatTimeAgo } from "./ActivityItem";
 
 export const DiscussionBoard = ({ project, initialDiscussion}) =>{
     const [discussion, setDiscussion] = useState(initialDiscussion || []);
@@ -73,11 +74,7 @@ export const DiscussionBoard = ({ project, initialDiscussion}) =>{
                                     </strong>
                                 </div>
                                 <span>
-                                    {new Date(message.timestamp).toLocaleDateString(undefined, {
-                                        year: 'numeric',
-                                        month: 'short',
-                                        day: 'numeric',
-                                    })}
+                                    {formatTimeAgo(message.timestamp)}
                                 </span>
                             </div>
                             <p>{message.message}</p>

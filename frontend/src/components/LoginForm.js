@@ -5,8 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const LoginForm = ({ setIsAuthenticated }) =>{
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("thomas10@gmail.com");
+    const [password, setPassword] = useState("test1234");
     const [errors, setErrors] = useState({});
     
     const validateEmail = (email) =>{

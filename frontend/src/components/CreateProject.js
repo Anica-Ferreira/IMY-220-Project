@@ -2,15 +2,16 @@
 import React from "react";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDropzone } from "react-dropzone";
 
-export const CreateProject = () =>{
+export const CreateProject = ({onClose}) =>{
     const navigate = useNavigate();
-    const [files, setFiles] = useState([]);
     const [currentTag, setCurrentTag] = useState("");
     const [hashtags, setHashtags] = useState([]);
     const [errors, setErrors] = useState({});
-    const [selectedImageFile, setSelectedImageFile] = useState(null)
+    const [selectedImageFile, setSelectedImageFile] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [files, setFiles] = useState([]);
     
     //Form Data
     const [formData, setFormData] = useState({
@@ -19,23 +20,18 @@ export const CreateProject = () =>{
         description: "",
         type: "Desktop Application",
     });
-    
-    const fileInputRef = useRef(null);
-    const imageInputRef = useRef(null);
 
-    //IMAGE
-    const handleImageClick = () => imageInputRef.current.click();
-
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
+    //IMAGE DROP
+    const onImageDrop = (acceptedFiles) => {
+        const file = acceptedFiles[0];
+            if (file) {
             setSelectedImageFile(file);
-            setFormData({
-                ...formData,
-                image: URL.createObjectURL(file),
-            });
+            setFormData(prev => ({ ...prev, image: URL.createObjectURL(file) }));
         }
     };
+
+    const { getRootProps: getImageRootProps, getInputProps: getImageInputProps, isDragActive: isImageDragActive } =
+        useDropzone({ onDrop: onImageDrop, accept: { "image/*": [] }, multiple: false });
 
     //HASHTAGS
 
@@ -61,24 +57,21 @@ export const CreateProject = () =>{
     };
 
     //FILES
-
-    //Adding selected file
-    const handleAddFiles = () => {
-        const selectedFiles = fileInputRef.current.files;
-        if (!selectedFiles || selectedFiles.length === 0) return;
-
-        //filter out duplicates
-        const filesArray = Array.from(selectedFiles).filter(
-            (file) => !files.some(f => f.name === file.name && f.size === file.size)
-        );
-
-        if (filesArray.length > 0) {
-            setFiles(prevFiles => [...prevFiles, ...filesArray]);
-        }
-
-        // Clear input for next selection
-        fileInputRef.current.value = null;
-    };
+    const {
+        getRootProps: getFilesRootProps,
+        getInputProps: getFilesInputProps,
+        isDragActive: isFilesDragActive,
+    } = useDropzone({
+        onDrop: (acceptedFiles) => {
+            const filteredFiles = acceptedFiles.filter(
+                (file) => !files.some(f => f.name === file.name && f.size === file.size)
+            );
+            if (filteredFiles.length > 0) {
+                setFiles(prev => [...prev, ...filteredFiles]);
+            }
+        },
+        multiple: true,
+    });
 
     //Remove a file from added list
     const handleRemoveFile = (removeIndex) => {
@@ -221,10 +214,11 @@ export const CreateProject = () =>{
     return(
         <div className="card edit-project-form create">
             <form>
-                <div className="form-group image-upload">
-                    <label htmlFor="image">Project Image (max 5MB)</label>
-                    <img src={formData.image} alt="Project" width={120} onClick={handleImageClick} className="image-preview"/>
-                    <input type="file" ref={imageInputRef} style={{ display: "none" }} accept="image/*" onChange={handleImageChange}/>
+                
+                <div {...getImageRootProps()} className="image-dropzone form-group image-upload">
+                    <input {...getImageInputProps()} />
+                    <img src={formData.image} alt="Project" width={120} />
+                    <p>{isImageDragActive ? "Drop image here..." : "Drag & drop or click to select an image"}</p>
                     {errors.image && <small className="text-danger">{errors.image}</small>}
                 </div>
 
@@ -284,30 +278,29 @@ export const CreateProject = () =>{
                 </div>
                 
                 <div className="form-group">
-                    <label htmlFor="files">Project Files (first check-in)</label>
-                    <div className="inline-input">
-                        <input id="files" name="files" type="file" multiple ref={fileInputRef}/>
-                        <button type="button" onClick={handleAddFiles}>+</button>
+                    <label>Project Files (first check-in)</label>
+                    <div {...getFilesRootProps()}>
+                        <input {...getFilesInputProps()} />
+                        {isFilesDragActive ? <p>Drop files here...</p> : <p>Click or drag files here</p>}
                     </div>
-                    {errors.files && <small className="text-danger">{errors.files}</small>}
-
-                    {/* Display selected files */}
                     {files.length > 0 && (
                         <ul>
-                        {files.map((file, index) => (
-                            <li key={index}>
-                            {file.name} ({Math.round(file.size / 1024)} KB)
-                            <button type="button" onClick={() => handleRemoveFile(index)} className="remove-btn">Remove</button>
-                            </li>
-                        ))}
+                            {files.map((file, idx) => (
+                                <li key={idx}>
+                                    {file.name} ({Math.round(file.size / 1024)} KB)
+                                    <button type="button" onClick={() => handleRemoveFile(idx)}>Remove</button>
+                                </li>
+                            ))}
                         </ul>
-                    )}<br/>
-
-                    <button type="submit" onClick={handleSubmit} disabled={loading}>
-                        {loading ? "Creating..." : "Create Project"}
-                    </button>
+                    )}
+                    {errors.files && <small className="text-danger">{errors.files}</small>}
                 </div>
-                
+
+                <button type="button" onClick={onClose}>Cancel</button>
+                <button type="submit" onClick={handleSubmit} disabled={loading}>
+                    {loading ? "Creating..." : "Create Project"}
+                </button>
+            
             </form>
         </div>
     )

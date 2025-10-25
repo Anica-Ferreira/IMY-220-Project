@@ -82,19 +82,12 @@ export const ProfileTabs = ({user, viewOnly}) =>{
                         onClick={() => switchTab("projects")}>Projects
                     </button>
                 </li>
-                {/* New Project */}
-                <li className="nav-item">
-                    <button 
-                        className={`nav-link ${activeTab === "new" ? "active" : ""}`} 
-                        onClick={() => switchTab("new")}>New Project
-                    </button>
-                </li>
             </ul>
         
             {/* Tab Content */}
             <section className="tab-content">
                 {activeTab === "activity" && (
-                    <ActivityList activities={activity} showAll={false}/>
+                    <ActivityList activities={activity} showAll={false} type="profile"/>
                 )}
 
                 {activeTab === "friends" && (
@@ -105,10 +98,6 @@ export const ProfileTabs = ({user, viewOnly}) =>{
                     <div> 
                         <ProjectList projects={projects} />
                     </div>
-                )}
-
-                {activeTab === "new" && (
-                    <CreateProject />
                 )}
             </section>
         </div>

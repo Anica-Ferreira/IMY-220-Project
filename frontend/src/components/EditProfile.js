@@ -1,40 +1,41 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
 import { useState, useRef } from "react";
+import { ProfileImage } from "./ProfileImage";
+import { useDropzone } from "react-dropzone";
 
 export const EditProfile = ({ user, onSave, onCancel }) => {
     const [formData, setFormData] = useState(user);
     const [selectedFile, setSelectedFile] = useState(null);
-    const fileInputRef = useRef(null);
 
-    //trigger hidden file input when pencil icon is clicked
-    const handleFileClick = () =>{
-        fileInputRef.current.click();
-    }
+    const onDrop = (acceptedFiles) => {
+        const file = acceptedFiles[0];
+        setSelectedFile(file);
 
-    const handleFileChange = (e) =>{
-        setSelectedFile(e.target.files[0]);
-        const file = e.target.files[0];
-        
-        //preview image
         if (file) {
             setFormData({
                 ...formData,
                 image: URL.createObjectURL(file),
             });
         }
-    }
+    };
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
+        accept: { "image/*": [] },
+        multiple: false
+    });
 
     const handleChange = (e) => {
         const { id, value } = e.target;
         setFormData({ ...formData, [id]: value });
     };
 
-
     const handleSubmit = async (e) => {
         //handle saving image
         e.preventDefault();
         let updatedImagePath = formData.image;
+        let updatedFields = { ...formData };
 
         //check if image was changed
         if (selectedFile) {
@@ -51,7 +52,7 @@ export const EditProfile = ({ user, onSave, onCancel }) => {
                 const data = await res.json();
                 //get returned image
                 updatedImagePath = data.path;
-                
+                updatedFields.placeholder = false;
             }catch(err){
                 console.error;
                 return;
@@ -63,10 +64,11 @@ export const EditProfile = ({ user, onSave, onCancel }) => {
 
     return (
         <form className="edit-project-form" onSubmit={handleSubmit}>
-            <img src={formData.image} alt={`${formData.username}'s profile`}  width={120} onClick={handleFileClick}/>
-
-            <input type="file" ref={fileInputRef} style={{ display: "none" }} accept="image/*" onChange={handleFileChange}/>
-            <i className="fas far fa-edit" onClick={handleFileClick}></i>
+            <div {...getRootProps()} className="dropzone">
+                <input {...getInputProps()} />
+                <ProfileImage profile={formData} size="large" preview={!!selectedFile} />
+                <p>{isDragActive ? "Drop image here..." : "Drag & drop or click to select an image"}</p>
+            </div>
 
             <div>
                 <label htmlFor="name">Full Name</label>

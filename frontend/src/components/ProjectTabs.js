@@ -8,24 +8,24 @@ import { ProjectMessages } from "./ProjectMessages";
 import { DiscussionBoard } from "../components/DiscussionBoard";
 
 export const ProjectTabs = ({ project, isOwner, isMember }) =>{
-    const [activeTab, setActiveTab] = useState('members');
+    const [activeTab, setActiveTab] = useState('files');
     const switchTab = (tab) => setActiveTab(tab);
 
     return(
         <div>
             <ul className="nav nav-tabs">
-                {/* User Members Feed */}
-                <li className="nav-item">
-                    <button 
-                        className={`nav-link ${activeTab === "members" ? "active" : ""}`} 
-                        onClick={() => switchTab("members")}>Members
-                    </button>
-                </li>
                 {/* Files */}
                 <li className="nav-item">
                     <button 
                         className={`nav-link ${activeTab === "files" ? "active" : ""}`} 
                         onClick={() => switchTab("files")}>Files
+                    </button>
+                </li>
+                {/* User Members Feed */}
+                <li className="nav-item">
+                    <button 
+                        className={`nav-link ${activeTab === "members" ? "active" : ""}`} 
+                        onClick={() => switchTab("members")}>Members
                     </button>
                 </li>
                 {/* Activity */}
@@ -44,26 +44,19 @@ export const ProjectTabs = ({ project, isOwner, isMember }) =>{
                         </button>
                     </li>
                 )}
-                {/* New Project */}
-                <li className="nav-item">
-                    <button 
-                        className={`nav-link ${activeTab === "new" ? "active" : ""}`} 
-                        onClick={() => switchTab("new")}>New Project
-                    </button>
-                </li>
             </ul>
         
             {/* Tab Content */}
             <section className="tab-content">
-                {activeTab === "members" && (
+                {activeTab === "files" && (
                     <div> 
-                        <MemberList project={project} isOwner={isOwner} isMember={isMember}/>
+                        <Files project={project} isMember={isMember} />
                     </div>
                 )}
 
-                {activeTab === "files" && (
+                {activeTab === "members" && (
                     <div> 
-                        <Files project={project} />
+                        <MemberList project={project} isOwner={isOwner} isMember={isMember}/>
                     </div>
                 )}
 
@@ -77,10 +70,6 @@ export const ProjectTabs = ({ project, isOwner, isMember }) =>{
                     <div> 
                         <DiscussionBoard project={project} initialDiscussion={project.discussion}/>
                     </div>
-                )}
-
-                {activeTab === "new" && (
-                    <CreateProject />
                 )}
             </section>
         </div>

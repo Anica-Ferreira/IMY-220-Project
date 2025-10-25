@@ -40,7 +40,7 @@ export const Friends = ({ friends: initialFriends, currentUser, viewOnly }) =>{
 
     return(
         <div className="card">
-            {friends.length === 0 && <p>No friends yet.</p>}
+            {friends.length === 0 && <p>You have no friends yet.</p>}
             {friends.map((friend) => (
                 <div key={friend._id} className="friend-item">
                     <ProfilePreview profile={friend} />

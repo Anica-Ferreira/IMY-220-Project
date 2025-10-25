@@ -86,11 +86,10 @@
 }
 
 .project-info img, .profile-info img, .image-upload img {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     border-radius: 50%;
-    border: 1px solid var(--red);
     margin-bottom: 1rem;
 }
 

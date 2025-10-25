@@ -37,7 +37,7 @@ const login = async (req, res) => {
 
 //SIGNUP
 const signup = async (req, res) => {
-    const {username, email, password} = req.body;
+    const {username, email, password, placeholderImages} = req.body;
 
     const db = await connectDB();
     const user = await db.collection('users').findOne({ email });
@@ -61,7 +61,9 @@ const signup = async (req, res) => {
         about: "",
         company: "",
         friends: [],
-        projects: []
+        projects: [],
+        placeholder: true,
+        placeholderImages: placeholderImages
     });
 
     //Signup succesful
