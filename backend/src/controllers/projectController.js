@@ -77,7 +77,7 @@ const downloadProjects = async (req, res) => {
 //UPDATE PROJECT
 const updatedProject = async (req, res) => {
     const { id } = req.params;
-    const { name, image, type, description, owner, files } = req.body;
+    const { name, image, type, description, owner, files, version } = req.body;
     const db = await connectDB();
 
     //find project
@@ -97,6 +97,7 @@ const updatedProject = async (req, res) => {
     if(image !== undefined) updateData.image = image;
     if(type !== undefined) updateData.type = type;
     if(description !== undefined) updateData.description = description;
+    if(version !== undefined) updateData.version = version;
     if (owner !== undefined) updateData.owner = new ObjectId(owner);
 
     await db.collection("projects").updateOne(

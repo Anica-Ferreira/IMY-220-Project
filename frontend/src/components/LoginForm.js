@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const LoginForm = ({ setIsAuthenticated }) =>{
     const navigate = useNavigate();
-    const [email, setEmail] = useState("thomas10@gmail.com");
+    const [email, setEmail] = useState("test@tester.com");
     const [password, setPassword] = useState("test1234");
     const [errors, setErrors] = useState({});
     
@@ -47,6 +47,14 @@ export const LoginForm = ({ setIsAuthenticated }) =>{
                 //store ID
                 sessionStorage.setItem("userId", data.userId);
                 sessionStorage.setItem("isAuthenticated", true);
+                
+                //check if user is admin
+                if(data.roleType === "admin"){
+                    sessionStorage.setItem("admin", true);
+                }else{
+                    sessionStorage.setItem("admin", false);
+                }
+
                 setIsAuthenticated(true);
                 //successful login - redirect to home
                 navigate("/home");

@@ -31,7 +31,8 @@ const login = async (req, res) => {
     return res.status(200).json({
         error : false,
         message: "Logged in successfully", 
-        userId: user._id 
+        userId: user._id,
+        roleType: user.roleType
     });
 }
 

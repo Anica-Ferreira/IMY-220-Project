@@ -1,0 +1,5 @@
+Build:
+docker build -t u24581802 .
+
+Run:
+docker run --name container -p 3005:8080 u24581802

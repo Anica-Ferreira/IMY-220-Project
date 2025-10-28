@@ -11,6 +11,7 @@ import { Projects } from "./pages/Projects";
 import { Project } from "./pages/Project";
 import { Profile } from "./pages/Profile";
 import { Results } from "./pages/Results";
+import { Admin } from "./pages/Admin";
 
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
@@ -39,6 +40,7 @@ export const App = () => {
                     <Route path="/login" element={<Login setIsAuthenticated={setIsAuthenticated} />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/projects" element={<Projects />} />
+                    <Route path="/admin" element={<Admin />} />
                     <Route path="/projects/:projectId" element={<Project />} />
                     <Route path="/profile/:profileId" element={<Profile />} />
                     <Route path="/results" element={<Results />} />

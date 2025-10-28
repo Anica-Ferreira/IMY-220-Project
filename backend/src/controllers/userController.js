@@ -82,7 +82,7 @@ const getUserFriends = async (req, res) => {
     if(Array.isArray(user.friends) && user.friends.length > 0) {
         friends = await db.collection("users")
             .find({ _id: { $in: user.friends.map(f => new ObjectId(f)) } })
-            .project({ _id: 1, username: 1, image: 1, email: 1 })
+            .project({ _id: 1, username: 1, image: 1, email: 1, placeholder: 1, placeholderImages: 1  })
             .toArray();
     }
 
@@ -135,8 +135,15 @@ const deleteUser = async (req, res) => {
     const projects = await db.collection("projects").find({ owner: new ObjectId(id) }).toArray();
     const projectIds = projects.map(p => p._id);
 
+    //delete activity of projects
+    if(projects.length > 0) {
+        await db.collection("activity").deleteMany({ projectId: { $in: projectIds } });
+    }
+
     //delete the projects
-    await db.collection("projects").deleteMany({ owner: new ObjectId(id) });
+    if(projectIds.length > 0) {
+        await db.collection("projects").deleteMany({ _id: { $in: projectIds } });
+    }
 
     //remove the deleted project IDs from all users' project arrays
     if (projectIds.length > 0) {
@@ -146,6 +153,8 @@ const deleteUser = async (req, res) => {
         );
     }
 
+    await db.collection("activity").deleteMany({ userId: new ObjectId(id) });
+
     //delete user
     await db.collection("users").deleteOne({ _id: new ObjectId(id) });
 
@@ -154,6 +163,56 @@ const deleteUser = async (req, res) => {
     });
 }
 
+//Get Admin overview
+const getAdminOverview = async (req, res) => {
+    const db = await connectDB();
+
+    //get all the data
+    const users = await db.collection("users").find({}).toArray();
+    const projects = await db.collection("projects").find({}).toArray();
+    const activitiesRaw = await db.collection("activity").find({}).toArray();
+
+    const activities = activitiesRaw
+        .map(act => {
+            const user = users.find(u => u._id.toString() === act.userId.toString()) || {};
+            const project = projects.find(p => p._id.toString() === act.projectId.toString()) || {};
+            return {
+                ...act,
+                username: user.username,
+                userImage: user.image,
+                placeholder: user.placeholder,
+                placeholderImages: user.placeholderImages,
+                projectName: project.name,
+                projectImage: project.image,
+                projectDescription: project.description,
+                projectLanguages: project.languages,
+                downloads: project.downloads,
+                projectPlaceholder: project.placeholder,
+                projectPlaceholderImages: project.placeholderImages
+            }
+        })
+        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+    //count total
+    const userCount = users.length;
+    const projectCount = projects.length;
+    const activityCount = activities.length;
+
+    res.status(200).json({
+        message: "Admin overview fetched successfully.",
+        totals: {
+            users: userCount,
+            projects: projectCount,
+            activities: activityCount
+        },
+        data: {
+            users,
+            projects,
+            activities
+        }
+    });
+};
+
 module.exports = {
     getAllUsers,
     getUserByID,
@@ -161,5 +220,6 @@ module.exports = {
     getUserFriends,
     addFriend,
     removeFriend,
-    deleteUser
+    deleteUser,
+    getAdminOverview
 };

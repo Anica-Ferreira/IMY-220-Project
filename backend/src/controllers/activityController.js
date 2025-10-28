@@ -105,6 +105,8 @@ const getFormattedActivities = async (req, res) => {
                 userId: "$user._id",
                 username: "$user.username",
                 userImage: "$user.image",
+                placeholder: "$user.placeholder",
+                placeholderImages: "$user.placeholderImages",
                 projectId: "$project._id",
                 projectName: "$project.name",
                 projectImage: "$project.image",
@@ -138,7 +140,7 @@ const checkOut = async (req, res) => {
     const activityResult = await db.collection("activity").insertOne(newActivity);
 
     //add activity id to project
-    const updatedProject = await db.collection("projects").updateOne(
+    await db.collection("projects").updateOne(
         { _id: new ObjectId(projectId) },
         { 
             $push: { activity: activityResult.insertedId },
@@ -149,10 +151,13 @@ const checkOut = async (req, res) => {
         }
     );
 
+    const updatedProject = await db.collection("projects").findOne({ _id: new ObjectId(projectId) });
+
     res.status(200).json({
         success: true,
         message: "Project checked out successfully.",
-        activityId: activityResult.insertedId
+        activityId: activityResult.insertedId,
+        data: updatedProject
     });
 
 };
@@ -189,9 +194,44 @@ const checkIn = async (req, res) => {
     res.status(200).json({
         success: true,
         message: "Project checked in successfully.",
-        activityId: activityResult.insertedId
+        activityId: activityResult.insertedId,
+        data: updatedProject
     });
 };
+
+//Delete Activity by ID
+const deleteActivity = async (req, res) => {
+    const { id } = req.params;
+    const db = await connectDB();
+
+    //find the activity
+    const activity = await db.collection("activity").findOne({ _id: new ObjectId(id) });
+
+    if (!activity) {
+        return res.status(404).json({
+            error: true,
+            error_message: "Activity not found."
+        });
+    }
+
+    //delete the activity
+    await db.collection("activity").deleteOne({ _id: new ObjectId(id) });
+
+    //remove activity from project
+    if(activity.projectId) {
+        await db.collection("projects").updateOne(
+            { _id: new ObjectId(activity.projectId) },
+            { $pull: { activity: new ObjectId(id) } }
+        );
+    }
+
+    res.status(200).json({
+        success: true,
+        message: "Activity deleted."
+    });
+    
+};
+
 
 module.exports = {
     getAllActivity,
@@ -200,5 +240,6 @@ module.exports = {
     getActivityByUserId,
     getFormattedActivities,
     checkOut,
-    checkIn
+    checkIn,
+    deleteActivity
 }

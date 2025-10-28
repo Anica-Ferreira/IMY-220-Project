@@ -10,12 +10,15 @@ export const Header = ({ isAuthenticated, setIsAuthenticated }) =>{
     const sessionUserId = sessionStorage.getItem("userId");
     const [currentUser, setCurrentUser] = useState(null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(sessionStorage.getItem("admin") === "true");
     const dropdownRef = useRef(null);
 
     useEffect(() => {
         const handleAuthChange = () => {
             const storedAuth = sessionStorage.getItem("isAuthenticated") === "true";
+            const storedAdmin = sessionStorage.getItem("admin") === "true";
             setIsAuthenticated(storedAuth);
+            setIsAdmin(storedAdmin);
         };
 
         if (sessionUserId) {
@@ -42,8 +45,7 @@ export const Header = ({ isAuthenticated, setIsAuthenticated }) =>{
     };
 
     const logout = () =>{
-        sessionStorage.removeItem("userId");
-        sessionStorage.setItem("isAuthenticated", "false");
+        sessionStorage.clear();
         setIsAuthenticated(false);
         window.dispatchEvent(new Event("authChange"));
         setDropdownOpen(false);
@@ -68,6 +70,13 @@ export const Header = ({ isAuthenticated, setIsAuthenticated }) =>{
                                 Projects
                             </NavLink>
                         </li>
+
+                        {/*If user is an admin*/}
+                        {isAdmin && <li className="btn-white mx-2 btn-md">
+                            <NavLink to="/admin" className={({ isActive }) => isActive ? "active-link" : "" }>
+                                Admin
+                            </NavLink>
+                        </li>}
 
                         {/* Profile dropdown */}
                         <li className="position-relative" ref={dropdownRef}>

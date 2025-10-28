@@ -127,7 +127,7 @@ export const MemberList = ({ project, isOwner, isMember }) =>{
                 ))}
 
                 {/* Only members can can add new members */}
-                    {isMember && (
+                    {isMember || isOwner && (
                         <li className="mt-2">
                             <div className="add-member dropdown" ref={dropdownRef}>
                                 <input
@@ -156,7 +156,7 @@ export const MemberList = ({ project, isOwner, isMember }) =>{
                                             </div>
                                         ))
                                     ) : (
-                                        <div className="dropdown-item text-muted">
+                                        <div className="dropdown-item">
                                             No friends available to add
                                         </div>
                                     )}

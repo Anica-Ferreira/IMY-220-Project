@@ -1,21 +1,28 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { EditProfile } from "./EditProfile";
 import { useNavigate } from "react-router-dom";
 import { ProfileImage } from "./ProfileImage";
+import {PopupModel } from "./PopupModel"
 
 export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
     const navigate = useNavigate();
+    const location = useLocation();
     const [isEditing, setIsEditing] = useState(false);
     const [isFriend, setIsFriend] = useState(false);
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [deleting, setDeleting] = useState(false);
-
+    const [showDeletePopup, setShowDeletePopup] = useState(false);
+    
+    const params = new URLSearchParams(location.search);
+    const isAdmin = params.get("adminManage") === "true";
+    
     //check if profile user is in current users friends list
     useEffect(() =>{
-        if (!currentUser || !currentUser.friends || !user) return;
+        if(!currentUser || !currentUser.friends || !user) return;
 
         if(currentUser.friends.some(friendId => friendId === user._id)) {
             setIsFriend(true);
@@ -94,10 +101,14 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
             });
         
             if(res.ok){
-                sessionStorage.removeItem("userId");
-                sessionStorage.setItem("isAuthenticated", false);
-                window.dispatchEvent(new Event("authChange")); //set header
-                navigate("/");
+                if(isAdmin){
+                    navigate("/admin");
+                }else{
+                    sessionStorage.removeItem("userId");
+                    sessionStorage.setItem("isAuthenticated", false);
+                    window.dispatchEvent(new Event("authChange")); //set header
+                    navigate("/admin");
+                }
             }
 
         }catch(err){
@@ -106,6 +117,9 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
             setDeleting(false);
         }
     };
+
+    //popup message
+    const message = isAdmin ? "Are you sure you want to delete this user?": "Are you sure you want to delete your profile?";
 
     return(
         <article className="profile-info shadow-sm">
@@ -121,10 +135,10 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
                     <strong>{user.email}</strong><br/>
                     <strong>{user.company}</strong><br/><br/>
 
-                    {viewOnly ? (
+                    {viewOnly || isAdmin ? (
                         <>
                             <button onClick={() => setIsEditing(true)}>Edit Profile</button>
-                            <button  onClick={handleDeleteAccount} disabled={deleting}>{deleting ? "Deleting..." : "Delete Account"}</button>
+                            <button  onClick={() => setShowDeletePopup(true)} disabled={deleting}>{deleting ? "Deleting..." : "Delete Account"}</button>
                         </>
                         
                     ) : (
@@ -136,6 +150,19 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
             ) : (
                 <EditProfile user={user} onSave={handleSave} onCancel={() => setIsEditing(false)} />
             )}
+
+            {/* DeletePopup */}
+            <PopupModel
+                visible={showDeletePopup}
+                title="Confirm Delete"
+                message={message}
+                isConfirmation={true}
+                onConfirm={async () => {
+                    setShowDeletePopup(false);
+                    await handleDeleteAccount();
+                }}
+                onCancel={() => setShowDeletePopup(false)}
+            />
         </article>
     )
 };

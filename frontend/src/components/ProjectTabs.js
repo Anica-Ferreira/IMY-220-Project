@@ -1,13 +1,12 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
 import { useState } from "react";
-import { CreateProject } from "./CreateProject";
 import { Files } from "./Files";
 import { MemberList } from "./MemberList";
 import { ProjectMessages } from "./ProjectMessages";
 import { DiscussionBoard } from "../components/DiscussionBoard";
 
-export const ProjectTabs = ({ project, isOwner, isMember }) =>{
+export const ProjectTabs = ({ project, isOwner, isMember, onUpdate }) =>{
     const [activeTab, setActiveTab] = useState('files');
     const switchTab = (tab) => setActiveTab(tab);
 
@@ -18,21 +17,21 @@ export const ProjectTabs = ({ project, isOwner, isMember }) =>{
                 <li className="nav-item">
                     <button 
                         className={`nav-link ${activeTab === "files" ? "active" : ""}`} 
-                        onClick={() => switchTab("files")}>Files
+                        onClick={() => switchTab("files")}><i className="fa-solid fa-folder-open"></i> Files
                     </button>
                 </li>
                 {/* User Members Feed */}
                 <li className="nav-item">
                     <button 
                         className={`nav-link ${activeTab === "members" ? "active" : ""}`} 
-                        onClick={() => switchTab("members")}>Members
+                        onClick={() => switchTab("members")}><i className="fa-solid fa-users"></i> Members
                     </button>
                 </li>
                 {/* Activity */}
                 <li className="nav-item">
                     <button 
                         className={`nav-link ${activeTab === "activity" ? "active" : ""}`} 
-                        onClick={() => switchTab("activity")}>Project Activity
+                        onClick={() => switchTab("activity")}><i className="fa-solid fa-chart-line"></i> Project Activity
                     </button>
                 </li>
                 {/* Discussion board */}
@@ -40,7 +39,7 @@ export const ProjectTabs = ({ project, isOwner, isMember }) =>{
                     <li className="nav-item">
                         <button 
                             className={`nav-link ${activeTab === "board" ? "active" : ""}`} 
-                            onClick={() => switchTab("board")}>Discussion board
+                            onClick={() => switchTab("board")}><i className="fa-solid fa-comments"></i> Discussion board
                         </button>
                     </li>
                 )}
@@ -50,7 +49,7 @@ export const ProjectTabs = ({ project, isOwner, isMember }) =>{
             <section className="tab-content">
                 {activeTab === "files" && (
                     <div> 
-                        <Files project={project} isMember={isMember} />
+                        <Files project={project} isMember={isMember} onUpdate={onUpdate} />
                     </div>
                 )}
 

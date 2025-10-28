@@ -2,10 +2,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { ProfileTabs } from "../components/ProfileTabs";
 import { ProfileInfo } from "../components/ProfileInfo";
 
 export const Profile = () =>{
+    const location = useLocation();
     const { profileId } = useParams();
     const [currentProfile, setCurrentProfile] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
@@ -13,6 +15,8 @@ export const Profile = () =>{
     const [error, setError] = useState("");
 
     const sessionUserId = sessionStorage.getItem("userId");
+    const params = new URLSearchParams(location.search);
+    const isAdmin = params.get("adminManage") === "true";
     
     //update profile when url changes
     useEffect(() => {
@@ -55,7 +59,9 @@ export const Profile = () =>{
 
     //check if you are viewing your own or another profile
     const isOwnProfile = sessionUserId === profileId;
-    const headerText = isOwnProfile ? "Your Profile" : "View Profile";
+    const isAdminManaging = isAdmin && !isOwnProfile; 
+
+    const headerText = isAdminManaging ? "Manage Profile" : isOwnProfile? "Your Profile": "View Profile";
 
     return(
         <div>

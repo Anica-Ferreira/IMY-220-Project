@@ -1,7 +1,7 @@
 /* Anica Ferreira 40_u24581802 */
 import { file } from "jszip";
 import React from "react";
-import { useState, useRef } from "react";
+import { useState} from "react";
 import { useDropzone } from "react-dropzone";
 
 export const ProjectCheckIn = ({project, onClose, onCheckIn}) =>{
@@ -21,22 +21,18 @@ export const ProjectCheckIn = ({project, onClose, onCheckIn}) =>{
         return parts.join(".");
     }
 
-    const nextVersion = getNextVersion(project.version);
-
     //Form Data
     const [formData, setFormData] = useState({
         message: "",
-        version: nextVersion,
+        version: getNextVersion(project.version),
     });
-    
-    const fileInputRef = useRef(null);
 
     //FILES
 
     //Adding selected file
     const onFilesDrop = (acceptedFiles) => {
         const filteredFiles = acceptedFiles.filter(
-            file => !files.some(f => f.name === file.name && f.size === file.size)
+            file => !files.some(f => f.name === file.name)
         );
         if (filteredFiles.length > 0) setFiles(prev => [...prev, ...filteredFiles]);
     };
@@ -114,9 +110,6 @@ export const ProjectCheckIn = ({project, onClose, onCheckIn}) =>{
 
             if (!res.ok) throw new Error("Failed to check in project");
 
-            const data = await res.json();
-            setCheckedOutBy(currentUserId);
-
             //download files after successful check in
             await downloadAllFiles();
 
@@ -145,15 +138,15 @@ export const ProjectCheckIn = ({project, onClose, onCheckIn}) =>{
                 size: f.size,
             }));
 
-            await fetch(`/api/projects/update/${project._id}`, {
+            const updateRes = await fetch(`/api/projects/update/${project._id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ files: uploadedFiles }),
+                body: JSON.stringify({ files: uploadedFiles, version: formData.version }),
             });
+            
+            const updatedProject = await updateRes.json();
+            onCheckIn(updatedProject.project);
         }
-
-        onCheckIn(files);
-
     };
 
     return(
@@ -162,13 +155,13 @@ export const ProjectCheckIn = ({project, onClose, onCheckIn}) =>{
 
                 <div className="form-group">
                     <label htmlFor="message">Check in Message</label>
-                    <input id="message" name="name" type="text" onChange={handleChange}/>
+                    <input id="message" type="text" onChange={handleChange} value={formData.message} />
                     {errors.message && <small className="text-danger">{errors.message}</small>}
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="version">Version</label>
-                    <input id="version" name="version" type="text" defaultValue={nextVersion} onChange={handleChange}/>
+                    <input id="version" type="text" onChange={handleChange} value={formData.version}/>
                     {errors.version && <small className="text-danger">{errors.version}</small>}
                 </div>
                 
@@ -177,6 +170,7 @@ export const ProjectCheckIn = ({project, onClose, onCheckIn}) =>{
                     <div {...getRootProps()}>
                         <input {...getInputProps()} />
                         <p>{isDragActive ? "Drop files here..." : "Click or drag files here"}</p>
+                        {errors.files && <small className="text-danger">{errors.files}</small>}
                     </div>
 
                     {/* Display selected files */}

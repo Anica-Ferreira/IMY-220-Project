@@ -8,7 +8,8 @@ const {
     getActivityByUserId,
     getFormattedActivities,
     checkOut,
-    checkIn
+    checkIn,
+    deleteActivity
 } = require("../controllers/activityController");
 
 router.get('/formatted', getFormattedActivities);
@@ -19,5 +20,7 @@ router.get('/', getAllActivity);
 
 router.post('/checkout', checkOut);
 router.post('/checkin', checkIn);
+
+router.delete('/:id', deleteActivity);
 
 module.exports = router;

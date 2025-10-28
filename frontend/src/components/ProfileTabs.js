@@ -2,7 +2,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 
-import { CreateProject } from "./CreateProject";
 import { Friends } from "./Friends";
 import { ProjectList } from "./ProjectList";
 import { ActivityList } from "./ActivityList";
@@ -14,8 +13,6 @@ export const ProfileTabs = ({user, viewOnly}) =>{
     const [friends, setFriends] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-
-    const sessionUserId = sessionStorage.getItem("userId");
 
     const switchTab = (tab) => setActiveTab(tab);
 
@@ -65,21 +62,21 @@ export const ProfileTabs = ({user, viewOnly}) =>{
                 <li className="nav-item">
                     <button 
                         className={`nav-link ${activeTab === "activity" ? "active" : ""}`} 
-                        onClick={() => switchTab("activity")}>Activity
+                        onClick={() => switchTab("activity")}><i className="fa-solid fa-chart-line"></i> Activity
                     </button>
                 </li>
                 {/* Friends */}
                 <li className="nav-item">
                     <button 
                         className={`nav-link ${activeTab === "friends" ? "active" : ""}`} 
-                        onClick={() => switchTab("friends")}>Friends
+                        onClick={() => switchTab("friends")}><i className="fa-solid fa-user-friends"></i> Friends
                     </button>
                 </li>
                 {/* Projects */}
                 <li className="nav-item">
                     <button 
                         className={`nav-link ${activeTab === "projects" ? "active" : ""}`} 
-                        onClick={() => switchTab("projects")}>Projects
+                        onClick={() => switchTab("projects")}><i className="fa-solid fa-diagram-project"></i> Projects
                     </button>
                 </li>
             </ul>

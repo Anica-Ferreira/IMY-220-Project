@@ -3,12 +3,13 @@ import React from "react";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { useState } from "react";
+import { Code } from "./Code";
+import { ProjectCheckIn } from "./ProjectCheckIn"; 
 
-import { ProjectCheckIn } from "./ProjectCheckIn";
-
-export const Files = ({ project, isMember }) =>{
+export const Files = ({ project, isMember, onUpdate }) =>{
     const currentUserId = sessionStorage.getItem("userId");
     const [files, setFiles] = useState(project.files);
+    const [selectedFile, setSelectedFile] = useState(files[0]);
     const [showCheckIn, setShowCheckIn] = useState(false);
     const [checkedOutBy, setCheckedOutBy] = useState(project.checkedOutBy);
 
@@ -54,7 +55,9 @@ export const Files = ({ project, isMember }) =>{
             if (!res.ok) throw new Error("Failed to check out project");
 
             const data = await res.json();
+            const updatedProject = data.data;
             setCheckedOutBy(currentUserId);
+            onUpdate(updatedProject);            
 
             //download files after successful check in
             await downloadAllFiles();
@@ -64,15 +67,10 @@ export const Files = ({ project, isMember }) =>{
     }
 
     //handle check in
-    const handleCheckIn = (newFiles) => {
+    const handleCheckIn = (newProject) => {
         setCheckedOutBy(null);
-
-        setFiles(prevFiles => {
-            const existingNames = prevFiles.map(f => f.name);
-            const filteredNew = newFiles.filter(f => !existingNames.includes(f.name));
-            return [...prevFiles, ...filteredNew];
-        });
-
+        setFiles(newProject.files);
+        onUpdate(newProject);
         setShowCheckIn(false);
     };
 
@@ -94,13 +92,19 @@ export const Files = ({ project, isMember }) =>{
             <ul className="file-list">
                 {files.map((file, index) => {
                     return(
-                        <li key={index} className="file-item">
+                        <li 
+                            key={index}
+                            className={`file-item ${selectedFile?.name === file.name ? "active-file" : ""}`}
+                            onClick={() => setSelectedFile(file)}
+                        >
                             <i className="fas fa-file me-2"></i>
                             {file.name}
                         </li>
                     )
                 })}
             </ul>
+
+            {selectedFile && <Code file={selectedFile} />}
 
             {/* Modal overlay */}
             {showCheckIn && (

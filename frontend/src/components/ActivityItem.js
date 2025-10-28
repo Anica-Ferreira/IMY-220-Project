@@ -18,8 +18,8 @@ export const formatTimeAgo = (timestamp) => {
     const years = Math.floor(days / 365);
 
     if (seconds < 60) return "just now";
-    if (minutes < 60) return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
-    if (hours < 24) return `${hours} h${hours > 1 ? "s" : ""} ago`;
+    if (minutes < 60) return `${minutes} min ago`;
+    if (hours < 24) return `${hours} h ago`;
     if (days < 7) return `${days} day${days > 1 ? "s" : ""} ago`;
     if (weeks < 4) return `${weeks} week${weeks > 1 ? "s" : ""} ago`;
     if (months < 12) return `${months} month${months > 1 ? "s" : ""} ago`;
@@ -46,7 +46,9 @@ export const ActivityItem = ({ activity, showAll = true, showMessage = false }) 
                             image: activity.projectImage,
                             description: activity.projectDescription,
                             languages: activity.projectLanguages,
-                            downloads: activity.downloads
+                            downloads: activity.downloads,
+                            placeholder: activity.placeholder,
+                            placeholderImages: activity.placeholderImages
                         }}
                     />
                 </div>
@@ -56,9 +58,11 @@ export const ActivityItem = ({ activity, showAll = true, showMessage = false }) 
                     <span>
                         <ProfilePreview
                             profile={{
-                            _id: activity.userId,
-                            username: activity.username,
-                            image: activity.userImage,
+                                _id: activity.userId,
+                                username: activity.username,
+                                image: activity.userImage,
+                                placeholder: activity.placeholder,
+                                placeholderImages: activity.placeholderImages
                             }}
                         />
                         {activity.action}{' '}
