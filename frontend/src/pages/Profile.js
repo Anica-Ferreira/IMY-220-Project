@@ -5,12 +5,14 @@ import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { ProfileTabs } from "../components/ProfileTabs";
 import { ProfileInfo } from "../components/ProfileInfo";
+import { Loader } from "../components/Loader";
 
 export const Profile = () =>{
     const location = useLocation();
     const { profileId } = useParams();
     const [currentProfile, setCurrentProfile] = useState(null);
     const [currentUser, setCurrentUser] = useState(null);
+    const [isFriend, setIsFriend] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -18,6 +20,13 @@ export const Profile = () =>{
     const params = new URLSearchParams(location.search);
     const isAdmin = params.get("adminManage") === "true";
     
+    //check if profile user is in current users friends list
+    useEffect(() => {
+        if (!currentUser || !currentUser.friends || !currentProfile) return;
+
+        setIsFriend(currentUser.friends.includes(currentProfile._id));
+    }, [currentUser, currentProfile]);
+
     //update profile when url changes
     useEffect(() => {
         const fetchUser = async () =>{
@@ -54,8 +63,14 @@ export const Profile = () =>{
     };
 
     //If user not found yet, display loading
-    if (loading) return <p>Loading profile...</p>;
-    if (error) return <p className="text-danger">{error}</p>;
+    if (loading)
+    return(
+        <div className="loader-overlay">
+            <Loader />
+        </div>
+    );
+
+    if(error) return <p className="text-danger">{error}</p>;
 
     //check if you are viewing your own or another profile
     const isOwnProfile = sessionUserId === profileId;
@@ -68,12 +83,12 @@ export const Profile = () =>{
             <h1 className="text-center">{headerText}</h1>
             <div className="profile-container">
                 <div className="profile-info flex-1">
-                    <ProfileInfo user={currentProfile} onSave={handleSave} viewOnly={isOwnProfile} currentUser={currentUser}/>
+                    <ProfileInfo user={currentProfile} onSave={handleSave} viewOnly={isOwnProfile} currentUser={currentUser} isFriend={isFriend}/>
                 </div>
                 
-                {isOwnProfile && (
+                {(isOwnProfile || isFriend) && (
                     <div className="profile-tabs">
-                        <ProfileTabs user={currentProfile} viewOnly={isOwnProfile} />
+                        <ProfileTabs user={currentProfile} viewOnly={isOwnProfile} isFriend={isFriend}/>
                     </div>
                 )}
             </div>

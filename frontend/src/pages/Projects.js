@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { ProjectList } from "../components/ProjectList";
 import { CreateProject } from "../components/CreateProject";
+import { Loader } from "../components/Loader";
 
 export const Projects = () =>{
     const [projects, setProjects] = useState([]);
@@ -36,9 +37,8 @@ export const Projects = () =>{
         <div>
             <h1>Projects</h1>
 
-            <button onClick={() => setShowCreate(true)} >New Project</button>
+            <button onClick={() => setShowCreate(true)} >New Project <i className="fas fa-plus"></i></button>
 
-            {loading && <p>Loading projects...</p>}
             {error && <p className="text-danger">{error}</p>}
 
             {!loading && !error && <ProjectList projects={projects} />}
@@ -49,6 +49,12 @@ export const Projects = () =>{
                     <div className="modal-content">
                         <CreateProject onClose={() => setShowCreate(false)}/>
                     </div>
+                </div>
+            )}
+
+            {loading && (
+                <div className="loader-overlay">
+                    <Loader />
                 </div>
             )}
         </div>

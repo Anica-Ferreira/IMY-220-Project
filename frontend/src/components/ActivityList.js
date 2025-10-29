@@ -2,7 +2,7 @@
 import React from "react";
 import { ActivityItem } from "./ActivityItem";
 
-export const ActivityList = ({ activities, showAll = true, showMessage, type="eed" }) =>{
+export const ActivityList = ({ activities, showAll = true, showMessage, type}) =>{
     
     const emptyErrorMessage = () =>{
         if (type === "feed") {
@@ -17,7 +17,7 @@ export const ActivityList = ({ activities, showAll = true, showMessage, type="ee
         }else if (type === "profile") {
             return (
                 <div className="card">
-                    <p>You have no activity yet.</p>
+                    <p>No activity yet.</p>
                 </div>
             );
         }
@@ -29,7 +29,7 @@ export const ActivityList = ({ activities, showAll = true, showMessage, type="ee
                 emptyErrorMessage()
             ) : (
                 activities.map((activity, index) => (
-                    <ActivityItem key={index} activity={activity} showAll={showAll}showMessage={showMessage}/>
+                    <ActivityItem key={index} activity={activity} showAll={showAll} showMessage={showMessage}/>
                 ))
             )}
         </div>

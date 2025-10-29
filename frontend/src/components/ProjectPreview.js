@@ -1,8 +1,37 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-export const ProjectPreview = ({ project }) =>{
+export const ProjectPreview = ({ project, showBookmark = false }) =>{
+    const [saved, setSaved] = useState(false);
+    const currentUserId = sessionStorage.getItem("userId");
+
+    //check if project is already saved
+    useEffect(() => {
+        if (!project.savedBy) return;
+        setSaved(project.savedBy.includes(currentUserId));
+    }, [project.savedBy, currentUserId]);
+    
+    const toggleSave = async () => {
+        
+        const endpoint = saved ? "/api/projects/unsave" : "/api/projects/save";
+
+        try{
+            const res = await fetch(endpoint, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId: currentUserId, projectId: project._id })
+            });
+
+            if(res.ok) {
+                setSaved(!saved);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     return(
         <article className="project-preview">
             
@@ -25,6 +54,10 @@ export const ProjectPreview = ({ project }) =>{
             <span className="project-preview-download">
                 <i className="fa-solid fa-download"></i>{project.downloads}
             </span>
+
+            { showBookmark && <span onClick={toggleSave} title="Save project">
+                <i className={saved ? "fa-solid fa-bookmark" : "fa-regular fa-bookmark"}></i>
+            </span>}
         </p>
 
         </article>

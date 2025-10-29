@@ -2,6 +2,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Loader } from "./Loader";
 
 export const SignupForm = ({ setIsAuthenticated }) =>{
     const navigate = useNavigate();
@@ -9,6 +10,7 @@ export const SignupForm = ({ setIsAuthenticated }) =>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const validateEmail = (email) =>{
         if(!email) return "Email cannot be empty.";
@@ -75,6 +77,7 @@ export const SignupForm = ({ setIsAuthenticated }) =>{
         setErrors(newErrors);
 
         if(!usernameError && !emailError && !passwordError){
+            setLoading(true);
             try{
                 const placeholderImages = randomiseProfile();
                 const res = await fetch('/api/auth/signup', {
@@ -99,42 +102,52 @@ export const SignupForm = ({ setIsAuthenticated }) =>{
                 }
             }catch (err){
                 console.error(err);
+            }finally{
+                setLoading(false);
             }   
         }
     };
 
     return(
-        <div className="form-box shadow-sm rounded bg-dark">
-            <form onSubmit={submit} noValidate autoComplete="off">
-                <h2>Sign Up</h2>
-                <div className="form-input">
-                    <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} id="usernameInput" placeholder=""/>
-                    <label htmlFor="usernameInput">Username</label>
+        <div>
+            {loading && (
+                <div className="loader-overlay">
+                    <Loader />
                 </div>
-                {errors.username && <small className="text-danger">{errors.username}</small>}
+            )}
 
-                <div className="form-input">
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="emailInput"  placeholder=""/>
-                    <label htmlFor="emailInput">Email</label>
-                </div>
-                {errors.email && <small className="text-danger">{errors.email}</small>}
-                
-                <div className="form-input">
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="passwordInput"  placeholder="" />
-                    <label htmlFor="passwordInput">Password</label>
-                </div>
-                {errors.password && <small className="text-danger">{errors.password}</small>}
+            <div className="form-box shadow-sm rounded bg-dark">
+                <form onSubmit={submit} noValidate autoComplete="off">
+                    <h2>Sign Up</h2>
+                    <div className="form-input">
+                        <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} id="usernameInput" placeholder=""/>
+                        <label htmlFor="usernameInput">Username</label>
+                    </div>
+                    {errors.username && <small className="text-danger">{errors.username}</small>}
 
-                {errors.signup && <small className="text-danger">{errors.signup}</small>}
+                    <div className="form-input">
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="emailInput"  placeholder=""/>
+                        <label htmlFor="emailInput">Email</label>
+                    </div>
+                    {errors.email && <small className="text-danger">{errors.email}</small>}
+                    
+                    <div className="form-input">
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="passwordInput"  placeholder="" />
+                        <label htmlFor="passwordInput">Password</label>
+                    </div>
+                    {errors.password && <small className="text-danger">{errors.password}</small>}
 
-                <div>
-                    <input type="submit" name="submit" value="Sign Up" className="mt-5"/>
-                </div>
+                    {errors.signup && <small className="text-danger">{errors.signup}</small>}
 
-                <div className="mt-4 form-info">
-                    <small>Already a member? <Link to="/login" className="red-link">Login</Link></small>
-                </div>
-            </form>
-        </div>
+                    <div>
+                        <input type="submit" name="submit" value="Sign Up" className="mt-5"/>
+                    </div>
+
+                    <div className="mt-4 form-info">
+                        <small>Already a member? <Link to="/login" className="red-link">Login</Link></small>
+                    </div>
+                </form>
+            </div>
+        </div>  
     )
 }

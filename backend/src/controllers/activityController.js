@@ -112,7 +112,8 @@ const getFormattedActivities = async (req, res) => {
                 projectImage: "$project.image",
                 projectDescription: "$project.description",
                 projectLanguages: "$project.languages",
-                downloads: "$project.downloads"
+                downloads: "$project.downloads",
+                savedBy: "$project.savedBy" 
             }
         },
         //sort in reverse chronological order

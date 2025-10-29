@@ -2,9 +2,6 @@
 const connectDB = require("../db/connection");
 const { ObjectId } = require('mongodb');
 
-const path = require('path');
-const fs = require('fs');
-
 /* CRUD OPERATIONS FOR PROJECTS */
 
 //GET ALL PROJECTS
@@ -40,7 +37,7 @@ const getProjectsByUserId = async (req, res) => {
     const projects = await db.collection("projects").find({
         $or: [
             { owner: new ObjectId(id) },
-            { members: { $in: [new ObjectId(id)] } }
+            { savedBy: { $in: [new ObjectId(id)] } } 
         ]
     }).toArray();
 
@@ -143,6 +140,12 @@ const deleteProject = async (req, res) => {
     await db.collection("users").updateMany(
         { projects: new ObjectId(id) },
         { $pull: { projects: new ObjectId(id) } }
+    );
+
+    //remove project from users savedProjects
+    await db.collection("users").updateMany(
+        { savedProjects: new ObjectId(id) },
+        { $pull: { savedProjects: new ObjectId(id) } }
     );
 
     //delete project
@@ -291,7 +294,8 @@ const createProject = async (req, res) => {
         files: files || [],
         activity: [],
         discussion: [],
-        languages: hashtags || []
+        languages: hashtags || [],
+        savedBy: []
     };
 
     const result = await db.collection("projects").insertOne(newProject);
@@ -314,6 +318,46 @@ const createProject = async (req, res) => {
     });
 }
 
+//SAVE PROJECT
+const saveProject = async (req, res) => {
+    const { projectId, userId } = req.body;
+    const db = await connectDB();
+
+    //add user to project savedBy
+    await db.collection("projects").updateOne(
+        { _id: new ObjectId(projectId) },
+        { $addToSet: { savedBy: new ObjectId(userId) } }
+    );
+
+    //add project to user savedProjects
+    await db.collection("users").updateOne(
+        { _id: new ObjectId(userId) },
+        { $addToSet: { savedProjects: new ObjectId(projectId) } }
+    );
+
+    res.status(200).json({ message: "Project saved successfully." });
+};
+
+//UNSAVE PROJECT
+const unsaveProject = async (req, res) => {
+    const { projectId, userId } = req.body;
+    const db = await connectDB();
+
+    //remove user from project's savedBy
+    await db.collection("projects").updateOne(
+        { _id: new ObjectId(projectId) },
+        { $pull: { savedBy: new ObjectId(userId) } }
+    );
+
+    //remove project from user's savedProjects
+    await db.collection("users").updateOne(
+        { _id: new ObjectId(userId) },
+        { $pull: { savedProjects: new ObjectId(projectId) } }
+    );
+
+    res.status(200).json({ message: "Project unsaved successfully." });
+};
+
 module.exports = {
     getAllProjects,
     getProjectsByID,
@@ -324,5 +368,7 @@ module.exports = {
     addDiscussionMessage,
     addProjectMember,
     removeProjectMember,
-    createProject
+    createProject,
+    saveProject,
+    unsaveProject
 }

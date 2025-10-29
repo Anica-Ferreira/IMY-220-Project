@@ -255,7 +255,7 @@ export const CreateProject = ({onClose}) =>{
                             onChange={(e) => setCurrentTag(e.target.value)}
                             placeholder="JavaScript"
                         />
-                        <button type="button" onClick={handleAddHashtag}>+</button>
+                        <button type="button" onClick={handleAddHashtag}><i className="fas fa-plus"></i></button>
                         {errors.hashtags && <small className="text-danger">{errors.hashtags}</small>}
                     </div>
 
@@ -265,7 +265,7 @@ export const CreateProject = ({onClose}) =>{
                             {hashtags.map((tag, index) => (
                                 <li key={index}>
                                     #{tag}{" "}
-                                    <button type="button" onClick={() => handleRemoveHashtag(index)} className="remove-btn">Remove</button>
+                                    <button type="button" onClick={() => handleRemoveHashtag(index)} className="remove-btn"><i className="fas fa-trash"></i></button>
                                 </li>
                             ))}
                         </ul>
@@ -288,7 +288,7 @@ export const CreateProject = ({onClose}) =>{
                             {files.map((file, idx) => (
                                 <li key={idx}>
                                     {file.name} ({Math.round(file.size / 1024)} KB)
-                                    <button type="button" onClick={() => handleRemoveFile(idx)}>Remove</button>
+                                    <button type="button" onClick={() => handleRemoveFile(idx)}><i className="fas fa-trash"></i></button>
                                 </li>
                             ))}
                         </ul>

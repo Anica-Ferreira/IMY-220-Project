@@ -48,7 +48,8 @@ export const ActivityItem = ({ activity, showAll = true, showMessage = false }) 
                             languages: activity.projectLanguages,
                             downloads: activity.downloads,
                             placeholder: activity.placeholder,
-                            placeholderImages: activity.placeholderImages
+                            placeholderImages: activity.placeholderImages,
+                            savedBy: activity.savedBy
                         }}
                     />
                 </div>
@@ -62,7 +63,8 @@ export const ActivityItem = ({ activity, showAll = true, showMessage = false }) 
                                 username: activity.username,
                                 image: activity.userImage,
                                 placeholder: activity.placeholder,
-                                placeholderImages: activity.placeholderImages
+                                placeholderImages: activity.placeholderImages,
+                                savedBy: activity.savedBy
                             }}
                         />
                         {activity.action}{' '}

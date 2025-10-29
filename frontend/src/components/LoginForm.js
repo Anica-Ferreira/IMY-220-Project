@@ -2,12 +2,14 @@
 import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Loader } from "./Loader";
 
 export const LoginForm = ({ setIsAuthenticated }) =>{
     const navigate = useNavigate();
-    const [email, setEmail] = useState("test@tester.com");
+    const [email, setEmail] = useState("thomas10@gmail.com");
     const [password, setPassword] = useState("test1234");
     const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
     
     const validateEmail = (email) =>{
         if(!email) return "Please enter your email.";
@@ -32,6 +34,7 @@ export const LoginForm = ({ setIsAuthenticated }) =>{
         }
 
         try{
+            setLoading(true);
             const res = await fetch('/api/auth/login', {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
@@ -62,35 +65,45 @@ export const LoginForm = ({ setIsAuthenticated }) =>{
 
         }catch(err){
             console.error(err);
+        }finally{
+            setLoading(false)
         }
     }
 
     return(
-        <div className="form-box shadow-sm rounded bg-dark">
-            <form onSubmit={submit} noValidate autoComplete="off">
-                <h2>Log In</h2>
-                <div className="form-input">
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="emailInput" placeholder=""/>
-                    <label htmlFor="emailInput">Email</label>
+        <div>
+            {loading && (
+                <div className="loader-overlay">
+                    <Loader />
                 </div>
-                {errors.email && <small className="text-danger">{errors.email}</small>}
+            )}
+        
+            <div className="form-box shadow-sm rounded bg-dark">
+                <form onSubmit={submit} noValidate autoComplete="off">
+                    <h2>Log In</h2>
+                    <div className="form-input">
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="emailInput" placeholder=""/>
+                        <label htmlFor="emailInput">Email</label>
+                    </div>
+                    {errors.email && <small className="text-danger">{errors.email}</small>}
 
-                <div className="form-input">
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="passwordInput" placeholder=""/>
-                    <label htmlFor="passwordInput">Password</label>
-                </div>
-                {errors.password && <small className="text-danger">{errors.password}</small>}
+                    <div className="form-input">
+                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="passwordInput" placeholder=""/>
+                        <label htmlFor="passwordInput">Password</label>
+                    </div>
+                    {errors.password && <small className="text-danger">{errors.password}</small>}
 
-                {errors.login && <small className="text-danger">{errors.login}</small>}
+                    {errors.login && <small className="text-danger">{errors.login}</small>}
 
-                <div>
-                    <input type="submit" name="submit" value="Log In" className="mt-5"/>
-                </div>
+                    <div>
+                        <input type="submit" name="submit" value="Log In" className="mt-5"/>
+                    </div>
 
-                <div className="mt-4 form-info">
-                    <small>Not registered? <Link to="/signup" className="red-link">Sign up</Link></small>
-                </div>
-            </form>
+                    <div className="mt-4 form-info">
+                        <small>Not registered? <Link to="/signup" className="red-link">Sign up</Link></small>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }

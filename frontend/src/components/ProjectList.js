@@ -7,12 +7,12 @@ export const ProjectList = ({ projects }) =>{
         <div>
             {projects.length === 0 && 
                 <div className="card">
-                    {projects.length === 0 && <p>You have no projects yet.</p>}
+                    {projects.length === 0 && <p>No projects yet.</p>}
                 </div>}
             
             {projects.map((project, index) => (
                 <div key={index} className="card mb-3">
-                    <ProjectPreview project={project} />
+                    <ProjectPreview project={project} showBookmark={true}/>
                 </div>
             ))}
         </div>

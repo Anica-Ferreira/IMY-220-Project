@@ -43,8 +43,6 @@ export const Feed = ({ localActivity, globalActivity, sortOption, setSortOption 
                     ) : (
                         <ActivityList activities={globalActivity} showMessage={false} type="feed"/>
                     )}
-
-
                 </div>
             </section>
         </div>

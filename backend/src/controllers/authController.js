@@ -63,6 +63,7 @@ const signup = async (req, res) => {
         company: "",
         friends: [],
         projects: [],
+        savedProjects: [],
         placeholder: true,
         placeholderImages: placeholderImages
     });

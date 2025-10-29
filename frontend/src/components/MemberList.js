@@ -127,7 +127,7 @@ export const MemberList = ({ project, isOwner, isMember }) =>{
                 ))}
 
                 {/* Only members can can add new members */}
-                    {isMember || isOwner && (
+                    {(isMember || isOwner) && (
                         <li className="mt-2">
                             <div className="add-member dropdown" ref={dropdownRef}>
                                 <input

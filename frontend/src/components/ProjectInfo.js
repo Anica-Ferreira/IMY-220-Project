@@ -97,12 +97,16 @@ export const ProjectInfo = ({project, onSave, isOwner, isAdmin}) =>{
 
                     <strong>Version {project.version}</strong><br/>
                     <strong>Created on {new Date(project.createdAt).toLocaleDateString()}</strong><br/>
-                    <strong>Status: {project.status}{project.status === "Checked out" && checkedOutUser ? ` by ${checkedOutUser.username}`: ""}</strong><br/><br/>
+                    {isOwner && 
+                        <>
+                            <strong>Status: {project.status}{project.status === "Checked out" && checkedOutUser ? ` by ${checkedOutUser.username}`: ""}</strong><br/><br/>
+                        </>
+                    }
 
                     {/*Add edit and delete button if the user is owner*/}
                     {isOwner && (
                         <>
-                            <button onClick={() => setIsEditing(true)}>Edit Project</button>
+                            <button onClick={() => setIsEditing(true)}><i className="fas fa-edit"></i></button>
                             <button onClick={() => setShowDeletePopup(true)} disabled={deleting}>{deleting ? "Deleting..." : "Delete Project"}</button>
                         </>
                     )}

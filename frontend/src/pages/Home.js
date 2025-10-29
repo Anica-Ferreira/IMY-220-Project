@@ -1,8 +1,8 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
 import { useState, useEffect } from "react";
-
 import { Feed }  from "../components/Feed";
+import { Loader } from "../components/Loader";
 
 export const Home = () =>{
     const [activity, setActivity] = useState([]);
@@ -71,18 +71,21 @@ export const Home = () =>{
 
     }, [sortOption, activity]);
 
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p className="text-danger">{error}</p>;
     if (!user) return null;
 
     //filter local and global feed
     
-    //only users friends
-    const local = filteredActivity.filter(act =>
-        Array.isArray(user.friends) && act.userId &&  
-        (act.userId.toString() === user._id.toString() || user.friends.map(f => f.toString()).includes(act.userId.toString()))
-    );
+    //local - ownn projects, isFriendsProjects or Saved projects
+    const local = filteredActivity.filter(act => {
+        const userId = act.userId.toString();
+        const projectId = act.projectId.toString();
+        const isOwn = userId === user._id.toString();
+
+        const isFriend = user.friends.some(friendId => friendId.toString() === userId);
+        const isSavedProject = user.savedProjects.some(savedId => savedId.toString() === projectId);
+
+        return isOwn || isFriend || isSavedProject;
+    });
 
     const global = filteredActivity;
 
@@ -96,6 +99,12 @@ export const Home = () =>{
                 sortOption={sortOption} 
                 setSortOption={setSortOption} 
             />
+
+            {loading && (
+                <div className="loader-overlay">
+                    <Loader />
+                </div>
+            )}
         </div>
     )
 };

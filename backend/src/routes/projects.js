@@ -11,8 +11,13 @@ const {
     addProjectMember,
     removeProjectMember,
     createProject,
-    downloadProjects
+    downloadProjects,
+    saveProject,
+    unsaveProject
 } = require('../controllers/projectController');
+
+router.post('/save', saveProject);
+router.post('/unsave', unsaveProject);
 
 router.get('/', getAllProjects);
 router.get('/:id', getProjectsByID);

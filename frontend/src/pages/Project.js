@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { ProjectInfo } from "../components/ProjectInfo";
 import { ProjectTabs } from "../components/ProjectTabs";
+import { Loader } from "../components/Loader";
 
 export const Project = () =>{
     const { projectId } = useParams();
@@ -39,7 +40,13 @@ export const Project = () =>{
         setCurrentProject(updatedProject);
     };
 
-    if (loading || !currentProject) return <p>Loading project...</p>;
+    if (loading || !currentProject) 
+    return (
+        <div className="loader-overlay">
+            <Loader />
+        </div>
+    );
+
     if (error) return <p className="text-danger">{error}</p>;
 
     //determine view type

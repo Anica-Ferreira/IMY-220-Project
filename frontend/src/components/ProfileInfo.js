@@ -7,11 +7,10 @@ import { useNavigate } from "react-router-dom";
 import { ProfileImage } from "./ProfileImage";
 import {PopupModel } from "./PopupModel"
 
-export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
+export const ProfileInfo = ({user, onSave, viewOnly, currentUser, isFriend}) =>{
     const navigate = useNavigate();
     const location = useLocation();
     const [isEditing, setIsEditing] = useState(false);
-    const [isFriend, setIsFriend] = useState(false);
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [deleting, setDeleting] = useState(false);
@@ -19,17 +18,6 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
     
     const params = new URLSearchParams(location.search);
     const isAdmin = params.get("adminManage") === "true";
-    
-    //check if profile user is in current users friends list
-    useEffect(() =>{
-        if(!currentUser || !currentUser.friends || !user) return;
-
-        if(currentUser.friends.some(friendId => friendId === user._id)) {
-            setIsFriend(true);
-        }else {
-            setIsFriend(false);
-        }
-    }, [currentUser, user]);
 
     //UPDATE PROFILE
     const handleSave = async (updatedUser) => {
@@ -131,13 +119,19 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser}) =>{
                     <h3>@{user.username}</h3>
 
                     <p>{user.about}</p>
-                    <strong>{user.role}</strong><br/>
-                    <strong>{user.email}</strong><br/>
-                    <strong>{user.company}</strong><br/><br/>
+                    
+                    {/* Only visible to friends account holder and admin  */}
+                    {(currentUser?._id === user._id || isFriend || isAdmin) && (
+                        <div className="profile-details">
+                            <p><i className="fas fa-briefcase"></i> Role: {user.role}</p>
+                            <p><i className="fas fa-envelope"></i> Email: {user.email}</p>
+                            <p><i className="fas fa-building"></i> Company: {user.company}</p>
+                        </div>
+                    )}
 
                     {viewOnly || isAdmin ? (
                         <>
-                            <button onClick={() => setIsEditing(true)}>Edit Profile</button>
+                            <button onClick={() => setIsEditing(true)}><i className="fas fa-edit"></i></button>
                             <button  onClick={() => setShowDeletePopup(true)} disabled={deleting}>{deleting ? "Deleting..." : "Delete Account"}</button>
                         </>
                         
