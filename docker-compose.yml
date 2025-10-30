@@ -1,0 +1,13 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend/uploadedImages:/app/backend/uploadedImages
+      - ./backend/uploadedFiles:/app/backend/uploadedFiles
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped

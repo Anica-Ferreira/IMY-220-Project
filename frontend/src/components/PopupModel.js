@@ -5,19 +5,19 @@ export const PopupModel = ({ visible, title, message, isConfirmation = false, on
     if(!visible) return null;
 
     return (
-        <div className="popup-overlay">
+        <div className="overlay">
         <div className="popup">
             <h3>{title}</h3>
             <p>{message}</p>
 
             {isConfirmation ? (
             <div className="buttons">
-                <button onClick={onConfirm}>Yes</button>
-                <button onClick={onCancel}>No</button>
+                <button className="btn-grey mx-4" onClick={onCancel}>No</button>
+                <button className="btn-red" onClick={onConfirm}>Yes</button>
             </div>
             ) : (
             <div className="buttons">
-                <button onClick={onClose}>OK</button>
+                <button className="btn-red" onClick={onClose}>OK</button>
             </div>
             )}
         </div>

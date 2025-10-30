@@ -1,9 +1,9 @@
 /* Anica Ferreira 40_u24581802 */
 
-/* --------------------------------- BUTTONS --------------------------------- */
+/* -------------------- BUTTONS -------------------- */
 
-/* Main red button */
-.btn-red, .form-box input[type="submit"] {
+/* Red Round button */
+.btn-red-round, .form-box input[type="submit"] {
     color: var(--white);
     background-color: var(--red);
     border: none;
@@ -13,10 +13,40 @@
     transition: border-radius 0.2s ease;
 }
 
-.btn-red:hover{
+.btn-red-round:hover{
     border-radius: 5px;
     background-color: var(--red);
     color: var(--white);
+}
+
+/* Red Square button*/
+.btn-red{
+    color: var(--white);
+    background-color: var(--red);
+    border: none;
+    border-radius: 5px;
+    padding: 0.5em 1em 0.5em 1em;
+    font-weight: 600;
+}
+
+.btn-red:hover{
+    background-color: #cc2b36;
+    color: var(--white);
+}
+
+/* Blue Button */
+.btn-grey{
+    color: var(--darkBlue);
+    background-color: var(--grey);
+    border: none;
+    border-radius: 5px;
+    padding: 0.5em 1em 0.5em 1em;
+    font-weight: 600;
+}
+
+.btn-grey:hover{
+    background-color: var(--white);
+    color: var(--darkBlue);
 }
 
 /* White line button */
@@ -52,21 +82,94 @@
     transform: translateX(-50%) scaleX(1);
 }
 
-/*  --------------------------------- FORM BUTTONS --------------------------------- */
+/* Signup arrow button */
+.btn .arrow {
+    display: none;
+    opacity: 0;
+    transform: translateX(-0.5em);
+    transition: opacity 0.3s ease;
+}
 
-.form-box input[type="submit"]{
+.btn:hover .arrow {
+    display: inline-block;
+    opacity: 1;
+    transform: translateX(0);
+}
+ 
+/* -------------------- FORM BUTTONS -------------------- */
+
+/* Outline-fill button */
+.outline-button{
     position: relative;
     width: 100%;
     border-radius: 5px;
     background-color: transparent;
     border: 2px solid var(--red);
     transition: 0.2s all ease-in-out;
+    color: var(--white);
+    padding: 0.5em;
 }
 
-.form-box input[type="submit"]:hover{
+.outline-button:hover{
     background-color: var(--red);
     color: var(--darkBlue);
     font-weight: 600;
 }
 
+/* -------------------- LINKS -------------------- */
 
+/* Red Link */
+.red-link{
+    text-decoration: none;
+    transition: all 0.2s ease-out;
+    font-weight: 600;
+}
+
+.red-link:hover{
+    color: var(--red) !important;
+}
+
+.nav-links li a {
+    color: var(--white);
+    text-decoration: none;
+}
+
+.nav-links li .active-link::after{
+    transform: translateX(-50%) scaleX(1);
+}
+
+a{
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover{
+    color: var(--red);
+}
+
+.profile-btn img {
+    border: 2px solid transparent;
+    border-radius: 50%;
+    transition: border 0.2s ease-in-out;
+}
+
+.profile-btn:hover img,
+.profile-btn.active img {
+    border-color: var(--red);
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: var(--dark);
+}
+
+.dropdown-menu .dropdown-item.active,
+.dropdown-menu .dropdown-item:active {
+    color: var(-darkBlue) !important;
+    background-color: transparent !important;
+}
+
+.profile-btn::after {
+    display: none !important;
+    content: none !important;
+}

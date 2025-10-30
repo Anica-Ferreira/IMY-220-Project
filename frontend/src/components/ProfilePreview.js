@@ -8,18 +8,18 @@ export const ProfilePreview = ({ profile, isLink = true }) =>{
     const currentUserId = sessionStorage.getItem("userId");
 
     return(
-        <span className="profile-preview">
+        <span className="profile-preview d-flex align-items-center">
 
-            <ProfileImage profile={profile} />
+            <ProfileImage profile={profile} size="small" />
             
             {isLink ? (
-                <strong>
+                <strong className="ms-2">
                     <Link to={`/profile/${profile._id}`}>
                         {" "}{profile.username} {currentUserId === profile._id && "(you)"}
                     </Link>
                 </strong>
             ) : (
-                <strong>
+                <strong className="ms-2">
                     {" "}{profile.username} {currentUserId === profile._id && "(you)"}
                 </strong>
             )}

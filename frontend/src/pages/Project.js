@@ -42,7 +42,7 @@ export const Project = () =>{
 
     if (loading || !currentProject) 
     return (
-        <div className="loader-overlay">
+        <div className="overlay">
             <Loader />
         </div>
     );
@@ -55,10 +55,24 @@ export const Project = () =>{
     const isMember = Array.isArray(currentProject?.members) && currentProject.members.some(memberId => memberId.toString() === sessionUserId);
 
     return (
-        <div>
-            {isAdmin && <h1>Manage Project</h1>}
-            <ProjectInfo project={currentProject} onSave={handleSave} isMember={isMember} isOwner={isOwner} isAdmin={isAdmin}/>
-            <ProjectTabs project={currentProject} isMember={isMember} isOwner={isOwner} onUpdate={handleSave}/>
+        <div id="project">
+            {!currentProject ? (
+                <div className="profile-layout">
+                    <ProjectInfo project={currentProject} onSave={handleSave} isMember={isMember} isOwner={isOwner} isAdmin={isAdmin}/>
+                </div>
+            ) : (
+        
+                <div className="layout-container">
+                    <div className="layout-info">
+                        <ProjectInfo project={currentProject} onSave={handleSave} isMember={isMember} isOwner={isOwner} isAdmin={isAdmin}/>
+                    </div>
+
+                    <div className="layout-tabs">
+                        <ProjectTabs project={currentProject} isMember={isMember} isOwner={isOwner} onUpdate={handleSave}/>
+                    </div>
+                </div>
+            )}
         </div>
+
     );
 };

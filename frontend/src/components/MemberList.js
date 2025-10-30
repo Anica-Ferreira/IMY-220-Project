@@ -23,6 +23,7 @@ export const MemberList = ({ project, isOwner, isMember }) =>{
                 const projectMembers = users.filter(user =>
                     (project.members || []).includes(user._id)
                 );
+                projectMembers.sort((a, b) => (b._id === project.owner) - (a._id === project.owner));
                 setMembers(projectMembers);
             }catch (err) {
                 console.error(err);
@@ -104,68 +105,64 @@ export const MemberList = ({ project, isOwner, isMember }) =>{
     };
 
     return(
-        <div className="members-card card">
-            <ul>
+        <div className="card mt-1 members-list">
+            {/* Only members can can add new members */}
+                {(isMember || isOwner) && (
+                    <div className="dropdown d-flex align-items-center mb-3" ref={dropdownRef}>
+                        <input
+                            type="text"
+                            className="dropdown-toggle"
+                            placeholder="Add a member"
+                            onClick={() => setDropdownVisible(true)}
+                            value={selectedUser ? selectedUser.username : searchTerm}
+                            onChange={(e) => {
+                                setSearchTerm(e.target.value);
+                                setSelectedUser(null);
+                                setDropdownVisible(true);
+                            }}
+                        />
+
+                        {/*Dispay current user's friends who are not members*/}
+                        <div className={`dropdown-menu ${dropdownVisible ? "show" : ""} overflow-auto`}>
+                            {filteredFriends.length > 0 ? (
+                                filteredFriends.map((friend) => (
+                                    <div key={friend._id} className="dropdown-item" onClick={() => handleSelect(friend)}>
+                                        <ProfilePreview profile={friend} isLink={false} />
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="dropdown-item">
+                                    No friends available to add
+                                </div>
+                            )}
+                        </div>
+                        <button className="btn-grey ms-2" onClick={handleAddMember}><i className="fa-solid fa-plus"></i></button>
+                    </div>
+                )}
+
+            <div>
                 {members.map((user) => (
-                    <li key={user._id} className="member-item">
+                    <div key={user._id} className="member-item">
                         <ProfilePreview profile={user} />
 
                         {/* Owner badge */}
                         {project.owner === user._id && (
-                            <span className="badge">
+                            <span className="badge me-3">
                                 Owner
                             </span>
                         )}
 
                         {/* Only the current owner can remove others */}
                         {isOwner && project.owner !== user._id && (
-                            <button onClick={() => handleRemove(user._id)}>
+                            <button className="btn btn-red btn-sm" onClick={() => handleRemove(user._id)}>
                                 Remove
                             </button>
                         )}
-                    </li>
+                    </div>
                 ))}
 
-                {/* Only members can can add new members */}
-                    {(isMember || isOwner) && (
-                        <li className="mt-2">
-                            <div className="add-member dropdown" ref={dropdownRef}>
-                                <input
-                                    type="text"
-                                    className="dropdown-toggle"
-                                    placeholder="Add a member"
-                                    onClick={() => setDropdownVisible(true)}
-                                    value={selectedUser ? selectedUser.username : searchTerm}
-                                    onChange={(e) => {
-                                        setSearchTerm(e.target.value);
-                                        setSelectedUser(null);
-                                        setDropdownVisible(true);
-                                    }}
-                                />
-
-                                {/*Dispay current user's friends who are not members*/}
-                                <div className={`dropdown-menu ${dropdownVisible ? "show" : ""} overflow-auto`}>
-                                   {filteredFriends.length > 0 ? (
-                                        filteredFriends.map((friend) => (
-                                            <div
-                                                key={friend._id}
-                                                className="dropdown-item"
-                                                onClick={() => handleSelect(friend)}
-                                            >
-                                                <ProfilePreview profile={friend} isLink={false} />
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <div className="dropdown-item">
-                                            No friends available to add
-                                        </div>
-                                    )}
-                                </div>
-                                <button onClick={handleAddMember}>+</button>
-                            </div>
-                        </li>
-                    )}
-            </ul>
+                
+            </div>
         </div>
     );
 };

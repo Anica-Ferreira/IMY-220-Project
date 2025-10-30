@@ -14,10 +14,15 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser, isFriend}) =>{
     const [loading, setLoading] = useState(false);
     const [saving, setSaving] = useState(false);
     const [deleting, setDeleting] = useState(false);
+    const [friend, setFriend] = useState(isFriend);
     const [showDeletePopup, setShowDeletePopup] = useState(false);
     
     const params = new URLSearchParams(location.search);
     const isAdmin = params.get("adminManage") === "true";
+
+    useEffect(() => {
+        setFriend(isFriend);
+    }, [isFriend]);
 
     //UPDATE PROFILE
     const handleSave = async (updatedUser) => {
@@ -54,7 +59,7 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser, isFriend}) =>{
         setLoading(true);
 
         try {
-            const endpoint = isFriend ? "/api/users/removeFriend" : "/api/users/addFriend";
+            const endpoint = friend ? "/api/users/removeFriend" : "/api/users/addFriend";
             const res = await fetch(endpoint, {
                 method: "POST",
                 headers: {
@@ -67,7 +72,7 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser, isFriend}) =>{
             });
 
             if (res.ok) {
-                setIsFriend(!isFriend);
+                setFriend(!isFriend);
             }else {
                 console.error("Failed to update friends");
             }
@@ -89,13 +94,12 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser, isFriend}) =>{
             });
         
             if(res.ok){
-                if(isAdmin){
+                if(user.roleType){
                     navigate("/admin");
                 }else{
-                    sessionStorage.removeItem("userId");
-                    sessionStorage.setItem("isAuthenticated", false);
-                    window.dispatchEvent(new Event("authChange")); //set header
-                    navigate("/admin");
+                    sessionStorage.clear;
+                    window.dispatchEvent(new Event("authChange"));
+                    navigate("/");
                 }
             }
 
@@ -110,34 +114,38 @@ export const ProfileInfo = ({user, onSave, viewOnly, currentUser, isFriend}) =>{
     const message = isAdmin ? "Are you sure you want to delete this user?": "Are you sure you want to delete your profile?";
 
     return(
-        <article className="profile-info shadow-sm">
+        <article className="info-layout card shadow-sm">
             {!isEditing ? (
-                <>
-                    <ProfileImage profile={user} size="large"/>
-
-                    <h2>{user.name}</h2>
-                    <h3>@{user.username}</h3>
-
-                    <p>{user.about}</p>
+                <>  
+                    <div className="img-layout">
+                        <h2>{user.name}</h2>
+                        <ProfileImage profile={user} size="large"/>
+                    </div>
+                    
+                    <div className="layout-center">
+                        <h3>@{user.username}</h3>
+                        <p>{user.about}</p>
+                    </div>
                     
                     {/* Only visible to friends account holder and admin  */}
                     {(currentUser?._id === user._id || isFriend || isAdmin) && (
-                        <div className="profile-details">
-                            <p><i className="fas fa-briefcase"></i> Role: {user.role}</p>
-                            <p><i className="fas fa-envelope"></i> Email: {user.email}</p>
-                            <p><i className="fas fa-building"></i> Company: {user.company}</p>
+                        <div className="layout-details">
+                            <hr/>
+                            {user.role && <p><i className="fas fa-briefcase me-2"></i>{user.role}</p>}
+                            {user.email && <p><i className="fas fa-envelope me-2"></i>{user.email}</p>}
+                            {user.company &&<p><i className="fas fa-building me-2"></i>{user.company}</p>}
                         </div>
                     )}
 
                     {viewOnly || isAdmin ? (
-                        <>
-                            <button onClick={() => setIsEditing(true)}><i className="fas fa-edit"></i></button>
-                            <button  onClick={() => setShowDeletePopup(true)} disabled={deleting}>{deleting ? "Deleting..." : "Delete Account"}</button>
-                        </>
+                        <div className="layout-actions">
+                            <span  onClick={() => setShowDeletePopup(true)} disabled={deleting}><i className="fas fa-trash"></i></span>
+                            <span onClick={() => setIsEditing(true)}><i className="fas fa-edit"></i></span>
+                        </div>
                         
                     ) : (
-                        <button onClick={handleToggleFollow} disabled={loading}>
-                            {loading ? "..." : isFriend ? "Unfollow" : "Follow"}
+                        <button className="btn btn-red btn-sm mt-3" onClick={handleToggleFollow} disabled={loading}>
+                            {loading ? "..." : friend ? "Unfollow" : "Follow"}
                         </button>
                     )}
                 </>

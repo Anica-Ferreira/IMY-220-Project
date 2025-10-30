@@ -3,11 +3,8 @@ This is a repository for my IMY 220 version control website.
 
 ## Docker commands
 
-### Build:
-docker build -t app-image .
-
 ### Run:
-docker run --name app-container -p 3000:3000 app-image
+docker compose up -d --build
 
 ## Wireframes
 

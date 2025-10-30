@@ -15,7 +15,7 @@ export const CreateProject = ({onClose}) =>{
     
     //Form Data
     const [formData, setFormData] = useState({
-        image: "/assets/images/project.png",
+        image: "/assets/images/placeholder.svg",
         name: "",
         description: "",
         type: "Desktop Application",
@@ -98,7 +98,9 @@ export const CreateProject = ({onClose}) =>{
         } 
 
         //image
-        if (selectedImageFile && selectedImageFile.size > 5 * 1024 * 1024){
+        if (!selectedImageFile) {
+            newErrors.image = "Please add a project image.";
+        }else if(selectedImageFile && selectedImageFile.size > 5 * 1024 * 1024){
             newErrors.image = "Image must be less than 5MB.";
         }
 
@@ -140,7 +142,7 @@ export const CreateProject = ({onClose}) =>{
                     version: "1.0.0",
                     hashtags: hashtags,
                     files: [], // empty for now
-                    image: "/assets/images/project.png",
+                    image: "/assets/images/placeholder.svg",
                     owner: ownerId,
                 }),
             });
@@ -212,95 +214,115 @@ export const CreateProject = ({onClose}) =>{
     };
 
     return(
-        <div className="card edit-project-form create">
+        <div className="edit-form">
             <form>
-                
-                <div {...getImageRootProps()} className="image-dropzone form-group image-upload">
-                    <input {...getImageInputProps()} />
-                    <img src={formData.image} alt="Project" width={120} />
-                    <p>{isImageDragActive ? "Drop image here..." : "Drag & drop or click to select an image"}</p>
-                    {errors.image && <small className="text-danger">{errors.image}</small>}
-                </div>
+                <div className="create-project-form">
+                    <div className="top-row d-flex mb-3">
+                        <div {...getImageRootProps()} className="dropzone">
+                            <input {...getImageInputProps()} />
+                            <div>
+                                <img className="project-img" src={formData.image} alt="Project"/>
+                            </div>
+                            <p className="text-muted">Drag & drop or click to select an image</p>
+                            {errors.image && <small className="text-danger">{errors.image}</small>}
+                        </div>
 
-                <div className="form-group">
-                    <label htmlFor="name">Project Name</label>
-                    <input id="name" name="name" type="text" onChange={handleChange}/><br/>
-                    {errors.name && <small className="text-danger">{errors.name}</small>}
-                </div>
+                        <div className="project-info flex-grow-1 ms-4">
+                            <div className="form-group">
+                                <label htmlFor="name">Project Name</label>
+                                <input id="name" name="name" type="text" onChange={handleChange}/><br/>
+                                {errors.name && <small className="text-danger">{errors.name}</small>}
+                            </div>
 
-                <div className="form-group">
-                    <label htmlFor="description">Description</label>
-                    <textarea id="description" name="description" onChange={handleChange}/><br/>
-                </div>
+                            <div className="form-group">
+                                <label htmlFor="description">Description</label>
+                                <textarea id="description" name="description" onChange={handleChange}/><br/>
+                            </div>
 
-                <div className="form-group">
-                    <label htmlFor="type">Project Type</label>
-                    <select id="type" name="type" className="form-select" onChange={handleChange}>
-                        <option value="Desktop Application">Desktop Application</option>
-                        <option value="Web Application">Web Application</option>
-                        <option value="Mobile Application">Mobile Application</option>
-                        <option value="Framework">Framework</option>
-                        <option value="Library">Library</option>
-                    </select><br/>
-                </div>
-                    
-                <div className="form-group">
-                    <label htmlFor="hashtags">Programming Languages (hashtags)</label>
-                    <div className="inline-input">
-                        <span>#</span>
-                        <input
-                            id="hashtags"
-                            type="text"
-                            value={currentTag}
-                            onChange={(e) => setCurrentTag(e.target.value)}
-                            placeholder="JavaScript"
-                        />
-                        <button type="button" onClick={handleAddHashtag}><i className="fas fa-plus"></i></button>
+                            <div className="d-flex align-items-center justify-content-between gap-3">
+                                <div className="form-group flex-grow-1">
+                                    <label htmlFor="type">Project Type</label>
+                                    <select id="type" name="type" className="form-select" onChange={handleChange}>
+                                        <option value="Desktop Application">Desktop Application</option>
+                                        <option value="Web Application">Web Application</option>
+                                        <option value="Mobile Application">Mobile Application</option>
+                                        <option value="Framework">Framework</option>
+                                        <option value="Library">Library</option>
+                                    </select>
+                                </div>
+
+                                <div className="form-group" style={{ width: "30%" }}>
+                                    <label htmlFor="version">Version</label>
+                                    <input id="version" name="version" type="text" readOnly defaultValue="1.0.0" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr className="text-white"/>
+
+                    <div className="second-row d-flex align-items-start justify-content-between gap-4 mb-3">
+                    {/* Files Section */}
+                        <div className="form-group flex-grow-1">
+                            <label>Project Files (first check-in)</label>
+                            <div {...getFilesRootProps()} className="dropzone file-drop">
+                                <input {...getFilesInputProps()} />
+                                {isFilesDragActive ? (
+                                    <p className="text-muted">Drop files here...</p>
+                                ) : (
+                                    <p className="text-muted">Click or drag files here</p>
+                                )}
+                            </div>
+                            {files.length > 0 && (
+                                <ul className="file-list">
+                                    {files.map((file, idx) => (
+                                        <li className="file-item" key={idx} onClick={() => handleRemoveFile(idx)}>
+                                            <i className="fas fa-file me-2"></i>
+                                            {file.name} ({Math.round(file.size / 1024)} KB)
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        {errors.files && <small className="text-danger">{errors.files}</small>}
+                        </div>
+
+                    {/* Hashtags Section */}
+                    <div className="form-group flex-grow-1">
+                        <label htmlFor="hashtags">Programming Languages (hashtags)</label>
+                        <div className="d-flex align-items-center">
+                            <input
+                                id="hashtags"
+                                type="text"
+                                value={currentTag}
+                                onChange={(e) => setCurrentTag(e.target.value)}
+                            />
+                            <button className="btn-grey ms-2" type="button" onClick={handleAddHashtag}>
+                                <i className="fas fa-plus"></i>
+                            </button>
+                        </div>
                         {errors.hashtags && <small className="text-danger">{errors.hashtags}</small>}
-                    </div>
 
-                    {/* Display Added hashtags */}
-                    {hashtags.length > 0 && (
-                        <ul className="hashtag-list">
-                            {hashtags.map((tag, index) => (
-                                <li key={index}>
-                                    #{tag}{" "}
-                                    <button type="button" onClick={() => handleRemoveHashtag(index)} className="remove-btn"><i className="fas fa-trash"></i></button>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                </div><br/>
-                
-                <div className="form-group">
-                    <label htmlFor="version">Version</label>
-                    <input id="version" name="version" type="text" readOnly  defaultValue="1.0.0" /><br/>
-                </div>
-                
-                <div className="form-group">
-                    <label>Project Files (first check-in)</label>
-                    <div {...getFilesRootProps()}>
-                        <input {...getFilesInputProps()} />
-                        {isFilesDragActive ? <p>Drop files here...</p> : <p>Click or drag files here</p>}
+                        {hashtags.length > 0 && (
+                            <div className="tags project-tags">
+                                {hashtags.map((tag, index) => (
+                                    <span
+                                        key={index}
+                                        className="tag-item"
+                                        onClick={() => handleRemoveHashtag(index)}
+                                    >
+                                        #{tag}
+                                    </span>
+                                ))}
+                            </div>
+                        )}
                     </div>
-                    {files.length > 0 && (
-                        <ul>
-                            {files.map((file, idx) => (
-                                <li key={idx}>
-                                    {file.name} ({Math.round(file.size / 1024)} KB)
-                                    <button type="button" onClick={() => handleRemoveFile(idx)}><i className="fas fa-trash"></i></button>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
-                    {errors.files && <small className="text-danger">{errors.files}</small>}
                 </div>
-
-                <button type="button" onClick={onClose}>Cancel</button>
-                <button type="submit" onClick={handleSubmit} disabled={loading}>
-                    {loading ? "Creating..." : "Create Project"}
-                </button>
-            
+            </div>
+                <div className="edit-form-buttons create-buttons mt-3">
+                    <button type="button" className="btn btn-grey btn-md" onClick={onClose}>Cancel</button>
+                    <button type="submit" className="btn btn-red btn-md" onClick={handleSubmit} disabled={loading}>
+                        {loading ? "Creating..." : "Create Project"}
+                    </button>
+                </div>
             </form>
         </div>
     )

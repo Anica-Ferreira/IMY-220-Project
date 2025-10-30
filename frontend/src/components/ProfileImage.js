@@ -1,7 +1,7 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
 
-export const ProfileImage = ({ profile, size="small", preview = false }) =>{
+export const ProfileImage = ({ profile, size="medium", preview = false }) =>{
     const sizeClasses = {
         small: "small-img",
         medium: "medium-img",

@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { Link} from "react-router-dom";
 
 export const Splash = () =>{
-    
     useEffect(() => {
         //select all elements
         const hexRows = document.querySelectorAll(".hex-row");
@@ -31,14 +30,17 @@ export const Splash = () =>{
     }, []);
 
     return(
-        <div>
-            <div className="vh-100 splash">
+        <div className="splash">
+
+            <div >
                 <div className="splash-content">
                     <img src="/assets/images/logo.png" className="splashImg" alt="CabiNet logo"/>
                     <h2 className="text-white fs-3">CREATE. COLLABORATE. COMMIT.</h2>
                 </div>
             </div>
+
             <div className="hex-section">
+
                 <div className="hex-row left">
                     <div className="hex">
                         <span>1</span>
@@ -57,7 +59,6 @@ export const Splash = () =>{
                         <h3>Collaborate</h3>
                         <p>Add friends, code together, and stay in sync across your team.</p>
                     </div>
-                    
                 </div>
 
                 <div className="hex-row left">
@@ -69,11 +70,14 @@ export const Splash = () =>{
                         <p>Track changes, leave messages, and update your project history.</p>
                     </div>
                 </div>
+
                 <div className="cta-section">
                     <h2>Join CabiNet today!</h2>
-                    <p><Link to="/signup" className="red-link">Sign up</Link> to join the community of creators and collaborators. Already a member? <Link to="/login">Login</Link></p>
+                    <p>
+                        <Link to="/signup" className="red-link">Sign up</Link> to join the community of creators and collaborators. Already a member? <Link to="/login">Login</Link>
+                    </p>
                     <div className="cta-buttons">
-                        <Link to="/signup" className="btn-red">Sign Up</Link>
+                        <Link to="/signup" className="btn btn-red-round btn-lg mt-2">Sign Up  <span className="arrow"><i className="fas fa-arrow-right"></i></span></Link>
                     </div>
                 </div>
             </div>

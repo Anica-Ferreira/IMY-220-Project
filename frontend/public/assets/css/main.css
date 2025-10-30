@@ -1,6 +1,6 @@
 /* Anica Ferreira 40_u24581802 */
 
-/* FONTS */
+/* -------------------- FONTS -------------------- */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
 
 @import url(splash.css);
@@ -8,13 +8,13 @@
 @import url(forms.css);
 @import url(activities.css);
 @import url(projects.css);
-@import url(links.css);
+@import url(layout.css);
 @import url(profile.css);
 @import url(popups.css);
 
-/* VARIABLES */
+/* -------------------- VARIABLES -------------------- */
 :root {
-    --blue : #232539;
+    --blue : #23253f;
     --darkBlue : #151624;
     --lightBlue : #212336;
     --lightGrey : #ffffff1c;
@@ -22,14 +22,13 @@
     --red : #ff3c49;
     --main-font : 'Montserrat';
     --sub-font: "Poppins";
-    --grey: #696969;
+    --grey: #aaaaaa;
+    --cyan:  #303f5e;
 }
 
 /* LIGHT THEME */
 
-/* DARK THEME */
-
-
+/* -------------------- GENERAL -------------------- */
 *{
     margin: 0;
     padding: 0;
@@ -47,13 +46,22 @@ html{
 main{
     min-height: 100vh;
     background-color: var(--blue);
-    padding: 2.5em;
 }
 
 main.no-padding {
-  padding: 0;
+    padding: 0;
 }
 
+#home, #projects, #admin, #searchr{
+    padding: 6em;
+    padding-top: 2em
+}
+
+#profile, #project{
+    padding: 2em;
+}
+
+/* -------------------- HEADINGS -------------------- */
 h1{
     color: var(--white);
     font-family: "Poppins";
@@ -75,9 +83,13 @@ h2{
     margin-bottom: 0.5em;
 }
 
-/* BACKGROUND COLOURS */
+.text-muted{
+    color: var(--grey) !important;
+}
 
-/*BG-DARK*/
+/* -------------------- BACKGROUND COLOURS -------------------- */
+
+/* BG-DARK */
 *[class*="bg-dark"] {
     background-color: var(--darkBlue) !important;
     color: var(--white);
@@ -89,13 +101,13 @@ h2{
     color: var(--white);
 }
 
-/*BG-Light*/
+/* BG-Light */
 *[class*="bg-light"] {
     background-color: var(--lightBlue) !important;
     color: var(--white);
 }
 
-/* FOOTER LOGOS */
+/* -------------------- FOOTER -------------------- */
 *[class*="fa-brands"]{
     transition: all 0.1s ease-in-out;
 }
@@ -104,7 +116,7 @@ h2{
     color: var(--red); 
 }
 
-/* SCROLLBAR */
+/* -------------------- SCROLLBAR -------------------- */
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
@@ -129,8 +141,8 @@ h2{
 
 
 
-
-/*TEMP*/
+/*
+/*TEMP
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -159,30 +171,5 @@ a:focus {
   color: inherit;
   text-decoration: none;
   outline: none;
-}
+}*/
 
-.loader {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60vh;
-    width: 100%;
-}
-.loader img {
-    width: 110px;
-    height: 110px;
-}
-
-.loader-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0,0,0,0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-
-}

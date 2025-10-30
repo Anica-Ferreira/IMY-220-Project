@@ -6,8 +6,8 @@ import { Loader } from "./Loader";
 
 export const LoginForm = ({ setIsAuthenticated }) =>{
     const navigate = useNavigate();
-    const [email, setEmail] = useState("thomas10@gmail.com");
-    const [password, setPassword] = useState("test1234");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     
@@ -71,14 +71,14 @@ export const LoginForm = ({ setIsAuthenticated }) =>{
     }
 
     return(
-        <div>
+        <div className="auth-form-box-background">
             {loading && (
-                <div className="loader-overlay">
+                <div className="overlay">
                     <Loader />
                 </div>
             )}
         
-            <div className="form-box shadow-sm rounded bg-dark">
+            <div className="auth-form-box shadow-sm rounded bg-dark">
                 <form onSubmit={submit} noValidate autoComplete="off">
                     <h2>Log In</h2>
                     <div className="form-input">
@@ -96,7 +96,7 @@ export const LoginForm = ({ setIsAuthenticated }) =>{
                     {errors.login && <small className="text-danger">{errors.login}</small>}
 
                     <div>
-                        <input type="submit" name="submit" value="Log In" className="mt-5"/>
+                        <input type="submit" name="submit" value="Log In" className="outline-button mt-5"/>
                     </div>
 
                     <div className="mt-4 form-info">

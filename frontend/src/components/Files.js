@@ -75,41 +75,57 @@ export const Files = ({ project, isMember, onUpdate }) =>{
     };
 
     return(
-        <div className="card">
-            {isMember && (
-            <>
-                {checkedOutBy === null ? (
-                    <button onClick={handleCheckOut}>Check Out</button>
-                ) : checkedOutBy === currentUserId ? (
-                    <button onClick={() => setShowCheckIn(true)}>Check In</button>
-                ) : (
-                    <button disabled title="This project is checked out by another member">Checked Out</button>
+        <div>
+
+            <div className="top-buttons mb-3">
+
+                {isMember && (
+                    <>
+                        {checkedOutBy === null ? (
+                            <button className="btn-red ps- pe-3" onClick={handleCheckOut}>Check Out</button>
+                        ) : checkedOutBy === currentUserId ? (
+                            <button className="btn-red ps-4 pe-4" onClick={() => setShowCheckIn(true)}>Check In</button>
+                        ) : (
+                            <button disabled title="This project is checked out by another member">Checked Out</button>
+                        )} 
+                    </>
                 )}
-            </>
-        )}
 
-            <button className="download-btn" onClick={downloadAllFiles}>Download Files</button>
-            <ul className="file-list">
-                {files.map((file, index) => {
-                    return(
-                        <li 
-                            key={index}
-                            className={`file-item ${selectedFile?.name === file.name ? "active-file" : ""}`}
-                            onClick={() => setSelectedFile(file)}
-                        >
-                            <i className="fas fa-file me-2"></i>
-                            {file.name}
-                        </li>
-                    )
-                })}
-            </ul>
+                <button className="btn-grey me-2 ms-1" onClick={downloadAllFiles}><i class="fas fa-download"></i></button>
 
-            {selectedFile && <Code file={selectedFile} />}
+                
+            </div>
+
+            <div className="file-code-container">
+                
+                <div className="code-container">
+                    {selectedFile && <Code file={selectedFile} />}
+                </div>
+
+                <div className="file-list-container">
+                    <ul className="file-list display-files">
+                        {files.map((file, index) => {
+                            return(
+                                <li 
+                                    key={index}
+                                    className={`file-item ${selectedFile?.name === file.name ? "active-file" : ""}`}
+                                    onClick={() => setSelectedFile(file)}
+                                >
+                                    <i className="fas fa-file me-2"></i>
+                                    {file.name}
+                                </li>
+                            )
+                        })}
+                    </ul>
+                </div>
+            
+                
+            </div>
 
             {/* Modal overlay */}
             {showCheckIn && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
+                <div className="overlay">
+                    <div className="modal-content checkin-form">
                         <ProjectCheckIn project={project} onClose={() => setShowCheckIn(false)} onCheckIn={handleCheckIn}/>
                     </div>
                 </div>

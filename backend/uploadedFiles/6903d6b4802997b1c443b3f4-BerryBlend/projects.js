@@ -1,0 +1,36 @@
+/* Anica Ferreira 40_u24581802 */
+const express = require('express');
+const router = express.Router();
+const { 
+    getAllProjects, 
+    getProjectsByID, 
+    getProjectsByUserId,
+    updatedProject,
+    deleteProject,
+    addDiscussionMessage,
+    addProjectMember,
+    removeProjectMember,
+    createProject,
+    downloadProjects,
+    saveProject,
+    unsaveProject
+} = require('../controllers/projectController');
+
+router.post('/save', saveProject);
+router.post('/unsave', unsaveProject);
+
+router.get('/', getAllProjects);
+router.get('/:id', getProjectsByID);
+router.get('/user/:id', getProjectsByUserId);
+
+router.put('/update/:id', updatedProject);
+router.put('/add-member/:id', addProjectMember);
+router.put('/remove-member/:id', removeProjectMember);
+
+router.delete('/delete/:id', deleteProject);
+
+router.post('/discussion/:id', addDiscussionMessage);
+router.post('/create', createProject);
+router.post('/download/:id', downloadProjects);
+
+module.exports = router;

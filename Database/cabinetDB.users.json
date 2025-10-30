@@ -1,0 +1,533 @@
+[{
+  "_id": {
+    "$oid": "6903bdc689b4c9b320a7b677"
+  },
+  "username": "Jeremy",
+  "email": "jeremy@jeremy.com",
+  "password": "jeremy123",
+  "name": "Jeremy Loops",
+  "image": "/uploadedImages/profiles/user-6903bdc689b4c9b320a7b677-1761853804826.jpg",
+  "role": "Software Developer",
+  "about": "Just Jeremy here, let's make for loops together.",
+  "company": "Nerdy Company",
+  "friends": [
+    {
+      "$oid": "6903bfb443a98c1c9644b3e3"
+    },
+    {
+      "$oid": "6903be6b89b4c9b320a7b678"
+    },
+    {
+      "$oid": "6903bf7643a98c1c9644b3e2"
+    },
+    {
+      "$oid": "6903c00e43a98c1c9644b3e4"
+    },
+    {
+      "$oid": "6903c1fd43a98c1c9644b3e9"
+    }
+  ],
+  "projects": [],
+  "savedProjects": [
+    {
+      "$oid": "6903c87dfb4d3383ab9ca132"
+    }
+  ],
+  "placeholder": false,
+  "placeholderImages": {
+    "background": "/assets/images/placeholder/background/2.png",
+    "body": "/assets/images/placeholder/body/1.png",
+    "face": "/assets/images/placeholder/face/1.png",
+    "head": "/assets/images/placeholder/head/3.png",
+    "accessory": "/assets/images/placeholder/accessory/4.png"
+  }
+},
+{
+  "_id": {
+    "$oid": "6903be6b89b4c9b320a7b678"
+  },
+  "username": "RogerdeRat",
+  "email": "roger@roger.com",
+  "password": "roger123",
+  "name": "Roger Durant",
+  "image": "",
+  "role": "Software Developer",
+  "about": "I hate bugs like I hate crocodiles.",
+  "company": "Ant Solutions",
+  "friends": [
+    {
+      "$oid": "6903bfb443a98c1c9644b3e3"
+    },
+    {
+      "$oid": "6903c0eb43a98c1c9644b3e7"
+    },
+    {
+      "$oid": "6903c1cd43a98c1c9644b3e8"
+    }
+  ],
+  "projects": [
+    {
+      "$oid": "6903ca3bfb4d3383ab9ca136"
+    },
+    {
+      "$oid": "6903ce5e802997b1c443b3dd"
+    },
+    {
+      "$oid": "6903c87dfb4d3383ab9ca132"
+    },
+    {
+      "$oid": "6903d15a802997b1c443b3e6"
+    },
+    {
+      "$oid": "6903d579802997b1c443b3f2"
+    },
+    {
+      "$oid": "6903d6b4802997b1c443b3f4"
+    }
+  ],
+  "savedProjects": [],
+  "placeholder": true,
+  "placeholderImages": {
+    "background": "/assets/images/placeholder/background/1.png",
+    "body": "/assets/images/placeholder/body/1.png",
+    "face": "/assets/images/placeholder/face/5.png",
+    "head": "/assets/images/placeholder/head/1.png",
+    "accessory": "/assets/images/placeholder/accessory/5.png"
+  }
+},
+{
+  "_id": {
+    "$oid": "6903bf7643a98c1c9644b3e2"
+  },
+  "username": "Sam",
+  "email": "sam@sam.com",
+  "password": "sam123",
+  "name": "Sam Serious",
+  "image": "",
+  "role": "Mobile Developer",
+  "about": "I am a very serious developer. Don't contact me unless you're serious.",
+  "company": "Serious Inc.",
+  "friends": [
+    {
+      "$oid": "6903bfb443a98c1c9644b3e3"
+    },
+    {
+      "$oid": "6903c1cd43a98c1c9644b3e8"
+    },
+    {
+      "$oid": "6903c0eb43a98c1c9644b3e7"
+    },
+    {
+      "$oid": "6903be6b89b4c9b320a7b678"
+    }
+  ],
+  "projects": [
+    {
+      "$oid": "6903c87dfb4d3383ab9ca132"
+    }
+  ],
+  "savedProjects": [
+    {
+      "$oid": "6903c87dfb4d3383ab9ca132"
+    }
+  ],
+  "placeholder": true,
+  "placeholderImages": {
+    "background": "/assets/images/placeholder/background/5.png",
+    "body": "/assets/images/placeholder/body/1.png",
+    "face": "/assets/images/placeholder/face/5.png",
+    "head": "/assets/images/placeholder/head/2.png",
+    "accessory": "/assets/images/placeholder/accessory/1.png"
+  }
+},
+{
+  "_id": {
+    "$oid": "6903bfb443a98c1c9644b3e3"
+  },
+  "username": "Tom",
+  "email": "tom@tom.com",
+  "password": "tom123",
+  "name": "Thomas Meiring",
+  "image": "/uploadedImages/profiles/user-6903bfb443a98c1c9644b3e3-1761855284856.png",
+  "role": "Backend Developer",
+  "about": "I am a coding wizard.",
+  "company": "Serious Inc.",
+  "friends": [
+    {
+      "$oid": "6903bdc689b4c9b320a7b677"
+    },
+    {
+      "$oid": "6903bf7643a98c1c9644b3e2"
+    },
+    {
+      "$oid": "6903c0eb43a98c1c9644b3e7"
+    },
+    {
+      "$oid": "6903c1cd43a98c1c9644b3e8"
+    },
+    {
+      "$oid": "6903c0ae43a98c1c9644b3e6"
+    },
+    {
+      "$oid": "6903be6b89b4c9b320a7b678"
+    }
+  ],
+  "projects": [
+    {
+      "$oid": "6903ca3bfb4d3383ab9ca136"
+    },
+    {
+      "$oid": "6903cfa4802997b1c443b3e1"
+    },
+    {
+      "$oid": "6903d15a802997b1c443b3e6"
+    },
+    {
+      "$oid": "6903d2f6802997b1c443b3eb"
+    },
+    {
+      "$oid": "6903d4c1802997b1c443b3ef"
+    },
+    {
+      "$oid": "6903d579802997b1c443b3f2"
+    }
+  ],
+  "savedProjects": [
+    {
+      "$oid": "6903c87dfb4d3383ab9ca132"
+    },
+    {
+      "$oid": "6903d15a802997b1c443b3e6"
+    },
+    {
+      "$oid": "6903cfa4802997b1c443b3e1"
+    }
+  ],
+  "placeholder": false,
+  "placeholderImages": {
+    "background": "/assets/images/placeholder/background/1.png",
+    "body": "/assets/images/placeholder/body/5.png",
+    "face": "/assets/images/placeholder/face/1.png",
+    "head": "/assets/images/placeholder/head/3.png",
+    "accessory": "/assets/images/placeholder/accessory/1.png"
+  }
+},
+{
+  "_id": {
+    "$oid": "6903c00e43a98c1c9644b3e4"
+  },
+  "username": "Chelsea-sea",
+  "email": "chelsea@chelsea.com",
+  "password": "chealsea123",
+  "name": "Chelsea Chu",
+  "image": "",
+  "role": "UI developer",
+  "about": "My code is sweeter than yours.",
+  "company": "Nerdy Company",
+  "friends": [
+    {
+      "$oid": "6903be6b89b4c9b320a7b678"
+    },
+    {
+      "$oid": "6903c1cd43a98c1c9644b3e8"
+    },
+    {
+      "$oid": "6903c1fd43a98c1c9644b3e9"
+    },
+    {
+      "$oid": "6903c0eb43a98c1c9644b3e7"
+    },
+    {
+      "$oid": "6903bf7643a98c1c9644b3e2"
+    }
+  ],
+  "projects": [
+    {
+      "$oid": "6903d2f6802997b1c443b3eb"
+    }
+  ],
+  "savedProjects": [
+    {
+      "$oid": "6903ca3bfb4d3383ab9ca136"
+    },
+    {
+      "$oid": "6903cfa4802997b1c443b3e1"
+    },
+    {
+      "$oid": "6903d6b4802997b1c443b3f4"
+    }
+  ],
+  "placeholder": true,
+  "placeholderImages": {
+    "background": "/assets/images/placeholder/background/4.png",
+    "body": "/assets/images/placeholder/body/2.png",
+    "face": "/assets/images/placeholder/face/1.png",
+    "head": "/assets/images/placeholder/head/5.png",
+    "accessory": "/assets/images/placeholder/accessory/3.png"
+  }
+},
+{
+  "_id": {
+    "$oid": "6903c04b43a98c1c9644b3e5"
+  },
+  "username": "Muffin",
+  "email": "melissa@melissa.com",
+  "password": "muffin123",
+  "name": "Melissa Muffin",
+  "image": "/uploadedImages/profiles/user-6903c04b43a98c1c9644b3e5-1761856969068.jpg",
+  "role": "Full Stack Developer",
+  "about": "Hi there, I am Melissa Muffin a professional Full Stack Developer, cooking some code.",
+  "company": "Code Kitchen",
+  "friends": [
+    {
+      "$oid": "6903be6b89b4c9b320a7b678"
+    },
+    {
+      "$oid": "6903c0eb43a98c1c9644b3e7"
+    },
+    {
+      "$oid": "6903bfb443a98c1c9644b3e3"
+    },
+    {
+      "$oid": "6903c1cd43a98c1c9644b3e8"
+    },
+    {
+      "$oid": "6903c1fd43a98c1c9644b3e9"
+    },
+    {
+      "$oid": "6903c00e43a98c1c9644b3e4"
+    }
+  ],
+  "projects": [],
+  "savedProjects": [
+    {
+      "$oid": "6903c87dfb4d3383ab9ca132"
+    }
+  ],
+  "placeholder": false,
+  "placeholderImages": {
+    "background": "/assets/images/placeholder/background/5.png",
+    "body": "/assets/images/placeholder/body/3.png",
+    "face": "/assets/images/placeholder/face/4.png",
+    "head": "/assets/images/placeholder/head/5.png",
+    "accessory": "/assets/images/placeholder/accessory/5.png"
+  }
+},
+{
+  "_id": {
+    "$oid": "6903c0ae43a98c1c9644b3e6"
+  },
+  "username": "Bob",
+  "email": "bob@bob.com",
+  "password": "bob123",
+  "name": "Bob Burger",
+  "image": "",
+  "role": "Big Data Developer",
+  "about": "I like my data big like my burgers.",
+  "company": "Code Kitchen",
+  "friends": [
+    {
+      "$oid": "6903bfb443a98c1c9644b3e3"
+    },
+    {
+      "$oid": "6903be6b89b4c9b320a7b678"
+    },
+    {
+      "$oid": "6903c1fd43a98c1c9644b3e9"
+    },
+    {
+      "$oid": "6903c04b43a98c1c9644b3e5"
+    },
+    {
+      "$oid": "6903c00e43a98c1c9644b3e4"
+    }
+  ],
+  "projects": [
+    {
+      "$oid": "6903cfa4802997b1c443b3e1"
+    },
+    {
+      "$oid": "6903d2f6802997b1c443b3eb"
+    }
+  ],
+  "savedProjects": [
+    {
+      "$oid": "6903c87dfb4d3383ab9ca132"
+    }
+  ],
+  "placeholder": true,
+  "placeholderImages": {
+    "background": "/assets/images/placeholder/background/5.png",
+    "body": "/assets/images/placeholder/body/3.png",
+    "face": "/assets/images/placeholder/face/2.png",
+    "head": "/assets/images/placeholder/head/3.png",
+    "accessory": "/assets/images/placeholder/accessory/1.png"
+  }
+},
+{
+  "_id": {
+    "$oid": "6903c0eb43a98c1c9644b3e7"
+  },
+  "username": "Agatha",
+  "email": "agatha@agatha.com",
+  "password": "agatha123",
+  "name": "Agatha Long",
+  "image": "",
+  "role": "Game Developer",
+  "about": "Game development has been my passion for a looong time.",
+  "company": "Rizzard Game Studios",
+  "friends": [
+    {
+      "$oid": "6903c1fd43a98c1c9644b3e9"
+    },
+    {
+      "$oid": "6903bfb443a98c1c9644b3e3"
+    },
+    {
+      "$oid": "6903c1cd43a98c1c9644b3e8"
+    },
+    {
+      "$oid": "6903c0ae43a98c1c9644b3e6"
+    },
+    {
+      "$oid": "6903c04b43a98c1c9644b3e5"
+    },
+    {
+      "$oid": "6903c00e43a98c1c9644b3e4"
+    }
+  ],
+  "projects": [
+    {
+      "$oid": "6903ce5e802997b1c443b3dd"
+    },
+    {
+      "$oid": "6903d4c1802997b1c443b3ef"
+    },
+    {
+      "$oid": "6903d6b4802997b1c443b3f4"
+    }
+  ],
+  "savedProjects": [],
+  "placeholder": true,
+  "placeholderImages": {
+    "background": "/assets/images/placeholder/background/2.png",
+    "body": "/assets/images/placeholder/body/5.png",
+    "face": "/assets/images/placeholder/face/1.png",
+    "head": "/assets/images/placeholder/head/1.png",
+    "accessory": "/assets/images/placeholder/accessory/4.png"
+  }
+},
+{
+  "_id": {
+    "$oid": "6903c1cd43a98c1c9644b3e8"
+  },
+  "username": "Tester",
+  "email": "test@test.com",
+  "password": "test1234",
+  "name": "Test User",
+  "image": "",
+  "role": "Software Tester",
+  "about": "The best software tester around, I will break your code, you'll thank me later",
+  "company": "Total Testing",
+  "friends": [
+    {
+      "$oid": "6903be6b89b4c9b320a7b678"
+    },
+    {
+      "$oid": "6903bfb443a98c1c9644b3e3"
+    },
+    {
+      "$oid": "6903c0eb43a98c1c9644b3e7"
+    },
+    {
+      "$oid": "6903c04b43a98c1c9644b3e5"
+    },
+    {
+      "$oid": "6903c0ae43a98c1c9644b3e6"
+    },
+    {
+      "$oid": "6903c1fd43a98c1c9644b3e9"
+    }
+  ],
+  "projects": [
+    {
+      "$oid": "6903c87dfb4d3383ab9ca132"
+    },
+    {
+      "$oid": "6903d15a802997b1c443b3e6"
+    },
+    {
+      "$oid": "6903d2f6802997b1c443b3eb"
+    },
+    {
+      "$oid": "6903d579802997b1c443b3f2"
+    }
+  ],
+  "savedProjects": [
+    {
+      "$oid": "6903ca3bfb4d3383ab9ca136"
+    },
+    {
+      "$oid": "6903cfa4802997b1c443b3e1"
+    }
+  ],
+  "placeholder": true,
+  "placeholderImages": {
+    "background": "/assets/images/placeholder/background/3.png",
+    "body": "/assets/images/placeholder/body/1.png",
+    "face": "/assets/images/placeholder/face/2.png",
+    "head": "/assets/images/placeholder/head/4.png",
+    "accessory": "/assets/images/placeholder/accessory/3.png"
+  }
+},
+{
+  "_id": {
+    "$oid": "6903c1fd43a98c1c9644b3e9"
+  },
+  "username": "admin",
+  "email": "admin@admin.com",
+  "password": "admin123",
+  "name": "Admin User",
+  "image": "/uploadedImages/profiles/user-6903c1fd43a98c1c9644b3e9-1761853997490.jpg",
+  "role": "Admin",
+  "about": "I run the place around here, don't cross me!",
+  "company": "Scary Admin",
+  "friends": [
+    {
+      "$oid": "6903be6b89b4c9b320a7b678"
+    },
+    {
+      "$oid": "6903bfb443a98c1c9644b3e3"
+    },
+    {
+      "$oid": "6903c04b43a98c1c9644b3e5"
+    },
+    {
+      "$oid": "6903c1cd43a98c1c9644b3e8"
+    }
+  ],
+  "projects": [
+    {
+      "$oid": "6903cfa4802997b1c443b3e1"
+    },
+    {
+      "$oid": "6903d6b4802997b1c443b3f4"
+    }
+  ],
+  "savedProjects": [
+    {
+      "$oid": "6903ca3bfb4d3383ab9ca136"
+    },
+    {
+      "$oid": "6903ccd5802997b1c443b3db"
+    }
+  ],
+  "placeholder": false,
+  "placeholderImages": {
+    "background": "/assets/images/placeholder/background/2.png",
+    "body": "/assets/images/placeholder/body/1.png",
+    "face": "/assets/images/placeholder/face/4.png",
+    "head": "/assets/images/placeholder/head/5.png",
+    "accessory": "/assets/images/placeholder/accessory/5.png"
+  }
+}]

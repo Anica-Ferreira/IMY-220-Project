@@ -67,6 +67,8 @@ const getActivityByUserId = async (req, res) => {
             projectImage: "$project.image",
             projectDescription: "$project.description",
             projectLanguages: "$project.languages",
+            placeholder: "$user.placeholder",
+            placeholderImages: "$user.placeholderImages"
         }},
         {$sort: { date: -1 }}
     ]).toArray();

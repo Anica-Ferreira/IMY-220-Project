@@ -70,7 +70,7 @@ export const ProjectInfo = ({project, onSave, isOwner, isAdmin}) =>{
             });
         
             if(res.ok){
-                if (isAdmin){
+                if(isAdmin){
                     navigate("/admin");
                 }else{
                     navigate("/projects");
@@ -85,56 +85,64 @@ export const ProjectInfo = ({project, onSave, isOwner, isAdmin}) =>{
     };
 
     return(
-        <article className="project-info shadow-sm">
+        <article className="info-layout card shadow-sm">
             {!isEditing ? (
-                <>
-                    <img src={project.image} alt={`${project.name}'s profile picture.`}/>
-
-                    <h2>{project.name}</h2>
-                    <h3>{project.type}</h3>
-
-                    <p>{project.description}</p>
-
-                    <strong>Version {project.version}</strong><br/>
-                    <strong>Created on {new Date(project.createdAt).toLocaleDateString()}</strong><br/>
-                    {isOwner && 
-                        <>
-                            <strong>Status: {project.status}{project.status === "Checked out" && checkedOutUser ? ` by ${checkedOutUser.username}`: ""}</strong><br/><br/>
-                        </>
-                    }
-
-                    {/*Add edit and delete button if the user is owner*/}
-                    {isOwner && (
-                        <>
-                            <button onClick={() => setIsEditing(true)}><i className="fas fa-edit"></i></button>
-                            <button onClick={() => setShowDeletePopup(true)} disabled={deleting}>{deleting ? "Deleting..." : "Delete Project"}</button>
-                        </>
-                    )}
-                </>
-            ) : (
-                <EditProject project={project} onSave={handleSave} onCancel={() => setIsEditing(false)} />
-            )}
-            <hr></hr>
-                    <h3>Tags</h3>
-                    <div className="tags">
+                <>  
+                    <div className="img-layout">
+                        <h2>{project.name}</h2>
+                        <img className="project-img" src={project.image} alt={`${project.name}'s profile picture.`}/>
+                    </div>
+                    
+                    <div className="layout-center">
+                        <h3>{project.type}</h3>
+                        <p>{project.description}</p>
+                    </div>
+                    
+                    <div className="layout-details">
+                        <hr/>
+                        <p>Version: {project.version}</p>
+                        <p className="mb-2">Created on: {new Date(project.createdAt).toLocaleDateString()}</p>
+                        {isOwner && 
+                            <>
+                                <p>Status: {project.status}{project.status === "Checked out" && checkedOutUser ? ` by ${checkedOutUser.username}`: ""}</p>
+                            </>
+                        }
+                    </div>
+                    <hr/>
+                    <div className="tags project-tags">
                         {(project.languages || []).map((tag, index) => (
                             <Link key={index} to={`/results?hashtag=${encodeURIComponent(tag)}`} className="mx-1">
                                 #{tag.toLowerCase()}
                             </Link>
                         ))}
                     </div>
+                    
+
+                    {/*Add edit and delete button if the user is owner*/}
+                    {isOwner && (
+                        <div className="layout-actions">
+                            <span onClick={() => setShowDeletePopup(true)} disabled={deleting}><i className="fas fa-trash"></i></span>
+                            <span onClick={() => setIsEditing(true)}><i className="fas fa-edit"></i></span>
+                        </div>
+                    )}
+                </>
+            ) : (
+                <EditProject project={project} onSave={handleSave} onCancel={() => setIsEditing(false)} />
+            )}
+            
+                    
 
                     {/* DeletePopup */}
                     <PopupModel
-                        visible={showDeletePopup}
-                        title="Confirm Delete"
-                        message="Are you sure you want to delete this project?"
-                        isConfirmation={true}
-                        onConfirm={async () => {
-                            setShowDeletePopup(false);
-                            await handleDeleteProject();
+                            visible={showDeletePopup}
+                            title="Confirm Delete"
+                            message="Are you sure you want to delete this project?"
+                            isConfirmation={true}
+                            onConfirm={async () => {
+                                setShowDeletePopup(false);
+                                await handleDeleteProject();
                         }}
-                        onCancel={() => setShowDeletePopup(false)}
+                            onCancel={() => setShowDeletePopup(false)}
                     />
         </article>
     )

@@ -34,10 +34,11 @@ export const Projects = () =>{
     }, [])
 
     return( 
-        <div>
+        <div className="text-center" id="projects">
             <h1>Projects</h1>
-
-            <button onClick={() => setShowCreate(true)} >New Project <i className="fas fa-plus"></i></button>
+            <div className="d-flex justify-content-end mb-4">
+                <button className="btn btn-red" onClick={() => setShowCreate(true)} >New Project <i className="fas fa-plus"></i></button>
+            </div> 
 
             {error && <p className="text-danger">{error}</p>}
 
@@ -45,7 +46,7 @@ export const Projects = () =>{
 
             {/* Modal overlay */}
             {showCreate && (
-                <div className="modal-overlay">
+                <div className="overlay">
                     <div className="modal-content">
                         <CreateProject onClose={() => setShowCreate(false)}/>
                     </div>
@@ -53,7 +54,7 @@ export const Projects = () =>{
             )}
 
             {loading && (
-                <div className="loader-overlay">
+                <div className="overlay">
                     <Loader />
                 </div>
             )}

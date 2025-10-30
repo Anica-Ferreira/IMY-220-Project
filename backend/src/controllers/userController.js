@@ -33,7 +33,7 @@ const getUserByID = async (req, res) => {
 //UPDATE USER
 const updateUser = async (req, res) => {
     const { id } = req.params;
-    const { name, image, role, about, company, placeholder } = req.body;
+    const { name, image, role, about, company } = req.body;
     const db = await connectDB();
 
     //find user
@@ -45,6 +45,8 @@ const updateUser = async (req, res) => {
             error_message: "User not found."
         });
     }
+
+    const placeholder = !image || image.trim() === "";
 
     const updateData = { name, image, role, about, company, placeholder };
 

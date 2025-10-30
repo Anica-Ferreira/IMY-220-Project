@@ -1,8 +1,19 @@
 /* Anica Ferreira 40_u24581802 */
 
+/* -------------------- FORMS -------------------- */
+
 /* LOGIN & SIGNUP FORM */
 
-.form-box{
+.auth-form-box-background{
+    width: 100vw;
+    height: 100vh;
+    background-image: url("/assets/images/background1.png");
+    background-size: cover;
+    background-position: top;
+    background-repeat: no-repeat;
+}
+
+.auth-form-box{
     position: absolute;
 	top: 50%;
 	left: 50%;
@@ -12,7 +23,7 @@
 	box-sizing: border-box;
 }
 
-.form-box h2{
+.auth-form-box h2{
     text-transform: uppercase;
     font-size: 1.5em;
     text-align: center;
@@ -70,16 +81,6 @@
     background-color: var(--white);
 }
 
-.red-link{
-    text-decoration: none;
-    transition: all 0.2s ease-out;
-    font-weight: 600;
-}
-
-.red-link:hover{
-    color: var(--red) !important;
-}
-
 *[class*="text-danger"] {
     color: #ff3a44 !important;
 }
@@ -91,7 +92,154 @@
     margin-top: 0.5em;
 }
 
-/* SEARCH INPUT */
+/* -------------------- EDIT Profile/Project -------------------- */
+
+.edit-form {
+    width: 100%;
+}
+
+.img-layout {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5em;
+}
+
+/* Dropzone */
+.dropzone {
+    border: 2px dashed var(--white);
+    border-radius: 0.75em;
+    padding: 1em;
+    text-align: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    background: var(--lightBlue);
+}
+
+.dropzone:hover {
+    border-color: var(--blue-dark, var(--red));
+    background: rgba(131, 166, 255, 0.185);
+}
+
+/* Labels/Inputs */
+.edit-form label{
+    display: block;
+    margin-bottom: 0.4em;
+    margin-top: 0.8em;
+    font-weight: 500;
+    color: var(--white);
+}
+
+.edit-form input,
+.edit-form textarea,
+.edit-form select,
+.members-list input{
+    width: 100%;
+    padding: 0.6em 0.8em;
+    border: 1px var(--grey) solid;
+    border-radius: 0.5em;
+    font-family: inherit;
+    font-size: 0.95em;
+    outline: none;
+    background: var(--lightBlue);
+    color: var(--white);
+}
+
+.edit-form input:focus,
+.edit-form textarea:focus,
+.edit-form select:focus{
+    border-color: var(--red);
+}
+
+/* DropDown */
+.edit-form .dropdown input,
+.members-list .dropdown input {
+    width: 100%;
+    cursor: pointer;
+}
+
+.edit-form .dropdown-menu,
+.members-list .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--lightBlue);
+    border-radius: 6px;
+    width: 100%;
+    max-height:  150px;
+    overflow-y: auto;
+    z-index: 10;
+    font-weight: 300;
+}
+
+.edit-form .dropdown-item,
+.members-list .dropdown-item{
+    padding: 0.5em;
+    cursor: pointer;
+    color: var(--white);
+}
+
+.edit-form .dropdown-menu.show,
+.members-list .dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item:hover,
+.dropdown-item:hover {
+    background-color: var(--darkBlue);
+}
+
+/* From button alignment */
+.edit-form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1em;
+}
+
+/* -------------------- CREATE PROJECT -------------------- */
+
+.project-image img.project-img {
+    width: 8px !important;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.project-image img.project-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    display: block;
+}
+
+/* -------------------- CHECKIN FORM -------------------- */
+.checkin-form{
+    width: 50%;
+}
+
+.flex-row {
+    display: flex;
+  gap: 1rem;
+    align-items: flex-start;
+}
+
+.message-group {
+    flex: 1;
+}
+
+.version-group {
+    flex: 0 0 100px;
+}
+
+.flex-row input {
+    width: 100%;
+}
+
+
+/* -------------------- FORM INPUTS -------------------- */
+
+/* Search */
 .search-wrapper {
     position: relative;
     display: flex;
@@ -126,156 +274,20 @@
 
 #search:focus {
     border-color: var(--red);
-    width: 17em;;
+    width: 17em;
 }
 
-/* SORT INPUT */
+/* Sort */
+
 .sort-container label {
     font-size: 1em;
     color: var(--white);
 }
 
 .sort-container select {
-    border-radius: 0.5em;
-    padding: 0.5em;
     cursor: pointer;
-    transition: all 0.2s ease-in-out;
 }
 
 .sort-container select:focus {
     border-color: var(--red);
-}
-
-.form-select:focus {
-    box-shadow: none !important;
-    border-color: var(--red) !important;
-    outline: var(--red) !important;
-}
-
-/* PROJECT FORMS */
-
-.edit-project-form i {
-    margin-left: -25px;
-    cursor: pointer;
-    color: var(--white);
-}
-
-.edit-project-form div,
-.edit-project-form label,
-.edit-project-form select,
-.edit-project-form textarea,
-.edit-project-form input[type="text"] {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3em;
-    width: 100%;
-}
-
-.edit-project-form input,
-.edit-project-form select,
-.edit-project-form textarea {
-    padding: 0.5em;
-    border-radius: 6px;
-    border: none;
-    background-color: #ccc;
-    color: var(--darkBlue);
-}
-
-.edit-project-form .dropdown {
-    position: relative;
-    width: 50%;
-    margin-top: 0.5em;
-    align-self: flex-end;
-}
-
-.edit-project-form .dropdown input {
-    width: 100%;
-    cursor: pointer;
-}
-
-.edit-project-form .dropdown-menu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: var(--darkBlue);
-    border-radius: 6px;
-    width: 100%;
-    max-height: 200px;
-    overflow-y: auto;
-    z-index: 10;
-}
-
-.edit-project-form .dropdown-item {
-    padding: 0.5em;
-    cursor: pointer;
-    color: var(--white);
-}
-
-.edit-project-form button {
-    width: 20%;
-    padding: 0.4em 0.8em;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-.edit-project-form button[type="submit"] {
-    background-color: var(--red);
-    color: var(--white);
-}
-
-.edit-project-form button[type="button"] {
-    background-color: #ffffff70;
-    color: var(--darkBlue);
-}
-
-.edit-project-form button + button {
-    margin-left: 0.5em;
-}
-
-.edit-project-form .dropdown-menu.show {
-    display: block;
-}
-
-.inline-input {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.inline-input input[type="text"],
-.inline-input input[type="file"] {
-    flex: 1;
-    padding: 0.35rem 0.5rem;
-    font-size: 0.9rem;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-.inline-input button {
-    padding: 0.35rem 0.75rem;
-    font-size: 0.9rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    background-color: var(--red);
-    color: var(--white);
-}
-
-.inline-input {
-    display: flex !important;  /* override column flex */
-    flex-direction: row !important;
-    align-items: center;
-    gap: 0.5rem;
-    width: 100%;
-}
-
-.inline-input input[type="text"],
-.inline-input input[type="file"] {
-    flex: 1;
-}
-
-.inline-input button {
-    flex: 0;
 }

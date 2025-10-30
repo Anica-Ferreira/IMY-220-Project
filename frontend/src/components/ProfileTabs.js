@@ -5,9 +5,10 @@ import { useState } from "react";
 import { Friends } from "./Friends";
 import { ProjectList } from "./ProjectList";
 import { ActivityList } from "./ActivityList";
+import { Loader } from "../components/Loader";
 
 export const ProfileTabs = ({user, viewOnly}) =>{
-    const [activeTab, setActiveTab] = useState('activity');
+    const [activeTab, setActiveTab] = useState('friends');
     const [activity, setActivity] = useState([]);
     const [projects, setProjects] = useState([]);
     const [friends, setFriends] = useState([]);
@@ -52,19 +53,16 @@ export const ProfileTabs = ({user, viewOnly}) =>{
         fetchAllData();
     }, [user])
 
-    if (loading) return <p>Loading profile data...</p>;
-    if (error) return <p className="text-danger">{error}</p>;
+    if (loading)
+        return(
+            <div className="overlay">
+                <Loader />
+            </div>
+        );
 
     return(
-        <div>
-            <ul className="nav nav-tabs">
-                {/* User Activity Feed */}
-                <li className="nav-item">
-                    <button 
-                        className={`nav-link ${activeTab === "activity" ? "active" : ""}`} 
-                        onClick={() => switchTab("activity")}><i className="fa-solid fa-chart-line"></i> Activity
-                    </button>
-                </li>
+        <div className="layout-tabs">
+            <ul className="nav nav-tabs mb-3 tab-links">
                 {/* Friends */}
                 <li className="nav-item">
                     <button 
@@ -72,6 +70,15 @@ export const ProfileTabs = ({user, viewOnly}) =>{
                         onClick={() => switchTab("friends")}><i className="fa-solid fa-user-friends"></i> Friends
                     </button>
                 </li>
+
+                {/* User Activity Feed */}
+                <li className="nav-item">
+                    <button 
+                        className={`nav-link ${activeTab === "activity" ? "active" : ""}`} 
+                        onClick={() => switchTab("activity")}><i className="fa-solid fa-chart-line"></i> Activity
+                    </button>
+                </li>
+                
                 {/* Projects */}
                 <li className="nav-item">
                     <button 
@@ -79,12 +86,13 @@ export const ProfileTabs = ({user, viewOnly}) =>{
                         onClick={() => switchTab("projects")}><i className="fa-solid fa-diagram-project"></i> Projects
                     </button>
                 </li>
+                
             </ul>
         
             {/* Tab Content */}
-            <section className="tab-content">
+            <section className="tab-content card">
                 {activeTab === "activity" && (
-                    <ActivityList activities={activity} showAll={false} type="profile"/>
+                    <ActivityList activities={activity} showAll={false} showMessage={true} type="profile"/>
                 )}
 
                 {activeTab === "friends" && (
@@ -93,7 +101,7 @@ export const ProfileTabs = ({user, viewOnly}) =>{
 
                 {activeTab === "projects" && (
                     <div> 
-                        <ProjectList projects={projects} />
+                        <ProjectList projects={projects} display="list" />
                     </div>
                 )}
             </section>

@@ -7,24 +7,24 @@ import { ProjectMessages } from "./ProjectMessages";
 import { DiscussionBoard } from "../components/DiscussionBoard";
 
 export const ProjectTabs = ({ project, isOwner, isMember, onUpdate }) =>{
-    const [activeTab, setActiveTab] = useState('files');
+    const [activeTab, setActiveTab] = useState('members');
     const switchTab = (tab) => setActiveTab(tab);
 
     return(
-        <div>
-            <ul className="nav nav-tabs">
-                {/* Files */}
-                <li className="nav-item">
-                    <button 
-                        className={`nav-link ${activeTab === "files" ? "active" : ""}`} 
-                        onClick={() => switchTab("files")}><i className="fa-solid fa-folder-open"></i> Files
-                    </button>
-                </li>
+        <div className="layout-tabs">
+            <ul className="nav nav-tabs mb-3 tab-links">
                 {/* User Members Feed */}
                 <li className="nav-item">
                     <button 
                         className={`nav-link ${activeTab === "members" ? "active" : ""}`} 
                         onClick={() => switchTab("members")}><i className="fa-solid fa-users"></i> Members
+                    </button>
+                </li>
+                {/* Files */}
+                <li className="nav-item">
+                    <button 
+                        className={`nav-link ${activeTab === "files" ? "active" : ""}`} 
+                        onClick={() => switchTab("files")}><i className="fa-solid fa-folder-open"></i> Files
                     </button>
                 </li>
                 {/* Activity */}
@@ -46,22 +46,22 @@ export const ProjectTabs = ({ project, isOwner, isMember, onUpdate }) =>{
             </ul>
         
             {/* Tab Content */}
-            <section className="tab-content">
-                {activeTab === "files" && (
-                    <div> 
-                        <Files project={project} isMember={isMember} onUpdate={onUpdate} />
-                    </div>
-                )}
-
+            <section className="tab-content card">
                 {activeTab === "members" && (
                     <div> 
                         <MemberList project={project} isOwner={isOwner} isMember={isMember}/>
                     </div>
                 )}
 
+                {activeTab === "files" && (
+                    <div> 
+                        <Files project={project} isMember={isMember} onUpdate={onUpdate} />
+                    </div>
+                )}
+
                 {activeTab === "activity" && (
                     <div> 
-                        <ProjectMessages projectId={project._id} />
+                        <ProjectMessages projectId={project._id} display="no-card"/>
                     </div>
                 )}
 

@@ -45,7 +45,7 @@ export const Friends = ({ friends: initialFriends, currentUser, viewOnly }) =>{
                 <div key={friend._id} className="friend-item">
                     <ProfilePreview profile={friend} />
                     {viewOnly && (
-                        <button onClick={() => handleRemove(friend._id)} disabled={loading}>
+                        <button className="btn btn-red btn-sm" onClick={() => handleRemove(friend._id)} disabled={loading}>
                             {loading ? "..." : "Remove"}
                         </button>
                     )}

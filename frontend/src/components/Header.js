@@ -1,17 +1,21 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+
 import { Search } from "../components/Search";
 import { ProfileImage } from "./ProfileImage";
-import { useState, useEffect, useRef } from "react";
 
 export const Header = ({ isAuthenticated, setIsAuthenticated }) =>{
     const navigate = useNavigate();
+    const location = useLocation();
     const sessionUserId = sessionStorage.getItem("userId");
     const [currentUser, setCurrentUser] = useState(null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [isAdmin, setIsAdmin] = useState(sessionStorage.getItem("admin") === "true");
     const dropdownRef = useRef(null);
+    
+    const isOnOwnProfile = location.pathname === `/profile/${sessionUserId}`;
 
     useEffect(() => {
         const handleAuthChange = () => {
@@ -34,11 +38,11 @@ export const Header = ({ isAuthenticated, setIsAuthenticated }) =>{
     const fetchUser = async () => {
         if (!sessionUserId) return;
 
-        try {
+        try{
             const res = await fetch(`/api/users/${sessionUserId}`);
             const data = await res.json();
             setCurrentUser(data);
-        } catch (err) {
+        }catch (err) {
             console.error("Error fetching user:", err);
             setCurrentUser(null); 
         }
@@ -80,7 +84,7 @@ export const Header = ({ isAuthenticated, setIsAuthenticated }) =>{
 
                         {/* Profile dropdown */}
                         <li className="position-relative" ref={dropdownRef}>
-                            <button className="btn-white mx-2 btn-md border-0 bg-transparent" onClick={() => setDropdownOpen((prev) => !prev)}>
+                            <button className={`btn-white mx-2 btn-md profile-btn ${isOnOwnProfile ? "active" : ""}`}onClick={() => setDropdownOpen((prev) => !prev)}>
                                 {currentUser && <ProfileImage profile={currentUser} onClick={() => setDropdownOpen((prev) => !prev)} />}
                             </button>
                             {dropdownOpen && (
@@ -106,7 +110,7 @@ export const Header = ({ isAuthenticated, setIsAuthenticated }) =>{
                             </button>
                         </NavLink>
                         <NavLink to="/login">
-                            <button className="btn-red mx-3 btn-md">
+                            <button className="btn-red-round mx-3">
                                 Log In
                             </button>
                         </NavLink>

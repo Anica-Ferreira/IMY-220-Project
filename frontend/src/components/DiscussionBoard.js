@@ -1,15 +1,29 @@
 /* Anica Ferreira 40_u24581802 */
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { formatTimeAgo } from "./ActivityItem";
+import { ProfileImage } from "./ProfileImage";
 
 export const DiscussionBoard = ({ project, initialDiscussion}) =>{
     const [discussion, setDiscussion] = useState(initialDiscussion || []);
     const [newMessage, setNewMessage] = useState("");
     const [users, setUsers] = useState({});
+    const messagesRef = useRef(null);
 
     const sessionUserId = sessionStorage.getItem("userId");
+
+    useEffect(() => {
+        if (messagesRef.current) {
+            messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+        }
+    }, [discussion]);
+
+    useEffect(() => {
+        if (messagesRef.current) {
+            messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+        }
+    }, []);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -59,7 +73,7 @@ export const DiscussionBoard = ({ project, initialDiscussion}) =>{
             {/* Check if messages exist */}
             {discussion.length === 0 && <p>No messages yet.</p>}
 
-            <div>
+            <div className="discussion-messages" ref={messagesRef}>
                 {discussion.map((message, index) => {
                     // Find user who sent the message
                     const user = users[message.userId];
@@ -68,7 +82,7 @@ export const DiscussionBoard = ({ project, initialDiscussion}) =>{
                         <div className="discussion-message" key={index}>
                             <div className="discussion-message-header">
                                 <div className="user-info">
-                                    <img src={user.image} alt={user.username} />
+                                    <ProfileImage profile={user} size="small"/>
                                     <strong>
                                         <Link to={`/profile/${user._id}`}>{user.username}</Link>
                                     </strong>
@@ -78,14 +92,15 @@ export const DiscussionBoard = ({ project, initialDiscussion}) =>{
                                 </span>
                             </div>
                             <p>{message.message}</p>
-                        </div>
+                        </div >
                     );
                 })}
+                <div/>
             </div>
 
             <div className="discussion-input">
                 <input type="text" placeholder="Write a message" value={newMessage} onChange={(e) => setNewMessage(e.target.value)}/>
-                <button onClick={handleSendMessage}>Send</button>
+                <button className="btn-red" onClick={handleSendMessage}>Send </button>
             </div>
         </div>
     );

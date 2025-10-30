@@ -55,7 +55,7 @@ export const ProjectMessages = ({ projectId }) =>{
         <div>
             {groupedArr.map(([monthYear, monthActivities]) => (
                 <div key={monthYear}>
-                    <h3>{monthYear}</h3>
+                    <h2 className="fs-5">{monthYear}</h2>
                     {monthActivities.map((act, index) => (
                         <ActivityItem key={index} activity={act} showAll={false} showMessage={true}/>
                     ))}

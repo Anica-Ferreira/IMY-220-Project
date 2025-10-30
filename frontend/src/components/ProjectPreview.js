@@ -38,26 +38,33 @@ export const ProjectPreview = ({ project, showBookmark = false }) =>{
         <div className="project-preview-header">
             <img src={project.image} alt={`${project.name} thumbnail`} />
             <div className="project-preview-text">
-                <Link to={`/projects/${project._id}`}>
+                <Link to={`/projects/${project._id}`} className="text-start">
                     <strong>{project.name}</strong>
                 </Link>
-                <div className="project-preview-description">{project.description}</div>
+                <div className="project-preview-description text-start">{project.description}</div>
             </div>
         </div>
 
-        <p className="project-preview-languages">
-            {project.languages && project.languages.map((lang, index) => (
-                <Link key={index} to={`/results?hashtag=${encodeURIComponent(lang)}`}>
-                    #{lang.toLowerCase()}
-                </Link>
-            ))}
-            <span className="project-preview-download">
-                <i className="fa-solid fa-download"></i>{project.downloads}
-            </span>
+        <p className="tags">
 
-            { showBookmark && <span onClick={toggleSave} title="Save project">
-                <i className={saved ? "fa-solid fa-bookmark" : "fa-regular fa-bookmark"}></i>
-            </span>}
+            <span className="tags-left">
+                {project.languages && project.languages.map((lang, index) => (
+                    <Link key={index} to={`/results?hashtag=${encodeURIComponent(lang)}`}>
+                        #{lang.toLowerCase()}
+                    </Link>
+                ))}
+            </span>
+            
+            <span className="tags-right">
+                <span className="project-preview-download mx-2">
+                    <i className="fa-solid fa-download me-1"></i>{project.downloads}
+                </span>
+
+                <span onClick={toggleSave} title="Save project">
+                    <i className={saved ? "fa-solid fa-bookmark" : "fa-regular fa-bookmark"}></i>
+                </span>
+            </span>
+            
         </p>
 
         </article>

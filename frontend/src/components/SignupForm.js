@@ -109,14 +109,14 @@ export const SignupForm = ({ setIsAuthenticated }) =>{
     };
 
     return(
-        <div>
+        <div className="auth-form-box-background">
             {loading && (
-                <div className="loader-overlay">
+                <div className="overlay">
                     <Loader />
                 </div>
             )}
 
-            <div className="form-box shadow-sm rounded bg-dark">
+            <div className="auth-form-box shadow-sm rounded bg-dark">
                 <form onSubmit={submit} noValidate autoComplete="off">
                     <h2>Sign Up</h2>
                     <div className="form-input">
@@ -140,7 +140,7 @@ export const SignupForm = ({ setIsAuthenticated }) =>{
                     {errors.signup && <small className="text-danger">{errors.signup}</small>}
 
                     <div>
-                        <input type="submit" name="submit" value="Sign Up" className="mt-5"/>
+                        <input type="submit" name="submit" value="Sign Up" className="outline-button mt-5"/>
                     </div>
 
                     <div className="mt-4 form-info">

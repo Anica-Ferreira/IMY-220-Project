@@ -1,8 +1,56 @@
 /* Anica Ferreira 40_u24581802 */
 
-/* --------------------------------- ACTIVITY FEED --------------------------------- */
+/* -------------------- ACTIVITY FEED -------------------- */
 
-/* Feed Tabs */
+/* Feed tabs */
+
+h3{
+    color: var(--white);
+}
+
+.nav-tabs {
+    border-bottom: none;
+    gap: 1em;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    border-radius: 0.5em;
+    transition: all 0.2s ease;
+    font-weight: 500;
+    background: var(--darkBlue);
+    color: var(--white);
+}
+
+.nav-tabs .nav-link:hover {
+    background: var(--grey);
+    color: var(--darkBlue);
+}
+
+.nav-tabs .nav-link.active {
+    background: var(--white);
+    color: var(--darkBlue);
+}
+
+/* -------------------- FEED-HEADER -------------------- */
+
+.feed-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+
+.feed-header .sort-container {
+    margin-left: auto;
+}
+
+
+
+/*
+--------------------------------- ACTIVITY FEED ---------------------------------
+
+Feed Tabs
 .nav-tabs {
     border-bottom: none;
     display: flex;
@@ -44,21 +92,8 @@
     margin-left: auto;
 }
 
-/* --------------------------------- ACTIVITY CARDS --------------------------------- */
-
-.card {
-    border: 0.05px solid #e5e7eb6e;
-    border-radius: 0.6em;
-    padding: 1.3em;
-    background: var(--darkBlue);
-    box-shadow: 0 1px 5px --darkBlue;
-    color: var(--white);
-}
-
-.card p{
-    margin-bottom: 0;
-}
+ --------------------------------- ACTIVITY CARDS --------------------------------- 
 
 h3{
     color: var(--white);
-}
+}*/

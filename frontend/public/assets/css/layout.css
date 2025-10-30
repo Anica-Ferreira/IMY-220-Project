@@ -1,0 +1,221 @@
+/* Anica Ferreira 40_u24581802 */
+
+/* -------------------- Cards -------------------- */
+
+.card{
+    border-radius: 0.6em;
+    padding: 1.7em;
+    background: var(--darkBlue);
+    box-shadow: 0 1px 5px --darkBlue;
+    color: var(--white);
+}
+
+.card p{
+    margin-bottom: 0;
+}
+
+/* -------------------- ACTIVITY LIST LAYOUT -------------------- */
+.list-container{
+    max-height: 100vh;
+    overflow: auto;
+}
+
+/* Scrollbar */
+.list-container::-webkit-scrollbar, 
+.layout-tabs::-webkit-scrollbar,
+.dropdown-menu::-webkit-scrollbar,
+.tab-content::-webkit-scrollbar,
+.discussion-messages::-webkit-scrollbar,
+.file-list::-webkit-scrollbar,
+.code::-webkit-scrollbar{
+    width: 6px;
+    overflow: auto;
+}
+
+.list-container::-webkit-scrollbar-thumb, 
+.layout-tabs::-webkit-scrollbar-thumb,
+.dropdown-menu::-webkit-scrollbar-thumb,
+.tab-content::-webkit-scrollbar-thumb,
+.discussion-messages::-webkit-scrollbar-thumb,
+.file-list::-webkit-scrollbar-thumb{
+    background-color: var(--grey);
+    border-radius: 3px;
+}
+
+.code::-webkit-scrollbar-thumb{
+    background-color: transparent;
+
+}
+
+.list-container::-webkit-scrollbar-track,
+.layout-tabs::-webkit-scrollbar-track, 
+.dropdown-menu::-webkit-scrollbar-track,
+.tab-content::-webkit-scrollbar-track,
+.discussion-messages::-webkit-scrollbar-track,
+.file-list::-webkit-scrollbar-track,
+.code::-webkit-scrollbar-track{
+    background: transparent;
+}
+
+/* -------------------- PROJECT LIST/GRID LAYOUT -------------------- */
+.project-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+/* -------------------- PROFILE/PROJECT PAGE LAYOUT -------------------- */
+.layout-container {
+    display: flex;
+    gap: 1.5em;
+    align-items: stretch;
+    height: 690px;
+}
+
+.info-layout {
+    position: relative;
+    height: 690px;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout-info {
+    flex: 1 1 300px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.layout-tabs {
+    flex: 2 1 690px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-layout,
+.tab-content.card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-content {
+    flex: 1 1 auto;
+    overflow-y: auto; 
+}
+
+.tab-links {
+    flex: 0 0 auto;
+}
+
+.layout-tabs .nav-tabs {
+    position: sticky;
+    top: 0;
+    background-color: var(--blue);
+    z-index: 5;
+    padding: 0.5em 0;
+}
+
+.profile-layout {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex: 0 0 auto;
+    height: 100%;
+    margin: 0 auto;
+    padding: 2em;
+    max-width: none;
+    box-sizing: border-box;
+}
+
+/* -------------------- PROFILE/PROJECT INFO LAYOUT-------------------- */
+
+/* Images */
+.img-layout, .layout-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Layout info */
+.layout-center h2{
+    font-size: 2em;
+    margin-top: 0em;
+    margin-bottom: 0.2em;
+    color: var(--white);
+}
+
+.layout-center h3{
+    color: var(--grey);
+    font-size: 1.5em;
+    font-weight: 300;
+    margin-top: 0.8em;
+    margin-bottom: 1em;
+}
+
+.layout-center p{
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    margin-left: 1.55em;
+}
+
+.layout-details{
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em
+}
+
+/* Action buttons  */
+.info-layout {
+    position: relative;
+}
+
+.layout-actions {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    display: flex;
+    gap: 1em;
+}
+
+.layout-actions span {
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.layout-actions span:hover {
+    transform: scale(1.09);
+}
+
+
+.layout-actions span:first-child:hover {
+    color: var(--red);
+}
+
+/* -------------------- FRIENDS/MEMBERS -------------------- */
+.friend-item, .member-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.9em 0;
+    border-bottom: 1px solid var(--lightGrey);
+}
+
+.friend-item:last-child {
+    border-bottom: none;
+}
+
+.edit-form .second-row {
+    display: flex !important;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: nowrap;
+}
+
+.edit-form .second-row .form-group {
+    flex: 1;
+    min-width: 0;
+}

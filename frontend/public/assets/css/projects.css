@@ -1,7 +1,16 @@
 /* Anica Ferreira 40_u24581802 */
 
-/*---------------------------- Project Preview ----------------------------*/
+/* -------------------- PROJECTS -------------------- */
 
+/* -------------------- IMAGES -------------------- */
+
+.project-img{
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+}
+
+/* -------------------- PROJECTS PREVIEW -------------------- */
 .project-preview {
     padding: 0.6em;
     background-color: var(--darkBlue);
@@ -22,7 +31,7 @@
     height: 50px;
     object-fit: cover;
     border-radius: 50%;
-    border: 1px solid var(--red);
+    border: 2px solid var(--red);
 }
 
 .project-preview-header .project-preview-text {
@@ -36,20 +45,26 @@
 
 .project-preview-header .project-preview-description {
     font-size: 0.9em;
-    color: #a5a5a5;
+    color: var(--grey);
     margin: 0;
+    margin-top: 0.3em;
 }
 
-.project-preview-languages,
-.project-info .tags {
+/* -------------------- TAGS/Badges -------------------- */
+.tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 0.3em;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.project-preview-languages a,
-.project-info .tags a {
+.project-tags{
+    justify-content: flex-start;
+    margin-top: 0.5em;
+}
+
+.tags a, .tags .tag-item  {
     font-size: 0.85em;
     text-decoration: none;
     color: var(--red);
@@ -59,11 +74,22 @@
     transition: all 0.2s ease;
 }
 
-.project-preview-languages a:hover,
-.project-info .tags a:hover {
+.tags a:hover, .tags .tag-item:hover {
     background-color: var(--red);
     color: var(--white);
     font-weight: 600;
+}
+
+.tags-left {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.tags-right {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .project-preview-download {
@@ -71,94 +97,12 @@
     color: var(--white);
     display: flex;
     align-items: center;
-    gap: 0.25rem;
 }
 
-/*---------------------------- Project Info ----------------------------*/
-.project-info, .profile-info  {
-    background-color: var(--darkBlue);
-    color: var(--white);
-    padding: 1.5em;
-    border-radius: 1em;
-    max-width: 800px;
-    margin: 1rem auto;
-    margin-bottom: 2em;
-}
+/* Badges */
 
-.project-info img, .profile-info img, .image-upload img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 1rem;
-}
 
-.project-info h2, .profile-info h2 {
-    font-size: 2rem;
-    margin-bottom: 0.3rem;
-    color: var(--white);
-}
-
-.project-info h3, .profile-info h3 {
-    font-size: 1.5em;
-    font-weight: 300;
-    margin-bottom: 1rem;
-    color: var(--grey);
-}
-
-.project-info p, .project-info strong, 
-.profile-info p, .profile-info strong {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 1rem;
-    color: var(--white);
-}
-
-.project-info button, .profile-info button {
-    background-color: var(--red);
-    color: var(--white);
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-right: 0.5rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-.project-info hr, .profile-info hr {
-    margin: 1.5rem 0;
-    border-color: var(--grey);
-}
-
-/* ----------------------------------------- Files ------------------------------------------- */
-
-.download-btn {
-    width: 20%;
-    margin-bottom: 1em;
-    padding: 0.4em 0.8em;
-    background-color: var(--red);
-    color: var(--white);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 1em;
-}
-
-.file-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.file-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    padding: 0.3em 0;
-}
-
-/*------------------------------------ Discussion Board -------------------------------------------- */
+/* -------------------- DISCUSSION BOARD -------------------- */
 
 .discussion-message img {
     width: 40px;
@@ -205,49 +149,111 @@
 }
 
 .discussion-input input {
+    width: 100%;
+    padding: 0.6em 0.8em;
+    border: 1px var(--grey) solid;
+    border-radius: 0.5em;
+    font-family: inherit;
+    font-size: 0.95em;
+    outline: none;
+    background: var(--lightBlue);
+    color: var(--white);
+}
+
+.discussion-input:focus{
+    border-color: var(--red);
+}
+
+.discussion-input {
+    position: sticky;
+    top: 0;
+    background-color: var(--darkBlue);
+    z-index: 5;
+    padding: 0.5em 0;
+}
+
+.discussion-card {
+    display: flex;
+    flex-direction: column;
+    height: 560px;
+}
+
+.discussion-messages {
     flex: 1;
-    padding: 0.5rem;
-    border-radius: 6px;
+    overflow-y: auto;
+    padding-right: 0.5em;
 }
 
-.discussion-input button {
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: none;
-    background-color: var(--red);
-    color: #fff;
+.discussion-input {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5em;
+    margin-top: 10px;
+    background-color: var(--darkBlue);
+}
+
+/* -------------------- FILES -------------------- */
+
+.file-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 5px;
+    background-color: var(--lightBlue);
+    color: var(--white);
+}
+
+.display-files{
+    height: 100%;
+    max-height: 100%;
+}
+
+.file-list li {
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
     cursor: pointer;
+    border-bottom: 1px solid var(--lightGrey);
 }
 
-input[type="file"]::file-selector-button {
-    padding: 0.5em 1em;
-    border: none;
-    border-radius: 6px;
-    background: var(--red);
-    color: var(--darkBlue);
-    cursor: pointer;
+.file-list li:last-child {
+    border-bottom: none;
 }
 
-.create input[type="text"],
-.create input[type="file"],
-.create select,
-.create textarea, #hashtags {
-    width: 50%;
-    min-width: 250px;
+.file-list li:hover, .active-file {
+    background-color: var(--cyan);;
 }
 
-.inline-input input[type="text"],
-.inline-input input[type="file"] {
-    width: 50%;
-    flex: unset;
+.file-code-container {
+    display: flex;
+    gap: 1rem;
+    max-width: 61vw;
 }
 
-.inline-input button {
-    flex: 0;
+.file-list-container {
+    width: 200px;
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 0.5rem; 
 }
 
-.remove-btn{
-    background-color: var(--red) !important;
-    color: var(--white) !important;
-    width: 100px !important;
+.code{
+    overflow: auto;
+    max-height: 450px;
+}
+
+.code-container {
+    width: 620px;
+    flex: 1;
+    margin-top: -37px;
+}
+
+.top-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8em;
 }

@@ -5,6 +5,7 @@ import { ProjectPreview } from "../components/ProjectPreview";
 import { ProfilePreview } from "../components/ProfilePreview";
 import { ActivityItem } from "../components/ActivityItem";
 import { useNavigate } from "react-router-dom";
+import { Loader } from "../components/Loader";
 
 export const Admin = () =>{
     const [activeTab, setActiveTab] = useState("users");
@@ -58,11 +59,8 @@ export const Admin = () =>{
     }
 
     return (
-        <div>
-            <h1>Admin</h1>
-            <h3 className="text-white mb-4">
-                Manage all users, projects, and activity across the platform.
-            </h3>
+        <div id="admin">
+            <h1 className="text-center">Admin</h1>
 
             <div className="feed-header d-flex align-items-center mb-3">
                 <ul className="nav nav-tabs">
@@ -95,11 +93,11 @@ export const Admin = () =>{
                     {activeTab === "users" && 
                         <div className="card">
                             <h4>Manage Users</h4>
-                            <p>Total Users: {totals.users}</p>
+                            <p className="mb-3" >Total Users: {totals.users}</p>
                                 {users && users.map((user) => (           
-                                    <div key={user._id}>
+                                    <div key={user._id} className="member-item">
                                         <ProfilePreview  profile={user}/>
-                                        <button onClick={() => navigate(`/profile/${user._id}?adminManage=true`)}>
+                                        <button className="btn btn-red btn-small" onClick={() => navigate(`/profile/${user._id}?adminManage=true`)}>
                                             Manage Profile
                                         </button>
                                     </div>                    
@@ -110,11 +108,11 @@ export const Admin = () =>{
                     {activeTab === "projects" && 
                         <div className="card">
                             <h4>Manage Projects</h4>
-                            <p>Total Projects: {totals.projects}</p>
+                            <p className="mb-3" >Total Projects: {totals.projects}</p>
                                 {projects && projects.map((project) => (           
-                                    <div key={project._id}>
+                                    <div key={project._id} className="member-item">
                                         <ProjectPreview  project={project}/>
-                                        <button onClick={() => navigate(`/projects/${project._id}?adminManage=true`)}>
+                                        <button className="btn btn-red btn-small" onClick={() => navigate(`/projects/${project._id}?adminManage=true`)}>
                                             Manage Project
                                         </button>
                                     </div>                 
@@ -125,20 +123,25 @@ export const Admin = () =>{
                     {activeTab === "activity" && 
                         <div className="card">
                             <h4>Manage Activity</h4>
-                            <p>Total Activity: {totals.activities}</p>
+                            <p className="mb-3" >Total Activity: {totals.activities}</p>
                                 {activities && activities.map((activity) => (           
-                                    <div key={activity._id}>
-                                        <ActivityItem  activity={activity} showAll={false} showMessage={true} />
-                                        <button onClick={() => handleDeleteActivity(activity._id)}>
+                                    <div key={activity._id} className="member-item">
+                                        <ActivityItem  activity={activity} showAll={false} showMessage={true} display="list"/>
+                                        <button className="btn btn-red btn-small" onClick={() => handleDeleteActivity(activity._id)}>
                                             Delete Activity
                                         </button>
                                     </div>                    
                                 ))}
                         </div>
                     }
-
                 </div>
             </section>
+
+            {loading && (
+                <div className="overlay">
+                    <Loader />
+                </div>
+            )}
         </div>
     );
 };
